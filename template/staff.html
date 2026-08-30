@@ -1,0 +1,514 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Staff Management</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'staff.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <h2>Admin Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li>
+            <a href="{% url 'students' %}">Students</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff' %}" class="active">Staff</a>
+        </li>
+
+        <li>
+            <a href="{% url 'classes' %}">Classes</a>
+        </li>
+
+        <li>
+            <a href="{% url 'attendance' %}">Attendance</a>
+        </li>
+
+        <li>
+            <a href="{% url 'marks' %}">Marks</a>
+        </li>
+
+        <li>
+            <a href="{% url 'homework' %}">Homework</a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}">Notices</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_details' %}">Fees Details</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_status' %}">Fees Status</a>
+        </li>
+
+        <li>
+            <a href="admin_profile.html">Profile</a>
+        </li>
+
+        <li>
+            <a href="logout.html">Logout</a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Staff Management</h1>
+
+            <p>View and manage all staff members</p>
+
+        </div>
+
+        <button class="add-btn" onclick="alert('Add Staff form will open here')">
+            + Add Staff
+        </button>
+
+    </div>
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Total Staff</h3>
+
+            <p>48</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Teachers</h3>
+
+            <p>38</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Administrative Staff</h3>
+
+            <p>6</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Other Staff</h3>
+
+            <p>4</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by Staff ID, Name, Subject or Role..."
+            onkeyup="searchStaff()"
+        >
+
+    </div>
+
+
+    <!-- ================= STAFF TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>All Staff Members</h2>
+
+        <div class="table-wrapper">
+
+            <table id="staffTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Staff ID</th>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Contact</th>
+
+                        <th>Qualification</th>
+
+                        <th>Experience</th>
+
+                        <th>Subject</th>
+
+                        <th>Class</th>
+
+                        <th>Address</th>
+
+                        <th>Gender</th>
+
+                        <th>Role</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <!-- STAFF 1 -->
+
+                    <tr>
+
+                        <td>STF001</td>
+
+                        <td>Rahul Sharma</td>
+
+                        <td>rahul.sharma@gmail.com</td>
+
+                        <td>9876543210</td>
+
+                        <td>MCA</td>
+
+                        <td>7 Years</td>
+
+                        <td>Computer Science</td>
+
+                        <td>BCA 3rd Year</td>
+
+                        <td>Kanpur, Uttar Pradesh</td>
+
+                        <td>Male</td>
+
+                        <td>
+                            <span class="role teacher">
+                                Teacher
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewStaff('STF001')">
+                                View
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editStaff('STF001')">
+                                Edit
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- STAFF 2 -->
+
+                    <tr>
+
+                        <td>STF002</td>
+
+                        <td>Priya Singh</td>
+
+                        <td>priya.singh@gmail.com</td>
+
+                        <td>9876501234</td>
+
+                        <td>M.Sc Mathematics</td>
+
+                        <td>5 Years</td>
+
+                        <td>Mathematics</td>
+
+                        <td>BCA 1st Year</td>
+
+                        <td>Lucknow, Uttar Pradesh</td>
+
+                        <td>Female</td>
+
+                        <td>
+                            <span class="role teacher">
+                                Teacher
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewStaff('STF002')">
+                                View
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editStaff('STF002')">
+                                Edit
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- STAFF 3 -->
+
+                    <tr>
+
+                        <td>STF003</td>
+
+                        <td>Amit Verma</td>
+
+                        <td>amit.verma@gmail.com</td>
+
+                        <td>9123456780</td>
+
+                        <td>M.Com</td>
+
+                        <td>8 Years</td>
+
+                        <td>Accounts</td>
+
+                        <td>All Classes</td>
+
+                        <td>Kanpur, Uttar Pradesh</td>
+
+                        <td>Male</td>
+
+                        <td>
+                            <span class="role accountant">
+                                Accountant
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewStaff('STF003')">
+                                View
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editStaff('STF003')">
+                                Edit
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- STAFF 4 -->
+
+                    <tr>
+
+                        <td>STF004</td>
+
+                        <td>Neha Gupta</td>
+
+                        <td>neha.gupta@gmail.com</td>
+
+                        <td>9988776655</td>
+
+                        <td>MA English</td>
+
+                        <td>6 Years</td>
+
+                        <td>English</td>
+
+                        <td>BCA 2nd Year</td>
+
+                        <td>Lucknow, Uttar Pradesh</td>
+
+                        <td>Female</td>
+
+                        <td>
+                            <span class="role teacher">
+                                Teacher
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewStaff('STF004')">
+                                View
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editStaff('STF004')">
+                                Edit
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- STAFF 5 -->
+
+                    <tr>
+
+                        <td>STF005</td>
+
+                        <td>Vikas Yadav</td>
+
+                        <td>vikas.yadav@gmail.com</td>
+
+                        <td>9090909090</td>
+
+                        <td>B.Ed</td>
+
+                        <td>4 Years</td>
+
+                        <td>Hindi</td>
+
+                        <td>BCA 1st Year</td>
+
+                        <td>Unnao, Uttar Pradesh</td>
+
+                        <td>Male</td>
+
+                        <td>
+                            <span class="role teacher">
+                                Teacher
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewStaff('STF005')">
+                                View
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editStaff('STF005')">
+                                Edit
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+    function searchStaff() {
+
+        let input =
+            document.getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document.getElementById("staffTable");
+
+        let rows =
+            table.getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowText =
+                rows[i].innerText.toLowerCase();
+
+            if (rowText.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function viewStaff(staffId) {
+
+        alert(
+            "Viewing complete details of Staff ID: "
+            + staffId
+        );
+
+    }
+
+
+    function editStaff(staffId) {
+
+        alert(
+            "Edit Staff ID: "
+            + staffId
+        );
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

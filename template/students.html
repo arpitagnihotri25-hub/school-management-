@@ -1,0 +1,618 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Management</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'students.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <h2>Admin Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li>
+            <a href="{% url 'students' %}" class="active">Students</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff' %}">Staff</a>
+        </li>
+
+        <li>
+            <a href="{% url 'classes' %}">Classes</a>
+        </li>
+
+        <li>
+            <a href="{% url 'attendance' %}">Attendance</a>
+        </li>
+
+        <li>
+            <a href="{% url 'marks' %}">Marks</a>
+        </li>
+
+        <li>
+            <a href="{% url 'homework' %}">Homework</a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}">Notices</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_details' %}">Fees Details</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_status' %}">Fees Status</a>
+        </li>
+
+        <li>
+            <a href="admin_profile.html">Profile</a>
+        </li>
+
+        <li>
+            <a href="logout.html">Logout</a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Student Management</h1>
+
+            <p>View and manage all registered students</p>
+
+        </div>
+
+        <button
+            class="add-btn"
+            onclick="alert('Add Student form will open here')">
+
+            + Add Student
+
+        </button>
+
+    </div>
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>Total Students</h3>
+
+            <p>520</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Male Students</h3>
+
+            <p>285</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Female Students</h3>
+
+            <p>235</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Active Students</h3>
+
+            <p>510</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by Admission No., Name, Class or Email..."
+            onkeyup="searchStudents()">
+
+    </div>
+
+
+    <!-- ================= STUDENT TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>All Students</h2>
+
+
+        <div class="table-wrapper">
+
+            <table id="studentTable">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>Admission No.</th>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Contact</th>
+
+                        <th>Date of Birth</th>
+
+                        <th>Gender</th>
+
+                        <th>Class</th>
+
+                        <th>Section</th>
+
+                        <th>Address</th>
+
+                        <th>Guardian Name</th>
+
+                        <th>Guardian Contact</th>
+
+                        <th>Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <!-- ================= STUDENT 1 ================= -->
+
+                    <tr>
+
+                        <td>STD001</td>
+
+                        <td>Aarav Sharma</td>
+
+                        <td>aarav@gmail.com</td>
+
+                        <td>9876543210</td>
+
+                        <td>15-04-2006</td>
+
+                        <td>Male</td>
+
+                        <td>BCA 1st Year</td>
+
+                        <td>A</td>
+
+                        <td>Kanpur, Uttar Pradesh</td>
+
+                        <td>Rajesh Sharma</td>
+
+                        <td>9876500001</td>
+
+                        <td>
+                            <span class="status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewStudent('STD001')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editStudent('STD001')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteStudent('STD001')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= STUDENT 2 ================= -->
+
+                    <tr>
+
+                        <td>STD002</td>
+
+                        <td>Ananya Singh</td>
+
+                        <td>ananya@gmail.com</td>
+
+                        <td>9876501234</td>
+
+                        <td>22-08-2006</td>
+
+                        <td>Female</td>
+
+                        <td>BCA 1st Year</td>
+
+                        <td>A</td>
+
+                        <td>Lucknow, Uttar Pradesh</td>
+
+                        <td>Suresh Singh</td>
+
+                        <td>9876500002</td>
+
+                        <td>
+                            <span class="status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewStudent('STD002')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editStudent('STD002')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteStudent('STD002')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= STUDENT 3 ================= -->
+
+                    <tr>
+
+                        <td>STD003</td>
+
+                        <td>Rahul Verma</td>
+
+                        <td>rahul@gmail.com</td>
+
+                        <td>9123456780</td>
+
+                        <td>10-02-2005</td>
+
+                        <td>Male</td>
+
+                        <td>BCA 2nd Year</td>
+
+                        <td>B</td>
+
+                        <td>Kanpur, Uttar Pradesh</td>
+
+                        <td>Mahesh Verma</td>
+
+                        <td>9123400003</td>
+
+                        <td>
+                            <span class="status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewStudent('STD003')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editStudent('STD003')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteStudent('STD003')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= STUDENT 4 ================= -->
+
+                    <tr>
+
+                        <td>STD004</td>
+
+                        <td>Priya Gupta</td>
+
+                        <td>priya@gmail.com</td>
+
+                        <td>9988776655</td>
+
+                        <td>18-11-2005</td>
+
+                        <td>Female</td>
+
+                        <td>BCA 2nd Year</td>
+
+                        <td>B</td>
+
+                        <td>Lucknow, Uttar Pradesh</td>
+
+                        <td>Rakesh Gupta</td>
+
+                        <td>9988700004</td>
+
+                        <td>
+                            <span class="status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewStudent('STD004')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editStudent('STD004')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteStudent('STD004')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= STUDENT 5 ================= -->
+
+                    <tr>
+
+                        <td>STD005</td>
+
+                        <td>Vivek Yadav</td>
+
+                        <td>vivek@gmail.com</td>
+
+                        <td>9090909090</td>
+
+                        <td>05-07-2005</td>
+
+                        <td>Male</td>
+
+                        <td>BCA 3rd Year</td>
+
+                        <td>A</td>
+
+                        <td>Unnao, Uttar Pradesh</td>
+
+                        <td>Ramesh Yadav</td>
+
+                        <td>9090900005</td>
+
+                        <td>
+                            <span class="status inactive">
+                                Inactive
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewStudent('STD005')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editStudent('STD005')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteStudent('STD005')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+    function searchStudents() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("studentTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowText =
+                rows[i]
+                .innerText
+                .toLowerCase();
+
+            if (rowText.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function viewStudent(admissionNo) {
+
+        alert(
+            "Viewing complete details of Student: "
+            + admissionNo
+        );
+
+    }
+
+
+    function editStudent(admissionNo) {
+
+        alert(
+            "Edit Student: "
+            + admissionNo
+        );
+
+    }
+
+
+    function deleteStudent(admissionNo) {
+
+        let confirmDelete =
+            confirm(
+                "Are you sure you want to delete Student "
+                + admissionNo
+                + "?"
+            );
+
+        if (confirmDelete) {
+
+            alert(
+                "Student "
+                + admissionNo
+                + " deleted successfully."
+            );
+
+        }
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

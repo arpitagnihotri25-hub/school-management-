@@ -1,0 +1,520 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Attendance</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'attendance.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <h2>Admin Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li>
+            <a href="{% url 'students' %}">Students</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff' %}">Staff</a>
+        </li>
+
+        <li>
+            <a href="{% url 'classes' %}">Classes</a>
+        </li>
+
+        <li>
+            <a href="{% url 'attendance' %}" class="active">Attendance</a>
+        </li>
+
+        <li>
+            <a href="{% url 'marks' %}">Marks</a>
+        </li>
+
+        <li>
+            <a href="{% url 'homework' %}">Homework</a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}">Notices</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_details' %}">Fees Details</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_status' %}">Fees Status</a>
+        </li>
+
+        <li>
+            <a href="admin_profile.html">Profile</a>
+        </li>
+
+        <li>
+            <a href="logout.html">Logout</a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Student Attendance</h1>
+
+            <p>View and manage student attendance records</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Total Students</h3>
+
+            <p>520</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Present Today</h3>
+
+            <p>488</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Absent Today</h3>
+
+            <p>32</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Overall Attendance</h3>
+
+            <p>93.8%</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FILTER SECTION ================= -->
+
+    <div class="filter-box">
+
+        <div class="filter-group">
+
+            <label for="classFilter">
+                Class
+            </label>
+
+            <select id="classFilter">
+
+                <option value="all">
+                    All Classes
+                </option>
+
+                <option value="BCA 1st Year">
+                    BCA 1st Year
+                </option>
+
+                <option value="BCA 2nd Year">
+                    BCA 2nd Year
+                </option>
+
+                <option value="BCA 3rd Year">
+                    BCA 3rd Year
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="sectionFilter">
+                Section
+            </label>
+
+            <select id="sectionFilter">
+
+                <option value="all">
+                    All Sections
+                </option>
+
+                <option value="A">
+                    A
+                </option>
+
+                <option value="B">
+                    B
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="dateFilter">
+                Date
+            </label>
+
+            <input
+                type="date"
+                id="dateFilter">
+
+        </div>
+
+
+        <button
+            class="filter-btn"
+            onclick="applyFilter()">
+
+            Apply Filter
+
+        </button>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by Admission No. or Student Name..."
+            onkeyup="searchAttendance()">
+
+    </div>
+
+
+    <!-- ================= ATTENDANCE TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>Attendance Records</h2>
+
+        <div class="table-wrapper">
+
+            <table id="attendanceTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Admission No.</th>
+
+                        <th>Student Name</th>
+
+                        <th>Class</th>
+
+                        <th>Section</th>
+
+                        <th>Date</th>
+
+                        <th>Status</th>
+
+                        <th>Attendance %</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <!-- STUDENT 1 -->
+
+                    <tr>
+
+                        <td>STD001</td>
+
+                        <td>Aarav Sharma</td>
+
+                        <td>BCA 1st Year</td>
+
+                        <td>A</td>
+
+                        <td>30 Aug 2026</td>
+
+                        <td>
+
+                            <span class="status present">
+                                Present
+                            </span>
+
+                        </td>
+
+                        <td>96%</td>
+
+                    </tr>
+
+
+                    <!-- STUDENT 2 -->
+
+                    <tr>
+
+                        <td>STD002</td>
+
+                        <td>Ananya Singh</td>
+
+                        <td>BCA 1st Year</td>
+
+                        <td>A</td>
+
+                        <td>30 Aug 2026</td>
+
+                        <td>
+
+                            <span class="status present">
+                                Present
+                            </span>
+
+                        </td>
+
+                        <td>94%</td>
+
+                    </tr>
+
+
+                    <!-- STUDENT 3 -->
+
+                    <tr>
+
+                        <td>STD003</td>
+
+                        <td>Rahul Verma</td>
+
+                        <td>BCA 2nd Year</td>
+
+                        <td>B</td>
+
+                        <td>30 Aug 2026</td>
+
+                        <td>
+
+                            <span class="status absent">
+                                Absent
+                            </span>
+
+                        </td>
+
+                        <td>87%</td>
+
+                    </tr>
+
+
+                    <!-- STUDENT 4 -->
+
+                    <tr>
+
+                        <td>STD004</td>
+
+                        <td>Priya Gupta</td>
+
+                        <td>BCA 2nd Year</td>
+
+                        <td>B</td>
+
+                        <td>30 Aug 2026</td>
+
+                        <td>
+
+                            <span class="status present">
+                                Present
+                            </span>
+
+                        </td>
+
+                        <td>91%</td>
+
+                    </tr>
+
+
+                    <!-- STUDENT 5 -->
+
+                    <tr>
+
+                        <td>STD005</td>
+
+                        <td>Vivek Yadav</td>
+
+                        <td>BCA 3rd Year</td>
+
+                        <td>A</td>
+
+                        <td>30 Aug 2026</td>
+
+                        <td>
+
+                            <span class="status absent">
+                                Absent
+                            </span>
+
+                        </td>
+
+                        <td>79%</td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+
+    function searchAttendance() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("attendanceTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowText =
+                rows[i]
+                .innerText
+                .toLowerCase();
+
+            if (rowText.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function applyFilter() {
+
+        let classValue =
+            document
+            .getElementById("classFilter")
+            .value
+            .toLowerCase();
+
+        let sectionValue =
+            document
+            .getElementById("sectionFilter")
+            .value
+            .toLowerCase();
+
+
+        let table =
+            document
+            .getElementById("attendanceTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let className =
+                rows[i]
+                .cells[2]
+                .innerText
+                .toLowerCase();
+
+            let section =
+                rows[i]
+                .cells[3]
+                .innerText
+                .toLowerCase();
+
+
+            let classMatch =
+                classValue === "all"
+                || className === classValue;
+
+            let sectionMatch =
+                sectionValue === "all"
+                || section === sectionValue;
+
+
+            if (classMatch && sectionMatch) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

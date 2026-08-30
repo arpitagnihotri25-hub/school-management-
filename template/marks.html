@@ -1,0 +1,744 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Marks Management</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'marks.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <h2>Admin Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li>
+            <a href="{% url 'students' %}">Students</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff' %}">Staff</a>
+        </li>
+
+        <li>
+            <a href="{% url 'classes' %}">Classes</a>
+        </li>
+
+        <li>
+            <a href="{% url 'attendance' %}">Attendance</a>
+        </li>
+
+        <li>
+            <a href="{% url 'marks' %}" class="active">Marks</a>
+        </li>
+
+        <li>
+            <a href="{% url 'homework' %}">Homework</a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}">Notices</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_details' %}">Fees Details</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_status' %}">Fees Status</a>
+        </li>
+
+        <li>
+            <a href="admin_profile.html">Profile</a>
+        </li>
+
+        <li>
+            <a href="logout.html">Logout</a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Marks Management</h1>
+
+            <p>View and manage student examination marks</p>
+
+        </div>
+
+        <button
+            class="add-btn"
+            onclick="addMarks()">
+
+            + Add Marks
+
+        </button>
+
+    </div>
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Total Records</h3>
+
+            <p>1,560</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Average Percentage</h3>
+
+            <p>78.5%</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Highest Percentage</h3>
+
+            <p>96%</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Students Failed</h3>
+
+            <p>24</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FILTER SECTION ================= -->
+
+    <div class="filter-box">
+
+        <div class="filter-group">
+
+            <label for="classFilter">
+                Class
+            </label>
+
+            <select id="classFilter">
+
+                <option value="all">
+                    All Classes
+                </option>
+
+                <option value="BCA 1st Year">
+                    BCA 1st Year
+                </option>
+
+                <option value="BCA 2nd Year">
+                    BCA 2nd Year
+                </option>
+
+                <option value="BCA 3rd Year">
+                    BCA 3rd Year
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="examFilter">
+                Examination
+            </label>
+
+            <select id="examFilter">
+
+                <option value="all">
+                    All Examinations
+                </option>
+
+                <option value="Internal 1">
+                    Internal 1
+                </option>
+
+                <option value="Internal 2">
+                    Internal 2
+                </option>
+
+                <option value="Semester">
+                    Semester
+                </option>
+
+                <option value="Final">
+                    Final
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="subjectFilter">
+                Subject
+            </label>
+
+            <select id="subjectFilter">
+
+                <option value="all">
+                    All Subjects
+                </option>
+
+                <option value="Python">
+                    Python
+                </option>
+
+                <option value="DBMS">
+                    DBMS
+                </option>
+
+                <option value="Django">
+                    Django
+                </option>
+
+                <option value="Mathematics">
+                    Mathematics
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="filter-btn"
+            onclick="applyFilter()">
+
+            Apply Filter
+
+        </button>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by Admission No. or Student Name..."
+            onkeyup="searchMarks()">
+
+    </div>
+
+
+    <!-- ================= MARKS TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>Student Marks Records</h2>
+
+        <div class="table-wrapper">
+
+            <table id="marksTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Admission No.</th>
+
+                        <th>Student Name</th>
+
+                        <th>Class</th>
+
+                        <th>Section</th>
+
+                        <th>Subject</th>
+
+                        <th>Examination</th>
+
+                        <th>Marks Obtained</th>
+
+                        <th>Total Marks</th>
+
+                        <th>Percentage</th>
+
+                        <th>Grade</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <!-- ================= RECORD 1 ================= -->
+
+                    <tr>
+
+                        <td>STD001</td>
+
+                        <td>Aarav Sharma</td>
+
+                        <td>BCA 1st Year</td>
+
+                        <td>A</td>
+
+                        <td>Python</td>
+
+                        <td>Internal 1</td>
+
+                        <td>87</td>
+
+                        <td>100</td>
+
+                        <td>87%</td>
+
+                        <td>
+                            <span class="grade grade-a">
+                                A
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editMarks('STD001')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteMarks('STD001')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= RECORD 2 ================= -->
+
+                    <tr>
+
+                        <td>STD002</td>
+
+                        <td>Ananya Singh</td>
+
+                        <td>BCA 1st Year</td>
+
+                        <td>A</td>
+
+                        <td>DBMS</td>
+
+                        <td>Internal 1</td>
+
+                        <td>92</td>
+
+                        <td>100</td>
+
+                        <td>92%</td>
+
+                        <td>
+                            <span class="grade grade-aplus">
+                                A+
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editMarks('STD002')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteMarks('STD002')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= RECORD 3 ================= -->
+
+                    <tr>
+
+                        <td>STD003</td>
+
+                        <td>Rahul Verma</td>
+
+                        <td>BCA 2nd Year</td>
+
+                        <td>B</td>
+
+                        <td>Django</td>
+
+                        <td>Semester</td>
+
+                        <td>78</td>
+
+                        <td>100</td>
+
+                        <td>78%</td>
+
+                        <td>
+                            <span class="grade grade-bplus">
+                                B+
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editMarks('STD003')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteMarks('STD003')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= RECORD 4 ================= -->
+
+                    <tr>
+
+                        <td>STD004</td>
+
+                        <td>Priya Gupta</td>
+
+                        <td>BCA 2nd Year</td>
+
+                        <td>B</td>
+
+                        <td>Mathematics</td>
+
+                        <td>Semester</td>
+
+                        <td>91</td>
+
+                        <td>100</td>
+
+                        <td>91%</td>
+
+                        <td>
+                            <span class="grade grade-aplus">
+                                A+
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editMarks('STD004')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteMarks('STD004')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= RECORD 5 ================= -->
+
+                    <tr>
+
+                        <td>STD005</td>
+
+                        <td>Vivek Yadav</td>
+
+                        <td>BCA 3rd Year</td>
+
+                        <td>A</td>
+
+                        <td>Python</td>
+
+                        <td>Final</td>
+
+                        <td>67</td>
+
+                        <td>100</td>
+
+                        <td>67%</td>
+
+                        <td>
+                            <span class="grade grade-b">
+                                B
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editMarks('STD005')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteMarks('STD005')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+
+    function searchMarks() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("marksTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowText =
+                rows[i]
+                .innerText
+                .toLowerCase();
+
+            if (rowText.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function applyFilter() {
+
+        let classValue =
+            document
+            .getElementById("classFilter")
+            .value
+            .toLowerCase();
+
+        let examValue =
+            document
+            .getElementById("examFilter")
+            .value
+            .toLowerCase();
+
+        let subjectValue =
+            document
+            .getElementById("subjectFilter")
+            .value
+            .toLowerCase();
+
+
+        let table =
+            document
+            .getElementById("marksTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let className =
+                rows[i]
+                .cells[2]
+                .innerText
+                .toLowerCase();
+
+            let subject =
+                rows[i]
+                .cells[4]
+                .innerText
+                .toLowerCase();
+
+            let exam =
+                rows[i]
+                .cells[5]
+                .innerText
+                .toLowerCase();
+
+
+            let classMatch =
+                classValue === "all"
+                || className === classValue;
+
+            let subjectMatch =
+                subjectValue === "all"
+                || subject === subjectValue;
+
+            let examMatch =
+                examValue === "all"
+                || exam === examValue;
+
+
+            if (
+                classMatch &&
+                subjectMatch &&
+                examMatch
+            ) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function addMarks() {
+
+        alert("Add Marks form will open here.");
+
+    }
+
+
+    function editMarks(admissionNo) {
+
+        alert(
+            "Edit marks for Student: "
+            + admissionNo
+        );
+
+    }
+
+
+    function deleteMarks(admissionNo) {
+
+        let confirmDelete =
+            confirm(
+                "Are you sure you want to delete marks for "
+                + admissionNo
+                + "?"
+            );
+
+
+        if (confirmDelete) {
+
+            alert(
+                "Marks for "
+                + admissionNo
+                + " deleted successfully."
+            );
+
+        }
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

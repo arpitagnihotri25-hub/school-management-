@@ -1,0 +1,664 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fees Status</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'fees_status.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <h2>Admin Portal</h2>
+
+    <ul>
+
+        <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+
+        <li><a href="{% url 'students' %}">Students</a></li>
+
+        <li><a href="{% url 'staff' %}">Staff</a></li>
+
+        <li><a href="{% url 'classes' %}">Classes</a></li>
+
+        <li><a href="{% url 'attendance' %}">Attendance</a></li>
+
+        <li><a href="{% url 'marks' %}">Marks</a></li>
+
+        <li><a href="{% url 'homework' %}">Homework</a></li>
+
+        <li><a href="{% url 'notices' %}">Notices</a></li>
+
+        <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
+
+        <li>
+            <a href="{% url 'fees_status' %}" class="active">
+                Fees Status
+            </a>
+        </li>
+
+        <li><a href="admin_profile.html">Profile</a></li>
+
+        <li><a href="logout.html">Logout</a></li>
+
+    </ul>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Fees Status</h1>
+
+            <p>View and manage student fee payment status</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Total Students</h3>
+
+            <p>320</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Fees Paid</h3>
+
+            <p>250</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Fees Pending</h3>
+
+            <p>55</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Partially Paid</h3>
+
+            <p>15</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FILTER ================= -->
+
+    <div class="filter-box">
+
+
+        <div class="filter-group">
+
+            <label for="classFilter">
+                Class
+            </label>
+
+            <select id="classFilter">
+
+                <option value="all">
+                    All Classes
+                </option>
+
+                <option value="1">
+                    Class 1
+                </option>
+
+                <option value="2">
+                    Class 2
+                </option>
+
+                <option value="3">
+                    Class 3
+                </option>
+
+                <option value="4">
+                    Class 4
+                </option>
+
+                <option value="5">
+                    Class 5
+                </option>
+
+                <option value="6">
+                    Class 6
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="statusFilter">
+                Payment Status
+            </label>
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="Paid">
+                    Paid
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Partially Paid">
+                    Partially Paid
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="filter-btn"
+            onclick="applyFilter()">
+
+            Apply Filter
+
+        </button>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by admission number or student name..."
+            onkeyup="searchStudents()">
+
+    </div>
+
+
+    <!-- ================= FEES STATUS TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>Student Fees Records</h2>
+
+
+        <div class="table-wrapper">
+
+            <table id="feesTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Admission No.</th>
+
+                        <th>Student Name</th>
+
+                        <th>Class</th>
+
+                        <th>Section</th>
+
+                        <th>Total Fees</th>
+
+                        <th>Paid Amount</th>
+
+                        <th>Pending Amount</th>
+
+                        <th>Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr>
+
+                        <td>STD001</td>
+
+                        <td>Aarav Sharma</td>
+
+                        <td>1</td>
+
+                        <td>A</td>
+
+                        <td>₹30,000</td>
+
+                        <td>₹30,000</td>
+
+                        <td>₹0</td>
+
+                        <td>
+                            <span class="status paid">
+                                Paid
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewFees('STD001')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees('STD001')">
+
+                                Edit
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>STD002</td>
+
+                        <td>Riya Verma</td>
+
+                        <td>2</td>
+
+                        <td>A</td>
+
+                        <td>₹32,000</td>
+
+                        <td>₹20,000</td>
+
+                        <td>₹12,000</td>
+
+                        <td>
+                            <span class="status partial">
+                                Partially Paid
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewFees('STD002')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees('STD002')">
+
+                                Edit
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>STD003</td>
+
+                        <td>Aditya Singh</td>
+
+                        <td>3</td>
+
+                        <td>B</td>
+
+                        <td>₹35,000</td>
+
+                        <td>₹0</td>
+
+                        <td>₹35,000</td>
+
+                        <td>
+                            <span class="status pending">
+                                Pending
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewFees('STD003')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees('STD003')">
+
+                                Edit
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>STD004</td>
+
+                        <td>Ananya Gupta</td>
+
+                        <td>4</td>
+
+                        <td>A</td>
+
+                        <td>₹38,000</td>
+
+                        <td>₹38,000</td>
+
+                        <td>₹0</td>
+
+                        <td>
+                            <span class="status paid">
+                                Paid
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewFees('STD004')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees('STD004')">
+
+                                Edit
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>STD005</td>
+
+                        <td>Rahul Yadav</td>
+
+                        <td>5</td>
+
+                        <td>B</td>
+
+                        <td>₹40,000</td>
+
+                        <td>₹25,000</td>
+
+                        <td>₹15,000</td>
+
+                        <td>
+                            <span class="status partial">
+                                Partially Paid
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewFees('STD005')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees('STD005')">
+
+                                Edit
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>STD006</td>
+
+                        <td>Priya Mishra</td>
+
+                        <td>6</td>
+
+                        <td>A</td>
+
+                        <td>₹45,000</td>
+
+                        <td>₹45,000</td>
+
+                        <td>₹0</td>
+
+                        <td>
+                            <span class="status paid">
+                                Paid
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewFees('STD006')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees('STD006')">
+
+                                Edit
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+    function searchStudents() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("feesTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowText =
+                rows[i]
+                .innerText
+                .toLowerCase();
+
+            if (rowText.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function applyFilter() {
+
+        let classValue =
+            document
+            .getElementById("classFilter")
+            .value;
+
+        let statusValue =
+            document
+            .getElementById("statusFilter")
+            .value
+            .toLowerCase();
+
+
+        let table =
+            document
+            .getElementById("feesTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let className =
+                rows[i]
+                .cells[2]
+                .innerText;
+
+            let status =
+                rows[i]
+                .cells[7]
+                .innerText
+                .toLowerCase();
+
+
+            let classMatch =
+                classValue === "all"
+                || className === classValue;
+
+            let statusMatch =
+                statusValue === "all"
+                || status === statusValue;
+
+
+            if (
+                classMatch &&
+                statusMatch
+            ) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function viewFees(admissionNo) {
+
+        alert(
+            "Viewing fees details for "
+            + admissionNo
+        );
+
+    }
+
+
+    function editFees(admissionNo) {
+
+        alert(
+            "Edit fees status for "
+            + admissionNo
+        );
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

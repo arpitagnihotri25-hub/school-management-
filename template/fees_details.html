@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fees Details</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'fees_details.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <h2>Admin Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li>
+            <a href="{% url 'students' %}">Students</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff' %}">Staff</a>
+        </li>
+
+        <li>
+            <a href="{% url 'classes' %}">Classes</a>
+        </li>
+
+        <li>
+            <a href="{% url 'attendance' %}">Attendance</a>
+        </li>
+
+        <li>
+            <a href="{% url 'marks' %}">Marks</a>
+        </li>
+
+        <li>
+            <a href="{% url 'homework' %}">Homework</a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}">Notices</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_details' %}" class="active">
+                Fees Details
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+
+        <li>
+            <a href="admin_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="logout.html">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Fees Details</h1>
+
+            <p>Manage class-wise fees structure</p>
+
+        </div>
+
+        <button
+            class="add-btn"
+            onclick="addFees()">
+
+            + Add Fees
+
+        </button>
+
+    </div>
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Total Classes</h3>
+
+            <p>6</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Highest Fees</h3>
+
+            <p>₹45,000</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Lowest Fees</h3>
+
+            <p>₹30,000</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Average Fees</h3>
+
+            <p>₹37,500</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by class number..."
+            onkeyup="searchFees()">
+
+    </div>
+
+
+    <!-- ================= FEES TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>Class Fees Structure</h2>
+
+
+        <div class="table-wrapper">
+
+            <table id="feesTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Class Number</th>
+
+                        <th>Fees Amount</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr>
+
+                        <td>1</td>
+
+                        <td>₹30,000</td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees(1)">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteFees(1)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>2</td>
+
+                        <td>₹32,000</td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees(2)">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteFees(2)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>3</td>
+
+                        <td>₹35,000</td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees(3)">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteFees(3)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>4</td>
+
+                        <td>₹38,000</td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees(4)">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteFees(4)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>5</td>
+
+                        <td>₹40,000</td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees(5)">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteFees(5)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>6</td>
+
+                        <td>₹45,000</td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees(6)">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteFees(6)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+    function searchFees() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("feesTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let classNumber =
+                rows[i]
+                .cells[0]
+                .innerText
+                .toLowerCase();
+
+
+            if (classNumber.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function addFees() {
+
+        alert("Add Fees form will open here.");
+
+    }
+
+
+    function editFees(classNumber) {
+
+        alert(
+            "Edit fees for Class "
+            + classNumber
+        );
+
+    }
+
+
+    function deleteFees(classNumber) {
+
+        let confirmDelete =
+            confirm(
+                "Are you sure you want to delete fees details for Class "
+                + classNumber
+                + "?"
+            );
+
+
+        if (confirmDelete) {
+
+            alert(
+                "Fees details for Class "
+                + classNumber
+                + " deleted successfully."
+            );
+
+        }
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

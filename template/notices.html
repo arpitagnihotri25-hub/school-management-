@@ -1,0 +1,819 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notice Management</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'notices.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <h2>Admin Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li>
+            <a href="{% url 'students' %}">Students</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff' %}">Staff</a>
+        </li>
+
+        <li>
+            <a href="{% url 'classes' %}">Classes</a>
+        </li>
+
+        <li>
+            <a href="{% url 'attendance' %}">Attendance</a>
+        </li>
+
+        <li>
+            <a href="{% url 'marks' %}">Marks</a>
+        </li>
+
+        <li>
+            <a href="{% url 'homework' %}">Homework</a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}" class="active">Notices</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_details' %}">Fees Details</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_status' %}">Fees Status</a>
+        </li>
+
+        <li>
+            <a href="admin_profile.html">Profile</a>
+        </li>
+
+        <li>
+            <a href="logout.html">Logout</a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Notice Management</h1>
+
+            <p>Create, view and manage school notices</p>
+
+        </div>
+
+        <button
+            class="add-btn"
+            onclick="addNotice()">
+
+            + Add Notice
+
+        </button>
+
+    </div>
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Total Notices</h3>
+
+            <p>35</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Active Notices</h3>
+
+            <p>12</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>For Students</h3>
+
+            <p>18</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>For Staff</h3>
+
+            <p>9</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FILTER SECTION ================= -->
+
+    <div class="filter-box">
+
+
+        <div class="filter-group">
+
+            <label for="audienceFilter">
+                Audience
+            </label>
+
+            <select id="audienceFilter">
+
+                <option value="all">
+                    All
+                </option>
+
+                <option value="Students">
+                    Students
+                </option>
+
+                <option value="Staff">
+                    Staff
+                </option>
+
+                <option value="Students & Staff">
+                    Students & Staff
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="priorityFilter">
+                Priority
+            </label>
+
+            <select id="priorityFilter">
+
+                <option value="all">
+                    All Priorities
+                </option>
+
+                <option value="High">
+                    High
+                </option>
+
+                <option value="Medium">
+                    Medium
+                </option>
+
+                <option value="Low">
+                    Low
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="statusFilter">
+                Status
+            </label>
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="Active">
+                    Active
+                </option>
+
+                <option value="Expired">
+                    Expired
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="filter-btn"
+            onclick="applyFilter()">
+
+            Apply Filter
+
+        </button>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by notice title or description..."
+            onkeyup="searchNotices()">
+
+    </div>
+
+
+    <!-- ================= NOTICE TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>Notice Records</h2>
+
+
+        <div class="table-wrapper">
+
+            <table id="noticeTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Notice ID</th>
+
+                        <th>Title</th>
+
+                        <th>Description</th>
+
+                        <th>Audience</th>
+
+                        <th>Posted By</th>
+
+                        <th>Posted Date</th>
+
+                        <th>Expiry Date</th>
+
+                        <th>Priority</th>
+
+                        <th>Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <!-- ================= NOTICE 1 ================= -->
+
+                    <tr>
+
+                        <td>NT001</td>
+
+                        <td>Independence Day Holiday</td>
+
+                        <td>
+                            College will remain closed on Independence Day.
+                        </td>
+
+                        <td>Students & Staff</td>
+
+                        <td>Admin</td>
+
+                        <td>10 Aug 2026</td>
+
+                        <td>15 Aug 2026</td>
+
+                        <td>
+
+                            <span class="priority high">
+                                High
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="status active">
+                                Active
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewNotice('NT001')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editNotice('NT001')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteNotice('NT001')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= NOTICE 2 ================= -->
+
+                    <tr>
+
+                        <td>NT002</td>
+
+                        <td>Semester Examination</td>
+
+                        <td>
+                            Semester examinations will begin from 10 September.
+                        </td>
+
+                        <td>Students</td>
+
+                        <td>Admin</td>
+
+                        <td>25 Aug 2026</td>
+
+                        <td>12 Sep 2026</td>
+
+                        <td>
+
+                            <span class="priority high">
+                                High
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="status active">
+                                Active
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewNotice('NT002')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editNotice('NT002')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteNotice('NT002')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= NOTICE 3 ================= -->
+
+                    <tr>
+
+                        <td>NT003</td>
+
+                        <td>Staff Meeting</td>
+
+                        <td>
+                            All teaching staff are requested to attend the meeting.
+                        </td>
+
+                        <td>Staff</td>
+
+                        <td>Admin</td>
+
+                        <td>27 Aug 2026</td>
+
+                        <td>30 Aug 2026</td>
+
+                        <td>
+
+                            <span class="priority medium">
+                                Medium
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="status active">
+                                Active
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewNotice('NT003')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editNotice('NT003')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteNotice('NT003')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= NOTICE 4 ================= -->
+
+                    <tr>
+
+                        <td>NT004</td>
+
+                        <td>Library Timing</td>
+
+                        <td>
+                            Library timings have been changed from 9 AM to 5 PM.
+                        </td>
+
+                        <td>Students & Staff</td>
+
+                        <td>Admin</td>
+
+                        <td>20 Aug 2026</td>
+
+                        <td>25 Aug 2026</td>
+
+                        <td>
+
+                            <span class="priority low">
+                                Low
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="status expired">
+                                Expired
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewNotice('NT004')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editNotice('NT004')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteNotice('NT004')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- ================= NOTICE 5 ================= -->
+
+                    <tr>
+
+                        <td>NT005</td>
+
+                        <td>Fee Submission Reminder</td>
+
+                        <td>
+                            Students are requested to submit their pending fees.
+                        </td>
+
+                        <td>Students</td>
+
+                        <td>Admin</td>
+
+                        <td>28 Aug 2026</td>
+
+                        <td>05 Sep 2026</td>
+
+                        <td>
+
+                            <span class="priority medium">
+                                Medium
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="status active">
+                                Active
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewNotice('NT005')">
+
+                                View
+
+                            </button>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editNotice('NT005')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteNotice('NT005')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+    function searchNotices() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("noticeTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowText =
+                rows[i]
+                .innerText
+                .toLowerCase();
+
+            if (rowText.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function applyFilter() {
+
+        let audience =
+            document
+            .getElementById("audienceFilter")
+            .value
+            .toLowerCase();
+
+        let priority =
+            document
+            .getElementById("priorityFilter")
+            .value
+            .toLowerCase();
+
+        let status =
+            document
+            .getElementById("statusFilter")
+            .value
+            .toLowerCase();
+
+
+        let table =
+            document
+            .getElementById("noticeTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowAudience =
+                rows[i]
+                .cells[3]
+                .innerText
+                .toLowerCase();
+
+            let rowPriority =
+                rows[i]
+                .cells[7]
+                .innerText
+                .toLowerCase();
+
+            let rowStatus =
+                rows[i]
+                .cells[8]
+                .innerText
+                .toLowerCase();
+
+
+            let audienceMatch =
+                audience === "all"
+                || rowAudience === audience;
+
+            let priorityMatch =
+                priority === "all"
+                || rowPriority === priority;
+
+            let statusMatch =
+                status === "all"
+                || rowStatus === status;
+
+
+            if (
+                audienceMatch &&
+                priorityMatch &&
+                statusMatch
+            ) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function addNotice() {
+
+        alert("Add Notice form will open here.");
+
+    }
+
+
+    function viewNotice(id) {
+
+        alert(
+            "Viewing Notice: " + id
+        );
+
+    }
+
+
+    function editNotice(id) {
+
+        alert(
+            "Edit Notice: " + id
+        );
+
+    }
+
+
+    function deleteNotice(id) {
+
+        let confirmDelete =
+            confirm(
+                "Are you sure you want to delete "
+                + id
+                + "?"
+            );
+
+
+        if (confirmDelete) {
+
+            alert(
+                "Notice "
+                + id
+                + " deleted successfully."
+            );
+
+        }
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>
