@@ -1,14 +1,609 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+```html
+<!DOCTYPE html>
+<html lang="en">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
 
-<title>Student Attendance</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{% load static %}
+    <title>Student Attendance</title>
 
-<link rel="stylesheet" href="{% static 'attendance.css' %}">
+    {% load static %}
 
-</head><body><!-- ================= SIDEBAR ================= -->
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 240px;
+            height: 100vh;
+
+            background: #1e293b;
+            color: white;
+
+            padding-top: 25px;
+
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin: 5px 0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+
+            padding: 13px 25px;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 16px;
+
+            transition: 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background: #334155;
+            padding-left: 32px;
+        }
+
+        .sidebar ul li a.active {
+            background: #2563eb;
+
+            font-weight: bold;
+
+            border-left: 4px solid white;
+        }
+
+        /* ================= MAIN CONTENT ================= */
+
+        .main-content {
+            margin-left: 240px;
+
+            padding: 30px;
+
+            min-height: 100vh;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: white;
+
+            padding: 25px 30px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+
+            color: #1e293b;
+
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+        /* ================= MARK ATTENDANCE BUTTON ================= */
+
+        .mark-attendance-btn {
+            display: inline-block;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition: 0.3s;
+        }
+
+        .mark-attendance-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+        }
+
+        /* ================= FILTER BOX ================= */
+
+        .filter-box {
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+
+            align-items: flex-end;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+        .filter-group label {
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #475569;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 190px;
+
+            padding: 11px 12px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            background: white;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: #2563eb;
+
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* ================= FILTER BUTTON ================= */
+
+        .filter-btn {
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 11px 20px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+        /* ================= SEARCH BOX ================= */
+
+        .search-box {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+
+            gap: 10px;
+
+            width: 100%;
+        }
+
+        .search-box input {
+            flex: 1;
+
+            padding: 13px 15px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            outline: none;
+
+            font-size: 15px;
+
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* ================= SEARCH BUTTON ================= */
+
+        .search-btn {
+            padding: 12px 25px;
+
+            background-color: #007bff;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* ================= TABLE CONTAINER ================= */
+
+        .table-container {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .table-container h2 {
+            color: #1e293b;
+
+            font-size: 21px;
+
+            margin-bottom: 20px;
+        }
+
+        /* ================= TABLE WRAPPER ================= */
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+        /* ================= TABLE ================= */
+
+        table {
+            width: 100%;
+
+            min-width: 850px;
+
+            border-collapse: collapse;
+        }
+
+        table th {
+            background: #f1f5f9;
+
+            color: #334155;
+
+            padding: 14px 12px;
+
+            text-align: left;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        table td {
+            padding: 13px 12px;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            font-size: 14px;
+
+            color: #475569;
+
+            white-space: nowrap;
+        }
+
+        table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* ================= ADMISSION NUMBER ================= */
+
+        table td:first-child {
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+        /* ================= STATUS BADGES ================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .status.present {
+            background: #dcfce7;
+
+            color: #15803d;
+        }
+
+        .status.absent {
+            background: #fee2e2;
+
+            color: #b91c1c;
+        }
+
+        /* ================= SCROLLBAR ================= */
+
+        .table-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+
+            border-radius: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1200px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        /* ================= TABLET ================= */
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+
+                padding: 20px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .header {
+                align-items: flex-start;
+            }
+
+            .mark-attendance-btn {
+                padding: 10px 16px;
+            }
+
+            .filter-box {
+                align-items: stretch;
+
+                flex-direction: column;
+            }
+
+            .filter-group select,
+            .filter-group input {
+                width: 100%;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding-bottom: 10px;
+            }
+
+            .sidebar h2 {
+                margin-bottom: 15px;
+            }
+
+            .sidebar ul {
+                display: flex;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+            .sidebar ul li {
+                margin: 2px;
+            }
+
+            .sidebar ul li a {
+                padding: 9px 11px;
+
+                font-size: 13px;
+            }
+
+            .sidebar ul li a:hover {
+                padding-left: 11px;
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 15px;
+            }
+
+            .header {
+                padding: 20px;
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .mark-attendance-btn {
+                width: 100%;
+
+                text-align: center;
+            }
+
+            .table-container {
+                padding: 18px;
+            }
+
+            .table-container h2 {
+                font-size: 18px;
+            }
+
+            .search-box {
+                padding: 15px;
+            }
+
+            .search-btn {
+                padding: 12px 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+{% if role == 'Admin' %}
 
 <div class="sidebar">
 
@@ -17,56 +612,299 @@
     <ul>
 
         <li>
-            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+            <a href="{% url 'admin_dashboard' %}">
+                Dashboard
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'students' %}">Students</a>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'staff' %}">Staff</a>
+            <a href="{% url 'staff' %}">
+                Staff
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'classes' %}">Classes</a>
+            <a href="{% url 'classes' %}">
+                Classes
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'attendance' %}" class="active">Attendance</a>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'marks' %}">
+                Marks
+            </a>
+        </li> {% endcomment %}
+
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'marks' %}">Marks</a>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'homework' %}">Homework</a>
+            <a href="{% url 'fees_details' %}">
+                Fees Details
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'notices' %}">Notices</a>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'fees_details' %}">Fees Details</a>
+            <a href="admin_profile.html">
+                Profile
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'fees_status' %}">Fees Status</a>
-        </li>
-
-        <li>
-            <a href="admin_profile.html">Profile</a>
-        </li>
-
-        <li>
-            <a href="logout.html">Logout</a>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
         </li>
 
     </ul>
 
 </div>
+
+{% endif %}
+
+
+{% if role == 'Staff' %}
+
+<div class="sidebar">
+
+    <h2>Staff Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+{% if role == 'Student' %}
+    <div class="sidebar">
+
+
+<h2>Student Portal</h2>
+
+<ul>
+
+    <li>
+        <a href="{% url 'student_dashboard' %}" class="active">
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+    <li>
+        <a href="student_profile.html">
+            Profile
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+</div>
+    {% endif %}
+
+{% if role == 'Guardian' %}
+<div class="sidebar">
+
+    <div class="logo">
+        <span>🏫</span>
+        School Management
+    </div>
+
+    <ul class="menu">
+
+        <li class="active">
+            <a href="{% url 'guardian_dashboard' %}">
+                🏠 <span>Dashboard</span>
+            </a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'student_dashboard' %}">
+                👨‍🎓 <span>My Child</span>
+            </a>
+        </li> {% endcomment %}
+
+        <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+        <li>
+            <a href="#">
+                👤 <span>Profile</span>
+            </a>
+        </li>
+
+        <li class="logout">
+            <a href="{% url 'logout' %}">
+                🚪 <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+{% endif %}
 
 
 <!-- ================= MAIN CONTENT ================= -->
@@ -80,60 +918,32 @@
 
         <div>
 
-            <h1>Student Attendance</h1>
+            <h1>
+                Student Attendance
+            </h1>
 
-            <p>View and manage student attendance records</p>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================= SUMMARY CARDS ================= -->
-
-    <div class="cards">
-
-        <div class="card">
-
-            <h3>Total Students</h3>
-
-            <p>520</p>
+            <p>
+                View and manage student attendance records
+            </p>
 
         </div>
 
+       {% if role == 'Staff' %}
+        <!-- ================= MARK ATTENDANCE BUTTON ================= -->
 
-        <div class="card">
-
-            <h3>Present Today</h3>
-
-            <p>488</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Absent Today</h3>
-
-            <p>32</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Overall Attendance</h3>
-
-            <p>93.8%</p>
-
-        </div>
-
+        <a href="{% url 'mark_attendance' %}" class="mark-attendance-btn">
+            Mark Attendance
+        </a>
+        {% endif %}
     </div>
 
 
     <!-- ================= FILTER SECTION ================= -->
 
     <div class="filter-box">
+
+
+        <!-- CLASS FILTER -->
 
         <div class="filter-group">
 
@@ -164,6 +974,8 @@
         </div>
 
 
+        <!-- SECTION FILTER -->
+
         <div class="filter-group">
 
             <label for="sectionFilter">
@@ -189,6 +1001,8 @@
         </div>
 
 
+        <!-- DATE FILTER -->
+
         <div class="filter-group">
 
             <label for="dateFilter">
@@ -197,17 +1011,20 @@
 
             <input
                 type="date"
-                id="dateFilter">
+                id="dateFilter"
+            >
 
         </div>
 
 
+        <!-- FILTER BUTTON -->
+
         <button
+            type="button"
             class="filter-btn"
-            onclick="applyFilter()">
-
+            onclick="applyFilter()"
+        >
             Apply Filter
-
         </button>
 
     </div>
@@ -221,7 +1038,15 @@
             type="text"
             id="searchInput"
             placeholder="Search by Admission No. or Student Name..."
-            onkeyup="searchAttendance()">
+        >
+
+        <button
+            type="button"
+            class="search-btn"
+            onclick="searchAttendance()"
+        >
+            Search
+        </button>
 
     </div>
 
@@ -230,172 +1055,88 @@
 
     <div class="table-container">
 
-        <h2>Attendance Records</h2>
+        <h2>
+            Attendance Records
+        </h2>
+
 
         <div class="table-wrapper">
 
             <table id="attendanceTable">
 
+
+                <!-- TABLE HEADER -->
+
                 <thead>
 
                     <tr>
 
-                        <th>Admission No.</th>
+                        <th>
+                            Admission No.
+                        </th>
 
-                        <th>Student Name</th>
+                        <th>
+                            Student Name
+                        </th>
 
-                        <th>Class</th>
+                        <th>
+                            Class
+                        </th>
 
-                        <th>Section</th>
+                        <th>
+                            Section
+                        </th>
 
-                        <th>Date</th>
+                        <th>
+                            Date
+                        </th>
 
-                        <th>Status</th>
-
-                        <th>Attendance %</th>
+                        <th>
+                            Status
+                        </th>
 
                     </tr>
 
                 </thead>
 
 
+                <!-- TABLE BODY -->
+                
                 <tbody>
 
 
-                    <!-- STUDENT 1 -->
-
+                    {% for st in attendance_record %}
+                    {% if role == 'Admin' or role == 'Staff' or st.admission_no.admission_no == student.admission_no %}
                     <tr>
 
-                        <td>STD001</td>
-
-                        <td>Aarav Sharma</td>
-
-                        <td>BCA 1st Year</td>
-
-                        <td>A</td>
-
-                        <td>30 Aug 2026</td>
-
                         <td>
-
-                            <span class="status present">
-                                Present
-                            </span>
-
+                            {{ st.admission_no.admission_no }}
                         </td>
 
-                        <td>96%</td>
+                        <td>
+                            {{ st.student_name }}
+                        </td>
+
+                        <td>
+                            {{ st.class_field }}
+                        </td>
+
+                        <td>
+                            {{ st.section }}
+                        </td>
+
+                        <td>
+                            {{ st.date }}
+                        </td>
+
+                        <td>
+                            {{ st.status }}
+                        </td>
 
                     </tr>
 
-
-                    <!-- STUDENT 2 -->
-
-                    <tr>
-
-                        <td>STD002</td>
-
-                        <td>Ananya Singh</td>
-
-                        <td>BCA 1st Year</td>
-
-                        <td>A</td>
-
-                        <td>30 Aug 2026</td>
-
-                        <td>
-
-                            <span class="status present">
-                                Present
-                            </span>
-
-                        </td>
-
-                        <td>94%</td>
-
-                    </tr>
-
-
-                    <!-- STUDENT 3 -->
-
-                    <tr>
-
-                        <td>STD003</td>
-
-                        <td>Rahul Verma</td>
-
-                        <td>BCA 2nd Year</td>
-
-                        <td>B</td>
-
-                        <td>30 Aug 2026</td>
-
-                        <td>
-
-                            <span class="status absent">
-                                Absent
-                            </span>
-
-                        </td>
-
-                        <td>87%</td>
-
-                    </tr>
-
-
-                    <!-- STUDENT 4 -->
-
-                    <tr>
-
-                        <td>STD004</td>
-
-                        <td>Priya Gupta</td>
-
-                        <td>BCA 2nd Year</td>
-
-                        <td>B</td>
-
-                        <td>30 Aug 2026</td>
-
-                        <td>
-
-                            <span class="status present">
-                                Present
-                            </span>
-
-                        </td>
-
-                        <td>91%</td>
-
-                    </tr>
-
-
-                    <!-- STUDENT 5 -->
-
-                    <tr>
-
-                        <td>STD005</td>
-
-                        <td>Vivek Yadav</td>
-
-                        <td>BCA 3rd Year</td>
-
-                        <td>A</td>
-
-                        <td>30 Aug 2026</td>
-
-                        <td>
-
-                            <span class="status absent">
-                                Absent
-                            </span>
-
-                        </td>
-
-                        <td>79%</td>
-
-                    </tr>
-
+                    {% endif %}
+                    {% endfor %}
 
                 </tbody>
 
@@ -411,110 +1152,139 @@
 
 <!-- ================= JAVASCRIPT ================= -->
 
-{% comment %} <script>
+<script>
 
 
-    function searchAttendance() {
+/* ================= SEARCH STUDENT ================= */
 
-        let input =
-            document
-            .getElementById("searchInput")
-            .value
+function searchAttendance() {
+
+    let input =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    let table =
+        document.getElementById("attendanceTable");
+
+
+    let rows =
+        table
+        .getElementsByTagName("tbody")[0]
+        .getElementsByTagName("tr");
+
+
+    for (let i = 0; i < rows.length; i++) {
+
+        let admissionNo =
+            rows[i]
+            .cells[0]
+            .innerText
             .toLowerCase();
 
-        let table =
-            document
-            .getElementById("attendanceTable");
 
-        let rows =
-            table
-            .getElementsByTagName("tr");
+        let studentName =
+            rows[i]
+            .cells[1]
+            .innerText
+            .toLowerCase();
 
 
-        for (let i = 1; i < rows.length; i++) {
+        if (
+            admissionNo.includes(input) ||
+            studentName.includes(input)
+        ) {
 
-            let rowText =
-                rows[i]
-                .innerText
-                .toLowerCase();
+            rows[i].style.display = "";
 
-            if (rowText.includes(input)) {
+        } else {
 
-                rows[i].style.display = "";
-
-            } else {
-
-                rows[i].style.display = "none";
-
-            }
+            rows[i].style.display = "none";
 
         }
 
     }
 
+}
 
-    function applyFilter() {
 
-        let classValue =
-            document
-            .getElementById("classFilter")
-            .value
+/* ================= APPLY FILTER ================= */
+
+function applyFilter() {
+
+    let classValue =
+        document
+        .getElementById("classFilter")
+        .value
+        .toLowerCase();
+
+
+    let sectionValue =
+        document
+        .getElementById("sectionFilter")
+        .value
+        .toLowerCase();
+
+
+    let table =
+        document.getElementById("attendanceTable");
+
+
+    let rows =
+        table
+        .getElementsByTagName("tbody")[0]
+        .getElementsByTagName("tr");
+
+
+    for (let i = 0; i < rows.length; i++) {
+
+        let className =
+            rows[i]
+            .cells[2]
+            .innerText
             .toLowerCase();
 
-        let sectionValue =
-            document
-            .getElementById("sectionFilter")
-            .value
+
+        let section =
+            rows[i]
+            .cells[3]
+            .innerText
             .toLowerCase();
 
 
-        let table =
-            document
-            .getElementById("attendanceTable");
-
-        let rows =
-            table
-            .getElementsByTagName("tr");
+        let classMatch =
+            classValue === "all" ||
+            className === classValue;
 
 
-        for (let i = 1; i < rows.length; i++) {
-
-            let className =
-                rows[i]
-                .cells[2]
-                .innerText
-                .toLowerCase();
-
-            let section =
-                rows[i]
-                .cells[3]
-                .innerText
-                .toLowerCase();
+        let sectionMatch =
+            sectionValue === "all" ||
+            section === sectionValue;
 
 
-            let classMatch =
-                classValue === "all"
-                || className === classValue;
+        if (
+            classMatch &&
+            sectionMatch
+        ) {
 
-            let sectionMatch =
-                sectionValue === "all"
-                || section === sectionValue;
+            rows[i].style.display = "";
 
+        } else {
 
-            if (classMatch && sectionMatch) {
-
-                rows[i].style.display = "";
-
-            } else {
-
-                rows[i].style.display = "none";
-
-            }
+            rows[i].style.display = "none";
 
         }
 
     }
 
-</script> {% endcomment %}
+}
 
-</body></html>
+</script>
+
+
+</body>
+
+</html>

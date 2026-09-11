@@ -10,63 +10,245 @@
 
 </head><body><!-- ================= SIDEBAR ================= -->
 
-<div class="sidebar">
+{% if role == 'Admin' %}
+    <div class="sidebar">
 
-    <h2>Admin Portal</h2>
+        <h2>Admin Portal</h2>
+
+        <ul>
+
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'students' %}" class="active">Students</a></li>
+            <li><a href="{% url 'staff' %}">Staff</a></li>
+            <li><a href="{% url 'classes' %}">Classes</a></li>
+            <li><a href="{% url 'attendance' %}">Attendance</a></li>
+            {% comment %} <li><a href="{% url 'marks' %}">Marks</a></li> {% endcomment %}
+            <li><a href="{% url 'homework' %}">Homework</a></li>
+            <li><a href="{% url 'notices' %}">Notices</a></li>
+            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
+            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
+            <li><a href='admin_profile.html'>Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+
+        </ul>
+
+    </div>
+{% endif %}
+
+{% if role == 'Staff' %}
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
 
     <ul>
 
         <li>
-            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'students' %}">Students</a>
-        </li>
-
-        <li>
-            <a href="{% url 'staff' %}">Staff</a>
-        </li>
-
-        <li>
-            <a href="{% url 'classes' %}">Classes</a>
-        </li>
-
-        <li>
-            <a href="{% url 'attendance' %}">Attendance</a>
-        </li>
-
-        <li>
-            <a href="{% url 'marks' %}">Marks</a>
-        </li>
-
-        <li>
-            <a href="{% url 'homework' %}" class="active">Homework</a>
-        </li>
-
-        <li>
-            <a href="{% url 'notices' %}">Notices</a>
-        </li>
-
-        <li>
-            <a href="{% url 'fees_details' %}">Fees Details</a>
-        </li>
-
-        <li>
-            <a href="{% url 'fees_status' %}">Fees Status</a>
-        </li>
-
-        <li>
-            <a href="admin_profile.html">Profile</a>
-        </li>
-
-        <li>
-            <a href="logout.html">Logout</a>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
         </li>
 
     </ul>
 
 </div>
+
+{% endif %}
+
+ {% if role == 'Student' %}
+    <div class="sidebar">
+
+
+<h2>Student Portal</h2>
+
+<ul>
+
+    <li>
+        <a href="{% url 'student_dashboard' %}" class="active">
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+    <li>
+        <a href="student_profile.html">
+            Profile
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+</div>
+    {% endif %}
+
+    {% if role == 'Guardian' %}
+<div class="sidebar">
+
+    <div class="logo">
+        <span>🏫</span>
+        School Management
+    </div>
+
+    <ul class="menu">
+
+        <li class="active">
+            <a href="{% url 'guardian_dashboard' %}">
+                🏠 <span>Dashboard</span>
+            </a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'student_dashboard' %}">
+                👨‍🎓 <span>My Child</span>
+            </a>
+        </li> {% endcomment %}
+
+        <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+        <li>
+            <a href="#">
+                👤 <span>Profile</span>
+            </a>
+        </li>
+
+        <li class="logout">
+            <a href="{% url 'logout' %}">
+                🚪 <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+{% endif %}
 
 
 <!-- ================= MAIN CONTENT ================= -->
@@ -96,47 +278,6 @@
 
     </div>
 
-
-    <!-- ================= SUMMARY CARDS ================= -->
-
-    <div class="cards">
-
-        <div class="card">
-
-            <h3>Total Homework</h3>
-
-            <p>48</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Active Homework</h3>
-
-            <p>18</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Completed</h3>
-
-            <p>25</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Overdue</h3>
-
-            <p>5</p>
-
-        </div>
-
-    </div>
 
 
     <!-- ================= FILTER SECTION ================= -->
@@ -258,7 +399,50 @@
             onkeyup="searchHomework()">
 
     </div>
+    {% if role == 'Staff' %}
+    <div class="homework-form">
 
+      <h2>Add Homework</h2>
+        <form method="POST">
+            {% csrf_token %}
+          <div class="form-grid"> 
+            <!-- CLASS --> 
+            <div class="form-group"> 
+                {% comment %} <label for="class"> Class </label> 
+                <input type="number" id="class" name="Class" placeholder="Enter class" required>  {% endcomment %}
+                {{ form.class_field.label_tag }} 
+                {{ form.class_field }}
+            </div> 
+            <!-- SECTION --> 
+            <div class="form-group"> 
+                {% comment %} <label for="section"> Section </label> 
+                <input type="text" id="section" name="Section" placeholder="Enter section" maxlength="5" required>  {% endcomment %}
+                {{ form.section.label_tag }} 
+                {{ form.section }}
+            </div>
+             <!-- SUBJECT --> 
+            {% comment %} <div class="form-group"> 
+                {% comment %} <label for="subject"> Subject </label> 
+                <input type="text" id="subject" name="Subject" placeholder="Enter subject" maxlength="30" required>
+                {{ form.subject.label_tag }} 
+                {{ form.subject }}
+            </div>  {% endcomment %}
+            <!-- DESCRIPTION --> 
+            <div class="form-group full-width"> 
+                {% comment %} <label for="description"> Description </label> 
+                <textarea id="description" name="Description" placeholder="Enter homework description" rows="6" required></textarea>  {% endcomment %}
+                {{ form.description.label_tag }} 
+                {{ form.description }}
+            </div> 
+          </div> 
+          <!-- BUTTONS --> 
+          <div class="form-buttons"> 
+            <button type="reset" class="reset-btn"> Reset </button> 
+            <button type="submit" class="submit-btn"> Post Homework </button> 
+          </div> 
+        </form>
+    </div>
+    {% endif %}
 
     <!-- ================= HOMEWORK TABLE ================= -->
 
@@ -275,25 +459,17 @@
 
                     <tr>
 
-                        <th>Homework ID</th>
-
-                        <th>Title</th>
-
                         <th>Class</th>
 
                         <th>Section</th>
 
                         <th>Subject</th>
 
+                        <th>Description</th>
+
+                        <th>Post Date</th>
+
                         <th>Teacher</th>
-
-                        <th>Assigned Date</th>
-
-                        <th>Due Date</th>
-
-                        <th>Status</th>
-
-                        <th>Action</th>
 
                     </tr>
 
@@ -301,302 +477,28 @@
 
 
                 <tbody>
-
-
-                    <!-- ================= RECORD 1 ================= -->
-
-                    <tr>
-
-                        <td>HW001</td>
-
-                        <td>Python Loops</td>
-
-                        <td>BCA 1st Year</td>
-
-                        <td>A</td>
-
-                        <td>Python</td>
-
-                        <td>Rahul Sharma</td>
-
-                        <td>25 Aug 2026</td>
-
-                        <td>02 Sep 2026</td>
-
-                        <td>
-
-                            <span class="status active">
-                                Active
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewHomework('HW001')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editHomework('HW001')">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteHomework('HW001')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- ================= RECORD 2 ================= -->
+               
+                    {% for hw in homework_details %}
+                    {% if role == 'Staff' or role == 'Admin' or hw.class_field == student.class_field %}
+                 
 
                     <tr>
 
-                        <td>HW002</td>
+                        <td>{{ hw.class_field }}</td>
 
-                        <td>Database Queries</td>
+                        <td>{{ hw.section }}</td>
 
-                        <td>BCA 2nd Year</td>
+                        <td>{{ hw.subject }}</td>
 
-                        <td>A</td>
+                        <td>{{ hw.description }}</td>
 
-                        <td>DBMS</td>
+                        <td>{{ hw.post_date }}</td>
 
-                        <td>Priya Singh</td>
-
-                        <td>20 Aug 2026</td>
-
-                        <td>28 Aug 2026</td>
-
-                        <td>
-
-                            <span class="status overdue">
-                                Overdue
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewHomework('HW002')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editHomework('HW002')">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteHomework('HW002')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
+                        <td>{{ hw.post_by_name }}</td>
 
                     </tr>
-
-
-                    <!-- ================= RECORD 3 ================= -->
-
-                    <tr>
-
-                        <td>HW003</td>
-
-                        <td>Django Models</td>
-
-                        <td>BCA 3rd Year</td>
-
-                        <td>A</td>
-
-                        <td>Django</td>
-
-                        <td>Neha Gupta</td>
-
-                        <td>22 Aug 2026</td>
-
-                        <td>05 Sep 2026</td>
-
-                        <td>
-
-                            <span class="status active">
-                                Active
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewHomework('HW003')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editHomework('HW003')">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteHomework('HW003')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- ================= RECORD 4 ================= -->
-
-                    <tr>
-
-                        <td>HW004</td>
-
-                        <td>SQL Assignment</td>
-
-                        <td>BCA 2nd Year</td>
-
-                        <td>B</td>
-
-                        <td>DBMS</td>
-
-                        <td>Vikas Yadav</td>
-
-                        <td>15 Aug 2026</td>
-
-                        <td>22 Aug 2026</td>
-
-                        <td>
-
-                            <span class="status completed">
-                                Completed
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewHomework('HW004')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editHomework('HW004')">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteHomework('HW004')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- ================= RECORD 5 ================= -->
-
-                    <tr>
-
-                        <td>HW005</td>
-
-                        <td>Mathematics Practice</td>
-
-                        <td>BCA 1st Year</td>
-
-                        <td>B</td>
-
-                        <td>Mathematics</td>
-
-                        <td>Priya Singh</td>
-
-                        <td>26 Aug 2026</td>
-
-                        <td>03 Sep 2026</td>
-
-                        <td>
-
-                            <span class="status active">
-                                Active
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewHomework('HW005')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editHomework('HW005')">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteHomework('HW005')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
+                    {% endif %}
+                    {% endfor %}
 
                 </tbody>
 

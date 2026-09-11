@@ -34,9 +34,9 @@
             <a href="{% url 'attendance' %}">Attendance</a>
         </li>
 
-        <li>
+        {% comment %} <li>
             <a href="{% url 'marks' %}">Marks</a>
-        </li>
+        </li> {% endcomment %}
 
         <li>
             <a href="{% url 'homework' %}">Homework</a>
@@ -55,11 +55,17 @@
         </li>
 
         <li>
+            <a href="{% url 'staff_registration' %}" class="active">
+                Add new Staff Member
+            </a>
+        </li>
+
+        <li>
             <a href="admin_profile.html">Profile</a>
         </li>
 
         <li>
-            <a href="logout.html">Logout</a>
+            <a href="{% url 'logout' %}">Logout</a>
         </li>
 
     </ul>
@@ -255,10 +261,11 @@
 
                 </tbody>
 
+
             </table>
 
-        </div>
 
+        </div>
 
         <!-- STAFF INFORMATION -->
 

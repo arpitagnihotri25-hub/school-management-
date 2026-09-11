@@ -57,11 +57,17 @@
         </li>
 
         <li>
+            <a href="{% url 'staff_registration' %}" class="active">
+                Add new Staff Member
+            </a>
+        </li>
+
+        <li>
             <a href="admin_profile.html">Profile</a>
         </li>
 
         <li>
-            <a href="logout.html">Logout</a>
+            <a href="{% url 'logout' %}">Logout</a>
         </li>
 
     </ul>
@@ -86,7 +92,7 @@
 
         </div>
 
-        <button class="add-btn" onclick="alert('Add Staff form will open here')">
+        <button class="add-btn" onclick="window.location.href='{% url 'staff_registration' %}'">
             + Add Staff
         </button>
 
@@ -190,7 +196,8 @@
                     </tr>
 
                 </thead>
-
+                
+                {% for staff in staff_details %}
 
                 <tbody>
 
@@ -199,29 +206,29 @@
 
                     <tr>
 
-                        <td>STF001</td>
+                        <td>{{ staff.staff_id }}</td>
 
-                        <td>Rahul Sharma</td>
+                        <td>{{ staff.name }}</td>
 
-                        <td>rahul.sharma@gmail.com</td>
+                        <td>{{ staff.email }}</td>
 
-                        <td>9876543210</td>
+                        <td>{{ staff.contact }}</td>
 
-                        <td>MCA</td>
+                        <td>{{ staff.qualifications }}</td>
 
-                        <td>7 Years</td>
+                        <td>{{ staff.experience }}</td>
 
-                        <td>Computer Science</td>
+                        <td>{{ staff.subject }}</td>
 
-                        <td>BCA 3rd Year</td>
+                        <td>{{ staff.class_field }}</td>
 
-                        <td>Kanpur, Uttar Pradesh</td>
+                        <td>{{ staff.address }}</td>
 
-                        <td>Male</td>
+                        <td>{{ staff.gender }}</td>
 
                         <td>
                             <span class="role teacher">
-                                Teacher
+                                {{ staff.role }}
                             </span>
                         </td>
 
@@ -242,203 +249,7 @@
                         </td>
 
                     </tr>
-
-
-                    <!-- STAFF 2 -->
-
-                    <tr>
-
-                        <td>STF002</td>
-
-                        <td>Priya Singh</td>
-
-                        <td>priya.singh@gmail.com</td>
-
-                        <td>9876501234</td>
-
-                        <td>M.Sc Mathematics</td>
-
-                        <td>5 Years</td>
-
-                        <td>Mathematics</td>
-
-                        <td>BCA 1st Year</td>
-
-                        <td>Lucknow, Uttar Pradesh</td>
-
-                        <td>Female</td>
-
-                        <td>
-                            <span class="role teacher">
-                                Teacher
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewStaff('STF002')">
-                                View
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editStaff('STF002')">
-                                Edit
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- STAFF 3 -->
-
-                    <tr>
-
-                        <td>STF003</td>
-
-                        <td>Amit Verma</td>
-
-                        <td>amit.verma@gmail.com</td>
-
-                        <td>9123456780</td>
-
-                        <td>M.Com</td>
-
-                        <td>8 Years</td>
-
-                        <td>Accounts</td>
-
-                        <td>All Classes</td>
-
-                        <td>Kanpur, Uttar Pradesh</td>
-
-                        <td>Male</td>
-
-                        <td>
-                            <span class="role accountant">
-                                Accountant
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewStaff('STF003')">
-                                View
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editStaff('STF003')">
-                                Edit
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- STAFF 4 -->
-
-                    <tr>
-
-                        <td>STF004</td>
-
-                        <td>Neha Gupta</td>
-
-                        <td>neha.gupta@gmail.com</td>
-
-                        <td>9988776655</td>
-
-                        <td>MA English</td>
-
-                        <td>6 Years</td>
-
-                        <td>English</td>
-
-                        <td>BCA 2nd Year</td>
-
-                        <td>Lucknow, Uttar Pradesh</td>
-
-                        <td>Female</td>
-
-                        <td>
-                            <span class="role teacher">
-                                Teacher
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewStaff('STF004')">
-                                View
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editStaff('STF004')">
-                                Edit
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- STAFF 5 -->
-
-                    <tr>
-
-                        <td>STF005</td>
-
-                        <td>Vikas Yadav</td>
-
-                        <td>vikas.yadav@gmail.com</td>
-
-                        <td>9090909090</td>
-
-                        <td>B.Ed</td>
-
-                        <td>4 Years</td>
-
-                        <td>Hindi</td>
-
-                        <td>BCA 1st Year</td>
-
-                        <td>Unnao, Uttar Pradesh</td>
-
-                        <td>Male</td>
-
-                        <td>
-                            <span class="role teacher">
-                                Teacher
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewStaff('STF005')">
-                                View
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editStaff('STF005')">
-                                Edit
-                            </button>
-
-                        </td>
-
-                    </tr>
-
+                {% endfor %}
 
                 </tbody>
 

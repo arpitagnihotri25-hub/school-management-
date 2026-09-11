@@ -10,43 +10,245 @@
 
 </head><body><!-- ================= SIDEBAR ================= -->
 
-<div class="sidebar">
+{% if role == 'Admin' %}
+    <div class="sidebar">
 
-    <h2>Admin Portal</h2>
+        <h2>Admin Portal</h2>
+
+        <ul>
+
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'students' %}" class="active">Students</a></li>
+            <li><a href="{% url 'staff' %}">Staff</a></li>
+            <li><a href="{% url 'classes' %}">Classes</a></li>
+            <li><a href="{% url 'attendance' %}">Attendance</a></li>
+            {% comment %} <li><a href="{% url 'marks' %}">Marks</a></li> {% endcomment %}
+            <li><a href="{% url 'homework' %}">Homework</a></li>
+            <li><a href="{% url 'notices' %}">Notices</a></li>
+            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
+            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
+            <li><a href='admin_profile.html'>Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+
+        </ul>
+
+    </div>
+{% endif %}
+
+{% if role == 'Staff' %}
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
 
     <ul>
 
-        <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
-
-        <li><a href="{% url 'students' %}">Students</a></li>
-
-        <li><a href="{% url 'staff' %}">Staff</a></li>
-
-        <li><a href="{% url 'classes' %}">Classes</a></li>
-
-        <li><a href="{% url 'attendance' %}">Attendance</a></li>
-
-        <li><a href="{% url 'marks' %}">Marks</a></li>
-
-        <li><a href="{% url 'homework' %}">Homework</a></li>
-
-        <li><a href="{% url 'notices' %}">Notices</a></li>
-
-        <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
-
         <li>
-            <a href="{% url 'fees_status' %}" class="active">
-                Fees Status
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
             </a>
         </li>
 
-        <li><a href="admin_profile.html">Profile</a></li>
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
 
-        <li><a href="logout.html">Logout</a></li>
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
 
     </ul>
 
 </div>
+
+{% endif %}
+
+{% if role == 'Student' %}
+    <div class="sidebar">
+
+
+<h2>Student Portal</h2>
+
+<ul>
+
+    <li>
+        <a href="{% url 'student_dashboard' %}" class="active">
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+    <li>
+        <a href="student_profile.html">
+            Profile
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+</div>
+    {% endif %}
+
+{% if role == 'Guardian' %}
+<div class="sidebar">
+
+    <div class="logo">
+        <span>🏫</span>
+        School Management
+    </div>
+
+    <ul class="menu">
+
+        <li class="active">
+            <a href="{% url 'guardian_dashboard' %}">
+                🏠 <span>Dashboard</span>
+            </a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'student_dashboard' %}">
+                👨‍🎓 <span>My Child</span>
+            </a>
+        </li> {% endcomment %}
+
+        <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+        <li>
+            <a href="#">
+                👤 <span>Profile</span>
+            </a>
+        </li>
+
+        <li class="logout">
+            <a href="{% url 'logout' %}">
+                🚪 <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+{% endif %}
 
 
 <!-- ================= MAIN CONTENT ================= -->
@@ -209,7 +411,71 @@
 
     </div>
 
+    {% if role == 'Staff' %}
 
+    <div class="homework-form">
+
+      <h2>Add a Record</h2>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-grid"> 
+            <!-- CLASS --> 
+            <div class="form-group"> 
+                {% comment %} <label for="class"> Class </label> 
+                <input type="number" id="class" name="Class" placeholder="Enter class" required>  {% endcomment %}
+                {{ form.admission_no.label_tag }} 
+                {{ form.admission_no }} 
+            </div> 
+            
+            <!-- SECTION --> 
+            <div class="form-group"> 
+                {% comment %} <label for="section"> Section </label> 
+                <input type="text" id="section" name="Section" placeholder="Enter section" maxlength="5" required>  {% endcomment %}
+                {{ form.student_name.label_tag }} 
+                {{ form.student_name }} 
+            
+            </div>
+             
+             <!-- SUBJECT --> 
+            <div class="form-group"> 
+                {% comment %} <label for="subject"> Subject </label> 
+                <input type="text" id="subject" name="Subject" placeholder="Enter subject" maxlength="30" required>  {% endcomment %}
+                {{ form.class_field.label_tag }} 
+                {{ form.class_field }} 
+           
+            </div> 
+            
+            <!-- POST DATE --> 
+            <div class="form-group"> 
+                {% comment %} <label for="post_date"> Post Date </label> 
+                <input type="date" id="post_date" name="Post_Date" required>  {% endcomment %}
+                 {{ form.section.label_tag }} 
+                {{ form.section }} 
+            </div> 
+            
+            <!-- DESCRIPTION --> 
+            <div class="form-group full-width"> 
+                {% comment %} <label for="description"> Description </label> 
+                <textarea id="description" name="Description" placeholder="Enter homework description" rows="6" required></textarea>  {% endcomment %}
+                {{ form.deposit_date.label_tag }} 
+                {{ form.deposit_date }} 
+            </div> 
+            <div class="form-group"> 
+                {{ form.deposit_amount.label_tag }} 
+                {{ form.deposit_amount }}
+            </div>
+          </div> 
+          <!-- BUTTONS --> 
+          <div class="form-buttons"> 
+            <button type="reset" class="reset-btn"> Reset </button> 
+            <button type="submit" class="submit-btn"> Send </button> 
+          </div> 
+        </form>
+    </div>
+
+    {% endif %}
+
+    
     <!-- ================= FEES STATUS TABLE ================= -->
 
     <div class="table-container">
@@ -233,15 +499,9 @@
 
                         <th>Section</th>
 
-                        <th>Total Fees</th>
+                        <th>Amount</th>
 
-                        <th>Paid Amount</th>
-
-                        <th>Pending Amount</th>
-
-                        <th>Status</th>
-
-                        <th>Action</th>
+                        <th>Date</th>
 
                     </tr>
 
@@ -250,276 +510,25 @@
 
                 <tbody>
 
-
+                    {% for status in fees_record%}
+                    {% if role == 'Admin' or role == 'Staff' or status.admission_no.admission_no == student.admission_no %}
                     <tr>
 
-                        <td>STD001</td>
+                        <td>{{ status.admission_no.admission_no }}</td>
 
-                        <td>Aarav Sharma</td>
+                        <td>{{ status.student_name}}</td>
 
-                        <td>1</td>
+                        <td>{{ status.class_field }}</td>
 
-                        <td>A</td>
+                        <td>{{ status.section }}</td>
 
-                        <td>₹30,000</td>
+                        <td>{{ status.deposit_amount }}</td>
 
-                        <td>₹30,000</td>
-
-                        <td>₹0</td>
-
-                        <td>
-                            <span class="status paid">
-                                Paid
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewFees('STD001')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees('STD001')">
-
-                                Edit
-
-                            </button>
-
-                        </td>
+                        <td>{{ status.deposit_date }}</td>
 
                     </tr>
-
-
-                    <tr>
-
-                        <td>STD002</td>
-
-                        <td>Riya Verma</td>
-
-                        <td>2</td>
-
-                        <td>A</td>
-
-                        <td>₹32,000</td>
-
-                        <td>₹20,000</td>
-
-                        <td>₹12,000</td>
-
-                        <td>
-                            <span class="status partial">
-                                Partially Paid
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewFees('STD002')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees('STD002')">
-
-                                Edit
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>STD003</td>
-
-                        <td>Aditya Singh</td>
-
-                        <td>3</td>
-
-                        <td>B</td>
-
-                        <td>₹35,000</td>
-
-                        <td>₹0</td>
-
-                        <td>₹35,000</td>
-
-                        <td>
-                            <span class="status pending">
-                                Pending
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewFees('STD003')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees('STD003')">
-
-                                Edit
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>STD004</td>
-
-                        <td>Ananya Gupta</td>
-
-                        <td>4</td>
-
-                        <td>A</td>
-
-                        <td>₹38,000</td>
-
-                        <td>₹38,000</td>
-
-                        <td>₹0</td>
-
-                        <td>
-                            <span class="status paid">
-                                Paid
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewFees('STD004')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees('STD004')">
-
-                                Edit
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>STD005</td>
-
-                        <td>Rahul Yadav</td>
-
-                        <td>5</td>
-
-                        <td>B</td>
-
-                        <td>₹40,000</td>
-
-                        <td>₹25,000</td>
-
-                        <td>₹15,000</td>
-
-                        <td>
-                            <span class="status partial">
-                                Partially Paid
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewFees('STD005')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees('STD005')">
-
-                                Edit
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>STD006</td>
-
-                        <td>Priya Mishra</td>
-
-                        <td>6</td>
-
-                        <td>A</td>
-
-                        <td>₹45,000</td>
-
-                        <td>₹45,000</td>
-
-                        <td>₹0</td>
-
-                        <td>
-                            <span class="status paid">
-                                Paid
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="view-btn"
-                                onclick="viewFees('STD006')">
-
-                                View
-
-                            </button>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees('STD006')">
-
-                                Edit
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
+                    {% endif %}
+                    {% endfor %}
 
                 </tbody>
 
@@ -528,7 +537,6 @@
         </div>
 
     </div>
-
 
 </div>
 

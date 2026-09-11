@@ -10,64 +10,106 @@
 
 </head><body><!-- ================= SIDEBAR ================= -->
 
-<div class="sidebar">
+{% if role == 'Admin' %}
+    <div class="sidebar">
 
-    <h2>Admin Portal</h2>
+        <h2>Admin Portal</h2>
+
+        <ul>
+
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'students' %}" class="active">Students</a></li>
+            <li><a href="{% url 'staff' %}">Staff</a></li>
+            <li><a href="{% url 'classes' %}">Classes</a></li>
+            <li><a href="{% url 'attendance' %}">Attendance</a></li>
+            {% comment %} <li><a href="{% url 'marks' %}">Marks</a></li> {% endcomment %}
+            <li><a href="{% url 'homework' %}">Homework</a></li>
+            <li><a href="{% url 'notices' %}">Notices</a></li>
+            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
+            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
+            <li><a href='admin_profile.html'>Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+
+        </ul>
+
+    </div>
+{% endif %}
+
+{% if role == 'Staff' %}
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
 
     <ul>
 
         <li>
-            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
-        </li>
-
-        <li>
-            <a href="{% url 'students' %}">Students</a>
-        </li>
-
-        <li>
-            <a href="{% url 'staff' %}">Staff</a>
-        </li>
-
-        <li>
-            <a href="{% url 'classes' %}">Classes</a>
-        </li>
-
-        <li>
-            <a href="{% url 'attendance' %}">Attendance</a>
-        </li>
-
-        <li>
-            <a href="{% url 'marks' %}">Marks</a>
-        </li>
-
-        <li>
-            <a href="{% url 'homework' %}">Homework</a>
-        </li>
-
-        <li>
-            <a href="{% url 'notices' %}">Notices</a>
-        </li>
-
-        <li>
-            <a href="{% url 'fees_details' %}" class="active">
-                Fees Details
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
             </a>
         </li>
 
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
         <li>
             <a href="{% url 'fees_status' %}">
                 Fees Status
             </a>
         </li>
-
+        {% endif %}
+        
         <li>
-            <a href="admin_profile.html">
+            <a href="teacher_profile.html">
                 Profile
             </a>
         </li>
 
         <li>
-            <a href="logout.html">
+            <a href="{% url 'logout' %}">
                 Logout
             </a>
         </li>
@@ -75,6 +117,8 @@
     </ul>
 
 </div>
+
+{% endif %}
 
 
 <!-- ================= MAIN CONTENT ================= -->
@@ -94,71 +138,55 @@
 
         </div>
 
-        <button
-            class="add-btn"
-            onclick="addFees()">
-
-            + Add Fees
-
-        </button>
+        
 
     </div>
 
+    {% if role == 'Admin' %}
+    <div class="homework-form">
 
-    <!-- ================= SUMMARY CARDS ================= -->
+      <h2>Add Fees Structure</h2>
+      <form method="POST">
+    {% csrf_token %}
 
-    <div class="cards">
+        <div class="form-grid">
 
-        <div class="card">
+            <div class="form-group">
+                {{ form.class_field.label_tag }} 
+                {{ form.class_field }}
+                {% comment %} <label for="id_class_field">Class</label>
+                <input
+                type="number"
+                id="id_class_field"
+                name="class_field"
+                placeholder="Enter class"
+                required
+                > {% endcomment %}
+            </div>
 
-            <h3>Total Classes</h3>
-
-            <p>6</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Highest Fees</h3>
-
-            <p>₹45,000</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Lowest Fees</h3>
-
-            <p>₹30,000</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Average Fees</h3>
-
-            <p>₹37,500</p>
+            <div class="form-group">
+                {{ form.amount.label_tag }} 
+                {{ form.amount }}
+                {% comment %} <label for="id_amount">Fees Amount</label>
+                <input
+                type="number"
+                id="id_amount"
+                name="amount"
+                placeholder="Enter fees amount"
+                required
+                > {% endcomment %}
+            </div>
 
         </div>
+
+        <div class="form-buttons">
+            <button type="reset" class="reset-btn">Reset</button>
+            <button type="submit" class="submit-btn">Add Details</button>
+        </div>
+        {{ message }}
 
     </div>
-
-
-    <!-- ================= SEARCH ================= -->
-
-    <div class="search-box">
-
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search by class number..."
-            onkeyup="searchFees()">
-
-    </div>
-
+    {% endif %}
 
     <!-- ================= FEES TABLE ================= -->
 
@@ -187,13 +215,14 @@
 
 
                 <tbody>
-
+                   
+                    {% for f in fees %}
 
                     <tr>
 
-                        <td>1</td>
+                        <td>{{ f.class_field }}</td>
 
-                        <td>₹30,000</td>
+                        <td>₹{{ f.amount|floatformat:2 }}</td>
 
                         <td>
 
@@ -216,152 +245,7 @@
                         </td>
 
                     </tr>
-
-
-                    <tr>
-
-                        <td>2</td>
-
-                        <td>₹32,000</td>
-
-                        <td>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees(2)">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteFees(2)">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>3</td>
-
-                        <td>₹35,000</td>
-
-                        <td>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees(3)">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteFees(3)">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>4</td>
-
-                        <td>₹38,000</td>
-
-                        <td>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees(4)">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteFees(4)">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>5</td>
-
-                        <td>₹40,000</td>
-
-                        <td>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees(5)">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteFees(5)">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>6</td>
-
-                        <td>₹45,000</td>
-
-                        <td>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editFees(6)">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteFees(6)">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
+                    {% endfor %}
 
                 </tbody>
 

@@ -6,7 +6,9 @@
 
     <title>Teacher Dashboard</title>
 
-    <link rel="stylesheet" href="/static/staff_dashboard.css">
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'staff_dashboard.css' %}">
 </head>
 
 <body>
@@ -14,21 +16,85 @@
     <!-- Sidebar -->
     <div class="sidebar">
 
-        <h2>Teacher Portal</h2>
+    <h2>Staff Portal</h2>
 
-        <ul>
-            <li><a href="teacher_home.html">Dashboard</a></li>
-            <li><a href="mark_attendance.html">Attendance</a></li>
-            <li><a href="students.html">Students</a></li>
-            <li><a href="marks_entry.html">Marks Entry</a></li>
-            <li><a href="homework.html">Homework</a></li>
-            <li><a href="teacher_timetable.html">Timetable</a></li>
-            <li><a href="notices.html">Notices</a></li>
-            <li><a href="teacher_profile.html">Profile</a></li>
-            <li><a href="logout.html">Logout</a></li>
-        </ul>
+    <ul>
 
-    </div>
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
 
 
     <!-- Main Content -->
@@ -37,9 +103,9 @@
         <!-- Header -->
         <div class="header">
 
-            <h1>Welcome, Mr. Rahul Sharma</h1>
+            <h1>Welcome, {{ staff_details.name }}</h1>
 
-            <p>Computer Science Teacher</p>
+            <p>{{ staff_details.subject }} {{ staff_details.role }}</p>
 
         </div>
 
@@ -70,6 +136,7 @@
         </div>
 
 
+        
         <!-- Main Dashboard Sections -->
         <div class="content-section">
 
@@ -79,7 +146,8 @@
 
                 <h2>Quick Actions</h2>
 
-                <button onclick="location.href='mark_attendance.html'">
+                <button onclick="location.href='student_registration.html'"
+                >
                     Mark Attendance
                 </button>
 

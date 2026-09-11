@@ -10,65 +10,115 @@
 
 </head><body><!-- ================= SIDEBAR ================= -->
 
-<div class="sidebar">
+{% if role == 'Admin' %}
+    <div class="sidebar">
 
-    <h2>Admin Portal</h2>
+        <h2>Admin Portal</h2>
+
+        <ul>
+
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'students' %}" class="active">Students</a></li>
+            <li><a href="{% url 'staff' %}">Staff</a></li>
+            <li><a href="{% url 'classes' %}">Classes</a></li>
+            <li><a href="{% url 'attendance' %}">Attendance</a></li>
+            {% comment %} <li><a href="{% url 'marks' %}">Marks</a></li> {% endcomment %}
+            <li><a href="{% url 'homework' %}">Homework</a></li>
+            <li><a href="{% url 'notices' %}">Notices</a></li>
+            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
+            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
+            <li><a href='admin_profile.html'>Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+
+        </ul>
+
+    </div>
+{% endif %}
+
+{% if role == 'Staff' %}
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
 
     <ul>
 
         <li>
-            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'students' %}">Students</a>
-        </li>
-
-        <li>
-            <a href="{% url 'staff' %}">Staff</a>
-        </li>
-
-        <li>
-            <a href="{% url 'classes' %}" class="active">Classes</a>
-        </li>
-
-        <li>
-            <a href="{% url 'attendance' %}">Attendance</a>
-        </li>
-
-        <li>
-            <a href="{% url 'marks' %}">Marks</a>
-        </li>
-
-        <li>
-            <a href="{% url 'homework' %}">Homework</a>
-        </li>
-
-        <li>
-            <a href="{% url 'notices' %}">Notices</a>
-        </li>
-
-        <li>
-            <a href="{% url 'fees_details' %}">Fees Details</a>
-        </li>
-
-        <li>
-            <a href="{% url 'fees_status' %}">Fees Status</a>
-        </li>
-
-        <li>
-            <a href="admin_profile.html">Profile</a>
-        </li>
-
-        <li>
-            <a href="logout.html">Logout</a>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
         </li>
 
     </ul>
 
 </div>
 
-
+{% endif %}
 <!-- ================= MAIN CONTENT ================= -->
 
 <div class="main-content">
@@ -150,6 +200,88 @@
             onkeyup="searchClasses()">
 
     </div>
+    <div class="class-teacher-form">
+        {% if role == 'Admin' %}
+
+    <h2>Add Class Teacher</h2>
+
+    <form method = "POST">
+
+        <div class="form-grid">
+            {% csrf_token %}
+            <!-- CLASS -->
+            <div class="form-group">
+                {% comment %} <label for="class">Class</label>
+                <input
+                    type="number"
+                    id="class"
+                    name="class"
+                    placeholder="Enter class"
+                    required
+                > {% endcomment %}
+                {{ form.class_number.label }}
+                {{ form.class_number}}
+            </div>
+
+            <!-- SECTION -->
+            <div class="form-group">
+                {% comment %} <label for="section">Section</label>
+                <input
+                    type="text"
+                    id="section"
+                    name="section"
+                    placeholder="Enter section"
+                    maxlength="5"
+                    required
+                > {% endcomment %}
+                {{ form.section.label }}
+                {{ form.section}}
+            </div>
+
+            <!-- CLASS TEACHER -->
+            <div class="form-group">
+                {% comment %} <label for="class_teacher">Class Teacher</label>
+                <input
+                    type="text"
+                    id="class_teacher"
+                    name="class_teacher"
+                    placeholder="Enter class teacher name"
+                    required
+                > {% endcomment %}
+                {{ form.class_teacher_name.label }}
+                {{ form.class_teacher_name}}
+            </div>
+
+            <!-- STAFF ID -->
+            <div class="form-group">
+                {% comment %} <label for="staff_id">Staff ID</label>
+                <input
+                    type="text"
+                    id="staff_id"
+                    name="staff_id"
+                    placeholder="Enter staff ID"
+                    required
+                > {% endcomment %}
+                {{ form.staff_id.label }}
+                {{ form.staff_id}}
+            </div>
+
+        </div>
+
+        <div class="form-buttons">
+            <button type="reset" class="reset-btn">
+                Reset
+            </button>
+
+            <button type="submit" class="submit-btn">
+                Add Class Teacher
+            </button>
+        </div>
+           {{  message }}
+    </form>
+
+</div>
+{% endif %}
 
 
     <!-- ================= CLASS TABLE ================= -->
@@ -183,18 +315,18 @@
 
                 <tbody>
 
-
+                    {% for Classteacher in class_teacher_details %}
                     <!-- CLASS 1 -->
 
                     <tr>
 
-                        <td>BCA 1st Year</td>
+                        <td>{{ Classteacher.class_number }}</td>
 
-                        <td>A</td>
+                        <td>{{ Classteacher.section }}</td>
 
-                        <td>Rahul Sharma</td>
+                        <td>{{ Classteacher.class_teacher_name }}</td>
 
-                        <td>STF001</td>
+                        <td>{{ Classteacher.staff_id }}</td>
 
                         <td>
 
@@ -217,182 +349,7 @@
                         </td>
 
                     </tr>
-
-
-                    <!-- CLASS 2 -->
-
-                    <tr>
-
-                        <td>BCA 1st Year</td>
-
-                        <td>B</td>
-
-                        <td>Priya Singh</td>
-
-                        <td>STF002</td>
-
-                        <td>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editClass('BCA 1st Year', 'B')">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteClass('BCA 1st Year', 'B')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- CLASS 3 -->
-
-                    <tr>
-
-                        <td>BCA 2nd Year</td>
-
-                        <td>A</td>
-
-                        <td>Neha Gupta</td>
-
-                        <td>STF004</td>
-
-                        <td>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editClass('BCA 2nd Year', 'A')">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteClass('BCA 2nd Year', 'A')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- CLASS 4 -->
-
-                    <tr>
-
-                        <td>BCA 2nd Year</td>
-
-                        <td>B</td>
-
-                        <td>Vikas Yadav</td>
-
-                        <td>STF005</td>
-
-                        <td>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editClass('BCA 2nd Year', 'B')">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteClass('BCA 2nd Year', 'B')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- CLASS 5 -->
-
-                    <tr>
-
-                        <td>BCA 3rd Year</td>
-
-                        <td>A</td>
-
-                        <td>Rahul Sharma</td>
-
-                        <td>STF001</td>
-
-                        <td>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editClass('BCA 3rd Year', 'A')">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteClass('BCA 3rd Year', 'A')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- CLASS 6 -->
-
-                    <tr>
-
-                        <td>BCA 3rd Year</td>
-
-                        <td>B</td>
-
-                        <td>Neha Gupta</td>
-
-                        <td>STF004</td>
-
-                        <td>
-
-                            <button
-                                class="edit-btn"
-                                onclick="editClass('BCA 3rd Year', 'B')">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteClass('BCA 3rd Year', 'B')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
+                    {% endfor %}
 
                 </tbody>
 

@@ -1,14 +1,548 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="en">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
 
-<title>Marks Management</title>
+    <meta charset="UTF-8">
 
-{% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="{% static 'marks.css' %}">
+    <title>Marks Management</title>
 
-</head><body><!-- ================= SIDEBAR ================= -->
+    {% load static %}
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 240px;
+            height: 100vh;
+
+            background: #1e293b;
+            color: white;
+
+            padding-top: 25px;
+
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin: 5px 0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+
+            padding: 13px 25px;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 16px;
+
+            transition: 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background: #334155;
+            padding-left: 32px;
+        }
+
+        .sidebar ul li a.active {
+            background: #2563eb;
+
+            font-weight: bold;
+
+            border-left: 4px solid white;
+        }
+
+        /* ================= MAIN CONTENT ================= */
+
+        .main-content {
+            margin-left: 240px;
+
+            padding: 30px;
+
+            min-height: 100vh;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: white;
+
+            padding: 25px 30px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+
+            color: #1e293b;
+
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+        /* ================= UPLOAD MARKS BUTTON ================= */
+
+        .upload-btn {
+            display: inline-block;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border: none;
+
+            padding: 12px 20px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+        .upload-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-2px);
+        }
+
+        /* ================= FILTER BOX ================= */
+
+        .filter-box {
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+
+            align-items: flex-end;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+        .filter-group label {
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #475569;
+        }
+
+        .filter-group select {
+            width: 190px;
+
+            padding: 11px 12px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            background: white;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+        .filter-group select:focus {
+            border-color: #2563eb;
+
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* ================= FILTER BUTTON ================= */
+
+        .filter-btn {
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 11px 20px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+        /* ================= SEARCH BOX ================= */
+
+        .search-box {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-box input {
+            width: 100%;
+
+            padding: 13px 15px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            outline: none;
+
+            font-size: 15px;
+
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* ================= TABLE CONTAINER ================= */
+
+        .table-container {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .table-container h2 {
+            color: #1e293b;
+
+            font-size: 21px;
+
+            margin-bottom: 20px;
+        }
+
+        /* ================= TABLE WRAPPER ================= */
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+        /* ================= TABLE ================= */
+
+        table {
+            width: 100%;
+
+            min-width: 1050px;
+
+            border-collapse: collapse;
+        }
+
+        table th {
+            background: #f1f5f9;
+
+            color: #334155;
+
+            padding: 14px 12px;
+
+            text-align: left;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        table td {
+            padding: 13px 12px;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            font-size: 14px;
+
+            color: #475569;
+
+            white-space: nowrap;
+        }
+
+        table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* ================= ADMISSION NUMBER ================= */
+
+        table td:first-child {
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+        /* ================= MARKS ================= */
+
+        table td:nth-child(7) {
+            font-weight: bold;
+
+            color: #2563eb;
+        }
+
+        table td:nth-child(8) {
+            color: #64748b;
+        }
+
+        /* ================= SCROLLBAR ================= */
+
+        .table-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+
+            border-radius: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1200px) {
+
+            .filter-box {
+                align-items: flex-end;
+            }
+
+        }
+
+        /* ================= TABLET ================= */
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+
+                padding: 20px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .filter-box {
+                align-items: stretch;
+
+                flex-direction: column;
+            }
+
+            .filter-group select {
+                width: 100%;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+
+            .upload-btn {
+                padding: 11px 16px;
+            }
+
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding-bottom: 10px;
+            }
+
+            .sidebar h2 {
+                margin-bottom: 15px;
+            }
+
+            .sidebar ul {
+                display: flex;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+            .sidebar ul li {
+                margin: 2px;
+            }
+
+            .sidebar ul li a {
+                padding: 9px 11px;
+
+                font-size: 13px;
+            }
+
+            .sidebar ul li a:hover {
+                padding-left: 11px;
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 15px;
+            }
+
+            .header {
+                flex-direction: column;
+
+                align-items: stretch;
+
+                padding: 20px;
+
+                gap: 15px;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .upload-btn {
+                width: 100%;
+
+                text-align: center;
+            }
+
+            .table-container {
+                padding: 18px;
+            }
+
+            .table-container h2 {
+                font-size: 18px;
+            }
+
+            .search-box {
+                padding: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+{% if role == 'Admin' %}
 
 <div class="sidebar">
 
@@ -17,56 +551,191 @@
     <ul>
 
         <li>
-            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        <a href="{% url 'student_dashboard' %}" class="active">
+            Dashboard
+        </a>
+    </li>
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'students' %}">Students</a>
+            <a href="{% url 'staff' %}">
+                Staff
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'staff' %}">Staff</a>
+            <a href="{% url 'classes' %}">
+                Classes
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'classes' %}">Classes</a>
+            <a href="{% url 'attendance' %}">
+                Attendance
+            </a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'marks' %}" class="active">
+                Marks
+            </a>
+        </li> {% endcomment %}
+
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'attendance' %}">Attendance</a>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'marks' %}" class="active">Marks</a>
+            <a href="{% url 'fees_details' %}">
+                Fees Details
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'homework' %}">Homework</a>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'notices' %}">Notices</a>
+            <a href="admin_profile.html">
+                Profile
+            </a>
         </li>
 
         <li>
-            <a href="{% url 'fees_details' %}">Fees Details</a>
-        </li>
-
-        <li>
-            <a href="{% url 'fees_status' %}">Fees Status</a>
-        </li>
-
-        <li>
-            <a href="admin_profile.html">Profile</a>
-        </li>
-
-        <li>
-            <a href="logout.html">Logout</a>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
         </li>
 
     </ul>
 
 </div>
+
+{% endif %}
+
+
+{% if role == 'Staff' %}
+
+<div class="sidebar">
+
+    <h2>Staff Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'attendance' %}">
+                Attendance
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+
+        {% if staff_role == 'Accountant' %}
+
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'marks' %}" class="active">
+                Marks Entry
+            </a>
+        </li>
+
+        {% endif %} {% endcomment %}
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        {% if staff_role == 'Accountant' %}
+
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
 
 
 <!-- ================= MAIN CONTENT ================= -->
@@ -80,68 +749,35 @@
 
         <div>
 
-            <h1>Marks Management</h1>
+            <h1>
+                Marks Management
+            </h1>
 
-            <p>View and manage student examination marks</p>
+            <p>
+                View and manage student examination marks
+            </p>
 
         </div>
 
-        <button
-            class="add-btn"
-            onclick="addMarks()">
 
-            + Add Marks
+        <!-- ================= UPLOAD MARKS ================= -->
 
-        </button>
+        <a
+            href="{% url 'upload_marks' %}"
+            class="upload-btn">
+
+            + Upload Marks
+
+        </a>
 
     </div>
 
-
-    <!-- ================= SUMMARY CARDS ================= -->
-
-    <div class="cards">
-
-        <div class="card">
-
-            <h3>Total Records</h3>
-
-            <p>1,560</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Average Percentage</h3>
-
-            <p>78.5%</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Highest Percentage</h3>
-
-            <p>96%</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Students Failed</h3>
-
-            <p>24</p>
-
-        </div>
-
-    </div>
 
 
     <!-- ================= FILTER SECTION ================= -->
 
     <div class="filter-box">
+
 
         <div class="filter-group">
 
@@ -170,6 +806,7 @@
             </select>
 
         </div>
+
 
 
         <div class="filter-group">
@@ -205,6 +842,7 @@
         </div>
 
 
+
         <div class="filter-group">
 
             <label for="subjectFilter">
@@ -238,6 +876,7 @@
         </div>
 
 
+
         <button
             class="filter-btn"
             onclick="applyFilter()">
@@ -247,6 +886,7 @@
         </button>
 
     </div>
+
 
 
     <!-- ================= SEARCH ================= -->
@@ -262,11 +902,15 @@
     </div>
 
 
+
     <!-- ================= MARKS TABLE ================= -->
 
     <div class="table-container">
 
-        <h2>Student Marks Records</h2>
+        <h2>
+            Student Marks Records
+        </h2>
+
 
         <div class="table-wrapper">
 
@@ -276,27 +920,37 @@
 
                     <tr>
 
-                        <th>Admission No.</th>
+                        <th>
+                            Admission No.
+                        </th>
 
-                        <th>Student Name</th>
+                        <th>
+                            Student Name
+                        </th>
 
-                        <th>Class</th>
+                        <th>
+                            Class
+                        </th>
 
-                        <th>Section</th>
+                        <th>
+                            Section
+                        </th>
 
-                        <th>Subject</th>
+                        <th>
+                            Subject
+                        </th>
 
-                        <th>Examination</th>
+                        <th>
+                            Examination
+                        </th>
 
-                        <th>Marks Obtained</th>
+                        <th>
+                            Marks Obtained
+                        </th>
 
-                        <th>Total Marks</th>
-
-                        <th>Percentage</th>
-
-                        <th>Grade</th>
-
-                        <th>Action</th>
+                        <th>
+                            Total Marks
+                        </th>
 
                     </tr>
 
@@ -306,256 +960,200 @@
                 <tbody>
 
 
-                    <!-- ================= RECORD 1 ================= -->
+                    <!-- RECORD 1 -->
 
                     <tr>
 
-                        <td>STD001</td>
-
-                        <td>Aarav Sharma</td>
-
-                        <td>BCA 1st Year</td>
-
-                        <td>A</td>
-
-                        <td>Python</td>
-
-                        <td>Internal 1</td>
-
-                        <td>87</td>
-
-                        <td>100</td>
-
-                        <td>87%</td>
-
                         <td>
-                            <span class="grade grade-a">
-                                A
-                            </span>
+                            STD001
                         </td>
 
                         <td>
+                            Aarav Sharma
+                        </td>
 
-                            <button
-                                class="edit-btn"
-                                onclick="editMarks('STD001')">
+                        <td>
+                            BCA 1st Year
+                        </td>
 
-                                Edit
+                        <td>
+                            A
+                        </td>
 
-                            </button>
+                        <td>
+                            Python
+                        </td>
 
-                            <button
-                                class="delete-btn"
-                                onclick="deleteMarks('STD001')">
+                        <td>
+                            Internal 1
+                        </td>
 
-                                Delete
+                        <td>
+                            87
+                        </td>
 
-                            </button>
-
+                        <td>
+                            100
                         </td>
 
                     </tr>
 
 
-                    <!-- ================= RECORD 2 ================= -->
+
+                    <!-- RECORD 2 -->
 
                     <tr>
 
-                        <td>STD002</td>
-
-                        <td>Ananya Singh</td>
-
-                        <td>BCA 1st Year</td>
-
-                        <td>A</td>
-
-                        <td>DBMS</td>
-
-                        <td>Internal 1</td>
-
-                        <td>92</td>
-
-                        <td>100</td>
-
-                        <td>92%</td>
-
                         <td>
-                            <span class="grade grade-aplus">
-                                A+
-                            </span>
+                            STD002
                         </td>
 
                         <td>
+                            Ananya Singh
+                        </td>
 
-                            <button
-                                class="edit-btn"
-                                onclick="editMarks('STD002')">
+                        <td>
+                            BCA 1st Year
+                        </td>
 
-                                Edit
+                        <td>
+                            A
+                        </td>
 
-                            </button>
+                        <td>
+                            DBMS
+                        </td>
 
-                            <button
-                                class="delete-btn"
-                                onclick="deleteMarks('STD002')">
+                        <td>
+                            Internal 1
+                        </td>
 
-                                Delete
+                        <td>
+                            92
+                        </td>
 
-                            </button>
-
+                        <td>
+                            100
                         </td>
 
                     </tr>
 
 
-                    <!-- ================= RECORD 3 ================= -->
+
+                    <!-- RECORD 3 -->
 
                     <tr>
 
-                        <td>STD003</td>
-
-                        <td>Rahul Verma</td>
-
-                        <td>BCA 2nd Year</td>
-
-                        <td>B</td>
-
-                        <td>Django</td>
-
-                        <td>Semester</td>
-
-                        <td>78</td>
-
-                        <td>100</td>
-
-                        <td>78%</td>
-
                         <td>
-                            <span class="grade grade-bplus">
-                                B+
-                            </span>
+                            STD003
                         </td>
 
                         <td>
+                            Rahul Verma
+                        </td>
 
-                            <button
-                                class="edit-btn"
-                                onclick="editMarks('STD003')">
+                        <td>
+                            BCA 2nd Year
+                        </td>
 
-                                Edit
+                        <td>
+                            B
+                        </td>
 
-                            </button>
+                        <td>
+                            Django
+                        </td>
 
-                            <button
-                                class="delete-btn"
-                                onclick="deleteMarks('STD003')">
+                        <td>
+                            Semester
+                        </td>
 
-                                Delete
+                        <td>
+                            78
+                        </td>
 
-                            </button>
-
+                        <td>
+                            100
                         </td>
 
                     </tr>
 
 
-                    <!-- ================= RECORD 4 ================= -->
+
+                    <!-- RECORD 4 -->
 
                     <tr>
 
-                        <td>STD004</td>
-
-                        <td>Priya Gupta</td>
-
-                        <td>BCA 2nd Year</td>
-
-                        <td>B</td>
-
-                        <td>Mathematics</td>
-
-                        <td>Semester</td>
-
-                        <td>91</td>
-
-                        <td>100</td>
-
-                        <td>91%</td>
-
                         <td>
-                            <span class="grade grade-aplus">
-                                A+
-                            </span>
+                            STD004
                         </td>
 
                         <td>
+                            Priya Gupta
+                        </td>
 
-                            <button
-                                class="edit-btn"
-                                onclick="editMarks('STD004')">
+                        <td>
+                            BCA 2nd Year
+                        </td>
 
-                                Edit
+                        <td>
+                            B
+                        </td>
 
-                            </button>
+                        <td>
+                            Mathematics
+                        </td>
 
-                            <button
-                                class="delete-btn"
-                                onclick="deleteMarks('STD004')">
+                        <td>
+                            Semester
+                        </td>
 
-                                Delete
+                        <td>
+                            91
+                        </td>
 
-                            </button>
-
+                        <td>
+                            100
                         </td>
 
                     </tr>
 
 
-                    <!-- ================= RECORD 5 ================= -->
+
+                    <!-- RECORD 5 -->
 
                     <tr>
 
-                        <td>STD005</td>
-
-                        <td>Vivek Yadav</td>
-
-                        <td>BCA 3rd Year</td>
-
-                        <td>A</td>
-
-                        <td>Python</td>
-
-                        <td>Final</td>
-
-                        <td>67</td>
-
-                        <td>100</td>
-
-                        <td>67%</td>
-
                         <td>
-                            <span class="grade grade-b">
-                                B
-                            </span>
+                            STD005
                         </td>
 
                         <td>
+                            Vivek Yadav
+                        </td>
 
-                            <button
-                                class="edit-btn"
-                                onclick="editMarks('STD005')">
+                        <td>
+                            BCA 3rd Year
+                        </td>
 
-                                Edit
+                        <td>
+                            A
+                        </td>
 
-                            </button>
+                        <td>
+                            Python
+                        </td>
 
-                            <button
-                                class="delete-btn"
-                                onclick="deleteMarks('STD005')">
+                        <td>
+                            Final
+                        </td>
 
-                                Delete
+                        <td>
+                            67
+                        </td>
 
-                            </button>
-
+                        <td>
+                            100
                         </td>
 
                     </tr>
@@ -573,10 +1171,13 @@
 </div>
 
 
+
 <!-- ================= JAVASCRIPT ================= -->
 
-{% comment %} <script>
+<script>
 
+
+    /* ================= SEARCH ================= */
 
     function searchMarks() {
 
@@ -586,9 +1187,11 @@
             .value
             .toLowerCase();
 
+
         let table =
             document
             .getElementById("marksTable");
+
 
         let rows =
             table
@@ -601,6 +1204,7 @@
                 rows[i]
                 .innerText
                 .toLowerCase();
+
 
             if (rowText.includes(input)) {
 
@@ -617,6 +1221,9 @@
     }
 
 
+
+    /* ================= FILTER ================= */
+
     function applyFilter() {
 
         let classValue =
@@ -625,11 +1232,13 @@
             .value
             .toLowerCase();
 
+
         let examValue =
             document
             .getElementById("examFilter")
             .value
             .toLowerCase();
+
 
         let subjectValue =
             document
@@ -642,6 +1251,7 @@
             document
             .getElementById("marksTable");
 
+
         let rows =
             table
             .getElementsByTagName("tr");
@@ -649,17 +1259,20 @@
 
         for (let i = 1; i < rows.length; i++) {
 
+
             let className =
                 rows[i]
                 .cells[2]
                 .innerText
                 .toLowerCase();
 
+
             let subject =
                 rows[i]
                 .cells[4]
                 .innerText
                 .toLowerCase();
+
 
             let exam =
                 rows[i]
@@ -672,9 +1285,11 @@
                 classValue === "all"
                 || className === classValue;
 
+
             let subjectMatch =
                 subjectValue === "all"
                 || subject === subjectValue;
+
 
             let examMatch =
                 examValue === "all"
@@ -699,46 +1314,9 @@
 
     }
 
-
-    function addMarks() {
-
-        alert("Add Marks form will open here.");
-
-    }
+</script>
 
 
-    function editMarks(admissionNo) {
+</body>
 
-        alert(
-            "Edit marks for Student: "
-            + admissionNo
-        );
-
-    }
-
-
-    function deleteMarks(admissionNo) {
-
-        let confirmDelete =
-            confirm(
-                "Are you sure you want to delete marks for "
-                + admissionNo
-                + "?"
-            );
-
-
-        if (confirmDelete) {
-
-            alert(
-                "Marks for "
-                + admissionNo
-                + " deleted successfully."
-            );
-
-        }
-
-    }
-
-</script> {% endcomment %}
-
-</body></html>
+</html>
