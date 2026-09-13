@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-!f%66v8kvbau5_qc))8hg%8792+hp#+#^6)om#f(%s-_d*(5n2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "school-management-1-39nl.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -133,4 +137,8 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS=[
     BASE_DIR,"static"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://school-management-1-39nl.onrender.com",
 ]
