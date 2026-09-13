@@ -1,0 +1,361 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Management</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'students.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+{% if role == 'Admin' %}
+    <div class="sidebar">
+
+        <h2>Admin Portal</h2>
+
+        <ul>
+
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'students' %}" class="active">Students</a></li>
+            <li><a href="{% url 'staff' %}">Staff</a></li>
+            <li><a href="{% url 'classes' %}">Classes</a></li>
+            <li><a href="{% url 'attendance' %}">Attendance</a></li>
+            <li><a href="{% url 'marks' %}">Marks</a></li>
+            <li><a href="{% url 'homework' %}">Homework</a></li>
+            <li><a href="{% url 'notices' %}">Notices</a></li>
+            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
+            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
+            <li><a href='admin_profile.html'>Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+
+        </ul>
+
+    </div>
+{% endif %}
+
+{% if role == 'Staff' %}
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Student Management</h1>
+
+            <p>View and manage all registered students</p>
+
+        </div>
+    {% if role == 'Staff' %}
+        <button
+            class="add-btn"
+            onclick="window.location.href='{% url 'student_registration' %}'">
+
+            + Add Student
+
+        </button>
+    {% endif %}
+    </div>
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>Total Students</h3>
+
+            <p>520</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Male Students</h3>
+
+            <p>285</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Female Students</h3>
+
+            <p>235</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by Admission No., Name, Class or Email..."
+            onkeyup="searchStudents()">
+
+    </div>
+
+
+    <!-- ================= STUDENT TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>All Students</h2>
+
+
+        <div class="table-wrapper">
+
+            <table id="studentTable">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>Admission No.</th>
+
+                        <th>Name</th>
+
+                        <th>Date of Birth</th>
+
+                        <th>Gender</th>
+
+                        <th>Class</th>
+
+                        <th>Section</th>
+
+                        <th>Address</th>
+
+                        <th>Guardian Name</th>
+
+                        <th>Guardian Contact</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                   
+                    {% for student in student_details %}
+
+                    <!-- ================= STUDENT 1 ================= -->
+
+                    <tr>
+
+                        <td>{{ student.admission_no }}</td>
+
+                        <td>{{ student.name }}</td>
+
+                        <td>{{ student.dob }}</td>
+
+                        <td>{{ student.gender }}</td>
+
+                        <td>{{ student.class_field.class_field }}</td>
+
+                        <td>{{ student.section }}</td>
+
+                        <td>{{ student.address }}</td>
+
+                        <td>Rajesh Sharma</td>
+
+                        <td>9876500001</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+    function searchStudents() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("studentTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowText =
+                rows[i]
+                .innerText
+                .toLowerCase();
+
+            if (rowText.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function viewStudent(admissionNo) {
+
+        alert(
+            "Viewing complete details of Student: "
+            + admissionNo
+        );
+
+    }
+
+
+    function editStudent(admissionNo) {
+
+        alert(
+            "Edit Student: "
+            + admissionNo
+        );
+
+    }
+
+
+    function deleteStudent(admissionNo) {
+
+        let confirmDelete =
+            confirm(
+                "Are you sure you want to delete Student "
+                + admissionNo
+                + "?"
+            );
+
+        if (confirmDelete) {
+
+            alert(
+                "Student "
+                + admissionNo
+                + " deleted successfully."
+            );
+
+        }
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

@@ -1,0 +1,682 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Dashboard</title>
+    
+    {% load static %}
+
+<link rel="stylesheet" href="{% static 'admin_dashboard.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <h2>Admin Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li>
+            <a href="{% url 'students' %}">Students</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff' %}">Staff</a>
+        </li>
+
+        <li>
+            <a href="{% url 'classes' %}">Classes</a>
+        </li>
+
+        <li>
+            <a href="{% url 'attendance' %}">Attendance</a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'marks' %}">Marks</a>
+        </li> {% endcomment %}
+
+        <li>
+            <a href="{% url 'homework' %}">Homework</a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}">Notices</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_details' %}">Fees Details</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_status' %}">Fees Status</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff_registration' %}" class="active">
+                Add new Staff Member
+            </a>
+        </li>
+
+        <li>
+            <a href="admin_profile.html">Profile</a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">Logout</a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div>
+            <h1>Welcome, Admin</h1>
+
+            <p>School Management System</p>
+        </div>
+
+    </div>
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="cards">
+
+
+        <!-- Students -->
+
+        <div class="card">
+
+            <h3>Total Students</h3>
+
+            <p>520</p>
+
+            <a href="{% url 'students' %}">View Students</a>
+
+        </div>
+
+
+        <!-- Staff -->
+
+        <div class="card">
+
+            <h3>Total Staff</h3>
+
+            <p>48</p>
+
+            <a href="{% url 'staff' %}">View Staff</a>
+
+        </div>
+
+
+        <!-- Classes -->
+
+        <div class="card">
+
+            <h3>Total Classes</h3>
+
+            <p>18</p>
+
+            <a href="{% url 'classes' %}">View Classes</a>
+
+        </div>
+
+
+        <!-- Attendance -->
+
+        <div class="card">
+
+            <h3>Today's Attendance</h3>
+
+            <p>94%</p>
+
+            <a href="{% url 'attendance' %}">View Attendance</a>
+
+        </div>
+
+
+        <!-- Fees -->
+
+        <div class="card">
+
+            <h3>Fees Collected</h3>
+
+            <p>₹8,45,000</p>
+
+            <a href="{% url 'fees_status' %}">View Fees</a>
+
+        </div>
+
+
+        <!-- Pending Fees -->
+
+        <div class="card">
+
+            <h3>Pending Fees</h3>
+
+            <p>₹1,25,000</p>
+
+            <a href="{% url 'fees_status' %}">View Pending</a>
+
+        </div>
+
+
+        <!-- Homework -->
+
+        <div class="card">
+
+            <h3>Active Homework</h3>
+
+            <p>32</p>
+
+            <a href="{% url 'homework' %}">View Homework</a>
+
+        </div>
+
+
+        <!-- Notices -->
+
+        <div class="card">
+
+            <h3>Active Notices</h3>
+
+            <p>8</p>
+
+            <a href="{% url 'notices' %}">View Notices</a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= INFORMATION SECTION ================= -->
+
+    <div class="content-section">
+
+
+        <!-- STUDENT INFORMATION -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>Student Information</h2>
+
+                <a href="{% url 'students' %}">View All</a>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Admission No.</th>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Gender</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>STD001</td>
+                        <td>Aarav Sharma</td>
+                        <td>BCA 1st Year</td>
+                        <td>Male</td>
+                        <td>Active</td>
+                    </tr>
+
+                    <tr>
+                        <td>STD002</td>
+                        <td>Ananya Singh</td>
+                        <td>BCA 1st Year</td>
+                        <td>Female</td>
+                        <td>Active</td>
+                    </tr>
+
+                    <tr>
+                        <td>STD003</td>
+                        <td>Rahul Verma</td>
+                        <td>BCA 2nd Year</td>
+                        <td>Male</td>
+                        <td>Active</td>
+                    </tr>
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+        <!-- STAFF INFORMATION -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>Staff Information</h2>
+
+                <a href="{% url 'staff' %}">View All</a>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Staff ID</th>
+                        <th>Name</th>
+                        <th>Subject</th>
+                        <th>Role</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>STF001</td>
+                        <td>Rahul Sharma</td>
+                        <td>Computer Science</td>
+                        <td>Teacher</td>
+                    </tr>
+
+                    <tr>
+                        <td>STF002</td>
+                        <td>Priya Singh</td>
+                        <td>Mathematics</td>
+                        <td>Teacher</td>
+                    </tr>
+
+                    <tr>
+                        <td>STF003</td>
+                        <td>Amit Verma</td>
+                        <td>Administration</td>
+                        <td>Accountant</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ATTENDANCE -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>Attendance Overview</h2>
+
+                <a href="{% url 'attendance' %}">View All</a>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Class</th>
+                        <th>Total Students</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                        <th>Attendance</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>BCA 1st Year</td>
+                        <td>120</td>
+                        <td>114</td>
+                        <td>6</td>
+                        <td>95%</td>
+                    </tr>
+
+                    <tr>
+                        <td>BCA 2nd Year</td>
+                        <td>110</td>
+                        <td>101</td>
+                        <td>9</td>
+                        <td>91.8%</td>
+                    </tr>
+
+                    <tr>
+                        <td>BCA 3rd Year</td>
+                        <td>100</td>
+                        <td>96</td>
+                        <td>4</td>
+                        <td>96%</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- MARKS -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>Recent Marks</h2>
+
+                <a href="{% url 'students' %}">View All</a>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Admission No.</th>
+                        <th>Student</th>
+                        <th>Subject</th>
+                        <th>Marks</th>
+                        <th>Grade</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>STD001</td>
+                        <td>Aarav Sharma</td>
+                        <td>Python</td>
+                        <td>87/100</td>
+                        <td>A</td>
+                    </tr>
+
+                    <tr>
+                        <td>STD002</td>
+                        <td>Ananya Singh</td>
+                        <td>DBMS</td>
+                        <td>92/100</td>
+                        <td>A+</td>
+                    </tr>
+
+                    <tr>
+                        <td>STD003</td>
+                        <td>Rahul Verma</td>
+                        <td>Django</td>
+                        <td>78/100</td>
+                        <td>B+</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- FEES STATUS -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>Fees Status</h2>
+
+                <a href="{% url 'fees_status' %}">View All</a>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Admission No.</th>
+                        <th>Student</th>
+                        <th>Total Fees</th>
+                        <th>Paid</th>
+                        <th>Pending</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>STD001</td>
+                        <td>Aarav Sharma</td>
+                        <td>₹60,000</td>
+                        <td>₹60,000</td>
+                        <td>₹0</td>
+                        <td>Paid</td>
+                    </tr>
+
+                    <tr>
+                        <td>STD002</td>
+                        <td>Ananya Singh</td>
+                        <td>₹60,000</td>
+                        <td>₹40,000</td>
+                        <td>₹20,000</td>
+                        <td>Pending</td>
+                    </tr>
+
+                    <tr>
+                        <td>STD003</td>
+                        <td>Rahul Verma</td>
+                        <td>₹65,000</td>
+                        <td>₹45,000</td>
+                        <td>₹20,000</td>
+                        <td>Pending</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- HOMEWORK -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>Recent Homework</h2>
+
+                <a href="{% url 'homework' %}">View All</a>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Homework</th>
+                        <th>Subject</th>
+                        <th>Class</th>
+                        <th>Assigned Date</th>
+                        <th>Due Date</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Python Functions</td>
+                        <td>Python</td>
+                        <td>BCA 1st Year</td>
+                        <td>28 Aug 2026</td>
+                        <td>03 Sep 2026</td>
+                    </tr>
+
+                    <tr>
+                        <td>SQL Queries</td>
+                        <td>DBMS</td>
+                        <td>BCA 2nd Year</td>
+                        <td>27 Aug 2026</td>
+                        <td>02 Sep 2026</td>
+                    </tr>
+
+                    <tr>
+                        <td>Django Models</td>
+                        <td>Django</td>
+                        <td>BCA 3rd Year</td>
+                        <td>26 Aug 2026</td>
+                        <td>01 Sep 2026</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- NOTICES -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>Latest Notices</h2>
+
+                <a href="{% url 'notices' %}">View All</a>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Title</th>
+                        <th>For</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Semester Examination</td>
+                        <td>All Students</td>
+                        <td>29 Aug 2026</td>
+                        <td>Active</td>
+                    </tr>
+
+                    <tr>
+                        <td>Teacher Meeting</td>
+                        <td>Staff</td>
+                        <td>28 Aug 2026</td>
+                        <td>Active</td>
+                    </tr>
+
+                    <tr>
+                        <td>Fee Submission Reminder</td>
+                        <td>Students</td>
+                        <td>27 Aug 2026</td>
+                        <td>Active</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- FEES DETAILS -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>Fees Details</h2>
+
+                <a href="{% url 'fees_details' %}">View All</a>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Class</th>
+                        <th>Academic Year</th>
+                        <th>Total Fees</th>
+                        <th>Collected</th>
+                        <th>Pending</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>BCA 1st Year</td>
+                        <td>2026-27</td>
+                        <td>₹72,00,000</td>
+                        <td>₹65,00,000</td>
+                        <td>₹7,00,000</td>
+                    </tr>
+
+                    <tr>
+                        <td>BCA 2nd Year</td>
+                        <td>2026-27</td>
+                        <td>₹66,00,000</td>
+                        <td>₹61,00,000</td>
+                        <td>₹5,00,000</td>
+                    </tr>
+
+                    <tr>
+                        <td>BCA 3rd Year</td>
+                        <td>2026-27</td>
+                        <td>₹60,00,000</td>
+                        <td>₹55,00,000</td>
+                        <td>₹5,00,000</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body></html>

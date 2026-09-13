@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Logout</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'logout.css' %}">
+```
+
+</head>
+
+<body>
+
+```
+<div class="logout-container">
+
+    <div class="logout-box">
+
+        <div class="logout-icon">
+            ⎋
+        </div>
+
+        <h1>Logout</h1>
+
+        <p>
+            Are you sure you want to logout?
+        </p>
+
+        <div class="buttons">
+
+            <button
+                class="cancel-btn"
+                onclick="history.back()">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="logout-btn"
+                onclick="location.href='{% url 'login' %}'">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</body>
+
+</html>

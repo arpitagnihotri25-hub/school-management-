@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fees Details</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'fees_details.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+{% if role == 'Admin' %}
+    <div class="sidebar">
+
+        <h2>Admin Portal</h2>
+
+        <ul>
+
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'students' %}" class="active">Students</a></li>
+            <li><a href="{% url 'staff' %}">Staff</a></li>
+            <li><a href="{% url 'classes' %}">Classes</a></li>
+            <li><a href="{% url 'attendance' %}">Attendance</a></li>
+            {% comment %} <li><a href="{% url 'marks' %}">Marks</a></li> {% endcomment %}
+            <li><a href="{% url 'homework' %}">Homework</a></li>
+            <li><a href="{% url 'notices' %}">Notices</a></li>
+            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
+            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
+            <li><a href='admin_profile.html'>Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+
+        </ul>
+
+    </div>
+{% endif %}
+
+{% if role == 'Staff' %}
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Fees Details</h1>
+
+            <p>Manage class-wise fees structure</p>
+
+        </div>
+
+        
+
+    </div>
+
+    {% if role == 'Admin' %}
+    <div class="homework-form">
+
+      <h2>Add Fees Structure</h2>
+      <form method="POST">
+    {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                {{ form.class_field.label_tag }} 
+                {{ form.class_field }}
+                {% comment %} <label for="id_class_field">Class</label>
+                <input
+                type="number"
+                id="id_class_field"
+                name="class_field"
+                placeholder="Enter class"
+                required
+                > {% endcomment %}
+            </div>
+
+            <div class="form-group">
+                {{ form.amount.label_tag }} 
+                {{ form.amount }}
+                {% comment %} <label for="id_amount">Fees Amount</label>
+                <input
+                type="number"
+                id="id_amount"
+                name="amount"
+                placeholder="Enter fees amount"
+                required
+                > {% endcomment %}
+            </div>
+
+        </div>
+
+        <div class="form-buttons">
+            <button type="reset" class="reset-btn">Reset</button>
+            <button type="submit" class="submit-btn">Add Details</button>
+        </div>
+        {{ message }}
+
+    </div>
+    {% endif %}
+
+    <!-- ================= FEES TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>Class Fees Structure</h2>
+
+
+        <div class="table-wrapper">
+
+            <table id="feesTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Class Number</th>
+
+                        <th>Fees Amount</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+                   
+                    {% for f in fees %}
+
+                    <tr>
+
+                        <td>{{ f.class_field }}</td>
+
+                        <td>₹{{ f.amount|floatformat:2 }}</td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editFees(1)">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteFees(1)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+    function searchFees() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("feesTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let classNumber =
+                rows[i]
+                .cells[0]
+                .innerText
+                .toLowerCase();
+
+
+            if (classNumber.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function addFees() {
+
+        alert("Add Fees form will open here.");
+
+    }
+
+
+    function editFees(classNumber) {
+
+        alert(
+            "Edit fees for Class "
+            + classNumber
+        );
+
+    }
+
+
+    function deleteFees(classNumber) {
+
+        let confirmDelete =
+            confirm(
+                "Are you sure you want to delete fees details for Class "
+                + classNumber
+                + "?"
+            );
+
+
+        if (confirmDelete) {
+
+            alert(
+                "Fees details for Class "
+                + classNumber
+                + " deleted successfully."
+            );
+
+        }
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

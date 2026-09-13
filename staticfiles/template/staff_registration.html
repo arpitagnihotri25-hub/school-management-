@@ -1,0 +1,420 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Staff Registration</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'staff_registration.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <h2>Admin Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li>
+            <a href="{% url 'students' %}">Students</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff' %}">Staff</a>
+        </li>
+
+        <li>
+            <a href="{% url 'classes' %}">Classes</a>
+        </li>
+
+        <li>
+            <a href="{% url 'attendance' %}">Attendance</a>
+        </li>
+
+        <li>
+            <a href="{% url 'marks' %}">Marks</a>
+        </li>
+
+        <li>
+            <a href="{% url 'homework' %}">Homework</a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}">Notices</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_details' %}">Fees Details</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_status' %}">Fees Status</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff_registration' %}" class="active">
+                Staff Registration
+            </a>
+        </li>
+
+        <li>
+            <a href=profile.html>Profile</a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">Logout</a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <h1>Staff Registration</h1>
+
+        <p>
+            Register a new staff member in the school management system
+        </p>
+
+    </div>
+
+
+    <!-- ================= REGISTRATION FORM ================= -->
+
+    <div class="form-container">
+
+        
+        
+         <form id="staffForm" method="POST">
+
+            {% csrf_token %}
+
+            <!-- ================= PERSONAL DETAILS ================= -->
+
+            <div class="section">
+
+                <h2>Personal Details</h2>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+                                                                   
+                        {% comment %} <label for="name">
+                            Full Name
+                        </label> {% endcomment %}
+                        {{ form.name.label }}
+                        {{ form.name}}
+                        {% comment %} <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter full name"
+                            required> {% endcomment %}
+
+                    </div>
+
+
+                    <div class="form-group">
+                                                                   {{ form.email.label }}
+                        {% comment %} <label for="email">
+                            Email
+                        </label> {% endcomment %}
+                                                                      {{ form.email}}
+                        {% comment %} <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter email address"
+                            required>{% endcomment %}
+
+                    </div>
+
+
+                    <div class="form-group">
+                                                                         {{ form.contact.label}}
+                        {% comment %} <label for="contact">
+                            Contact Number
+                        </label> {% endcomment %}
+                                                                         {{ form.contact}}
+                        {% comment %} <input
+                            type="tel"
+                            id="contact"
+                            placeholder="Enter contact number"
+                            maxlength="10"
+                            required> {% endcomment %}
+
+                    </div>
+
+
+                    <div class="form-group">
+                                                                     {{ form.gender.label}}
+                        {% comment %} <label for="gender">
+                            Gender
+                        </label> {% endcomment %}
+                                                                      {{ form.gender}}
+                        {% comment %} <select id="gender" required>
+
+                            <option value="">
+                                Select Gender
+                            </option>
+
+                            <option value="Male">
+                                Male
+                            </option>
+
+                            <option value="Female">
+                                Female
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select> {% endcomment %}
+
+                    </div>
+
+
+                    <div class="form-group">
+                                                                                {{ form.role.label}}
+                        {% comment %} <label for="role">
+                            Role
+                        </label> {% endcomment %}
+                                                                                  {{ form.role}}
+                        {% comment %} <select id="role" required>
+
+                            <option value="">
+                                Select Role
+                            </option>
+
+                            <option value="Teacher">
+                                Teacher
+                            </option>
+
+                            <option value="Accountant">
+                                Accountant
+                            </option>
+
+                            <option value="Librarian">
+                                Librarian
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select> {% endcomment %}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= PROFESSIONAL DETAILS ================= -->
+
+            <div class="section">
+
+                <h2>Professional Details</h2>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group"> 
+                                                                              
+                        {% comment %} <label for="qualification">
+                            Qualification
+                        </label> {% endcomment %}
+                        {{ form.qualifications.label}}
+                        {{ form.qualifications}}
+                        {% comment %} <input
+                            type="text"
+                            id="qualification"
+                            placeholder="e.g. MCA, M.Sc, B.Ed"
+                            required> {% endcomment %}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {% comment %} <label for="experience">
+                            Experience
+                        </label> {% endcomment %}
+                        {{ form.experience.label }}
+                        {{ form.experience }}
+                        {% comment %} <input
+                            type="text"
+                            id="experience"
+                            placeholder="e.g. 3 Years"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {% comment %} <label for="subject">
+                            Subject
+                        </label> {% endcomment %}
+                        {{ form.subject.label }}
+                        {{ form.subject }}
+                        {% comment %} <input
+                            type="text"
+                            id="subject"
+                            placeholder="Enter subject">  {% endcomment %}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {% comment %} <label for="classNumber">
+                            Class
+                        </label> {% endcomment %}
+                        {{ form.class_field.label }}
+                        {{ form.class_field }}
+                        {% comment %} <input
+                            type="number"
+                            id="classNumber"
+                            placeholder="Enter class"
+                            min="1">{% endcomment %}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ADDRESS ================= -->
+
+            <div class="section">
+
+                <h2>Address Details</h2>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="address">
+                        Address
+                    </label> {% endcomment %}
+                    {{ form.address.label }}
+                    {{ form.address }}
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <div class="form-buttons">
+
+                <button
+                    type="reset"
+                    class="reset-btn">
+
+                    Reset
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="submit-btn">
+
+                    Register Staff
+
+                </button>
+
+            </div>
+
+
+        </form>
+        
+        {{ message }}
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+    function registerStaff(event) {
+
+        event.preventDefault();
+
+
+        let password =
+            document
+            .getElementById("password")
+            .value;
+
+        let confirmPassword =
+            document
+            .getElementById("confirmPassword")
+            .value;
+
+
+        if (password !== confirmPassword) {
+
+            alert(
+                "Password and Confirm Password do not match."
+            );
+
+            return;
+
+        }
+
+
+        let contact =
+            document
+            .getElementById("contact")
+            .value;
+
+
+        if (!/^[0-9]{10}$/.test(contact)) {
+
+            alert(
+                "Please enter a valid 10-digit contact number."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Staff registered successfully!"
+        );
+
+
+        document
+        .getElementById("staffForm")
+        .reset();
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

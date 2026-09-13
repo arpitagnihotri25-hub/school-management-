@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Vision Public School</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo">V</div>
+            <div>
+                <h1>VISION PUBLIC SCHOOL</h1><small>School Management & Information Portal</small>
+            </div>
+        </div>
+        <div>📞 1800-123-4567</div>
+    </header>
+    <div class="nav">
+        <div class="navlinks">
+            <a href="{% url 'home' %}" class="active">HOME</a>
+            <a href="{% url 'about' %}" class="">ABOUT</a>
+            <a href="{% url 'contact' %}" class="">CONTACT</a>
+            <a href="{% url 'services' %}" class="">SERVICES</a>
+        </div><a class="login-btn" href="{% url 'login' %}">LOGIN</a>
+    </div>
+    <div class="ticker"><span>📢 Latest Update: School admission and examination notices are available.</span><span>📅
+            Academic Session 2026–27</span></div>
+    <main class="layout">
+        <aside>
+            <div class="card side">
+                <h3>Useful Links</h3>
+                <a href="homework.html">📚 Homework</a><a href="attendance.html">📝 Attendance</a><a
+                    href="timetable.html">🕘 Time Table</a>
+                <a href="result.html">📊 Result</a><a href="fees.html">💳 Fees</a><a href="notices.html">📢
+                    Notices</a><a href="profile.html">👤 Profile</a>
+            </div>
+        </aside>
+        <section>
+            <div class="hero">
+                <div>
+                    <h2>Welcome to Smart Public School</h2>
+                    <p>Official school information and management portal for students, teachers, guardians and
+                        administrators.</p><a class="btn" href="{% url 'about' %}">Know More</a>
+                </div>
+            </div>
+            <div class="grid2 section">
+                <div class="card">
+                    <h3>Latest Notices</h3>
+                    <div class="notice"><b>10 Aug 2026</b><br>Unit Test schedule published.</div>
+                    <div class="notice"><b>08 Aug 2026</b><br>Parent meeting notice available.</div>
+                    <div class="notice"><b>05 Aug 2026</b><br>Fee submission reminder.</div>
+                </div>
+                <div class="card">
+                    <h3>Quick Links</h3>
+                    <div class="notice"><a href="homework.html">Homework & Assignments</a></div>
+                    <div class="notice"><a href="attendance.html">Attendance</a></div>
+                    <div class="notice"><a href="result.html">Examination Result</a></div>
+                    <div class="notice"><a href="fees.html">Fee Details</a></div>
+                </div>
+            </div>
+        </section>
+        <aside class="rightbar">
+            <div class="card">
+                <h3>All Circulars</h3>
+                <div class="notice">School timing circular</div>
+                <div class="notice">Holiday notice</div>
+                <div class="notice">Exam instructions</div>
+            </div>
+        </aside>
+    </main>
+    <main class="page">
+        <div class="pagehead">
+            <h2>About Our School</h2>
+            <p>School information and facilities</p>
+        </div>
+        <div class="content-card">
+            <h3>Vision Public School</h3>
+            <p>Our school provides quality education, co-curricular activities, sports, digital learning and a safe
+                environment for students.</p>
+            <div class="grid2">
+                <div>
+                    <h3>Vision</h3>
+                    <p>To develop confident, responsible and skilled learners.</p>
+                </div>
+                <div>
+                    <h3>Mission</h3>
+                    <p>To provide inclusive and technology-enabled education.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+      <main class="page">
+        <div class="pagehead">
+            <h2>Contact Us</h2>
+            <p>Get in touch with the school</p>
+        </div>
+        <div class="content-card">
+            <form class="form"
+                onsubmit="event.preventDefault();alert('Your message has been submitted successfully!');this.reset();">
+                <input required placeholder="Your Name"><input required type="email" placeholder="Email"><input
+                    placeholder="Mobile Number"><textarea required rows="5" placeholder="Message"></textarea><button
+                    class="btn">Submit Message</button></form>
+        </div>
+    </main>
+
+     <main class="page">
+        <div class="pagehead">
+            <h2>School Services</h2>
+            <p>Student and parent facilities</p>
+        </div>
+        <div class="grid2">
+            <div class="content-card">
+                <h3>Academic Services</h3>
+                <p>Homework, timetable, attendance, results and examination information.</p>
+            </div>
+            <div class="content-card">
+                <h3>Student Services</h3>
+                <p>Profile, notices, fee information and communication facilities.</p>
+            </div>
+            <div class="content-card">
+                <h3>Parent Services</h3>
+                <p>Guardian access to attendance, fees, results and notices.</p>
+            </div>
+            <div class="content-card">
+                <h3>Digital Learning</h3>
+                <p>Online assignments, announcements and academic resources.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">© 2026 Vision Public School | School Management Portal</footer>
+    {% comment %} <script src="script.js"></script> {% endcomment %}
+</body>
+
+</html>

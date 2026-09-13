@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Student Dashboard</title>
+
+    {% load static %}
+
+<link rel="stylesheet" href="{% static 'student_dashboard.css' %}">
+
+
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+{% if role == 'Student' %}
+
+<div class="sidebar">
+
+
+<h2>Student Portal</h2>
+
+<ul>
+
+    <li>
+        <a href="{% url 'student_dashboard' %}" class="active">
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+    <li>
+        <a href="student_profile.html">
+            Profile
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+
+</div>
+{% endif %}
+
+{% if role == 'Guardian' %}
+<div class="sidebar">
+
+    <div class="logo">
+        <span>🏫</span>
+        School Management
+    </div>
+
+    <ul class="menu">
+
+        <li class="active">
+            <a href="{% url 'guardian_dashboard' %}">
+                🏠 <span>Dashboard</span>
+            </a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'student_dashboard' %}">
+                👨‍🎓 <span>My Child</span>
+            </a>
+        </li> {% endcomment %}
+
+        <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+        <li>
+            <a href="#">
+                👤 <span>Profile</span>
+            </a>
+        </li>
+
+        <li class="logout">
+            <a href="{% url 'logout' %}">
+                🚪 <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+{% endif %}
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+```
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+    <div>
+
+        <h1>
+            Welcome, {{ student_details.name }}
+        </h1>
+
+        <p>
+            Class {{ student_details.class_field }} - {{ student_details.section }}
+        </p>
+
+    </div>
+
+    <div class="student-info">
+
+        <span>Admission No: {{ student_details.admission_no }}</span>
+
+    </div>
+
+</div>
+
+
+<!-- ================= DASHBOARD CARDS ================= -->
+
+<div class="cards">
+
+
+    <div class="card">
+
+        <h3>Attendance</h3>
+
+        <p>87%</p>
+
+        <a href="student_attendance.html">
+            View Attendance
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>Overall Marks</h3>
+
+        <p>82%</p>
+
+        <a href="student_marks.html">
+            View Marks
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>Homework</h3>
+
+        <p>5 Pending</p>
+
+        <a href="student_homework.html">
+            View Homework
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>Fees Status</h3>
+
+        <p class="paid">
+            Paid
+        </p>
+
+        <a href="student_fees.html">
+            View Fees
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="content-section">
+
+
+    <!-- ================= TODAY'S SCHEDULE ================= -->
+
+    <div class="info-box">
+
+        <div class="box-header">
+
+            <h2>
+                Today's Schedule
+            </h2>
+
+            <a href="student_timetable.html">
+                Full Timetable
+            </a>
+
+        </div>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Time</th>
+
+                    <th>Subject</th>
+
+                    <th>Teacher</th>
+
+                    <th>Room</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td>09:00 AM</td>
+
+                    <td>Python</td>
+
+                    <td>Mr. Rahul Sharma</td>
+
+                    <td>Lab 1</td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>11:00 AM</td>
+
+                    <td>DBMS</td>
+
+                    <td>Ms. Priya Singh</td>
+
+                    <td>Room 204</td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>01:00 PM</td>
+
+                    <td>Django</td>
+
+                    <td>Mr. Amit Verma</td>
+
+                    <td>Lab 2</td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>03:00 PM</td>
+
+                    <td>Java</td>
+
+                    <td>Mr. Raj Kumar</td>
+
+                    <td>Room 105</td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ================= NOTICES ================= -->
+
+    <div class="info-box">
+
+        <div class="box-header">
+
+            <h2>
+                Latest Notices
+            </h2>
+
+            <a href="student_notices.html">
+                View All
+            </a>
+
+        </div>
+
+
+        <div class="notice">
+
+            <div>
+
+                <h3>
+                    Mid-Term Examination
+                </h3>
+
+                <p>
+                    Mid-term examinations will begin
+                    from 15 September.
+                </p>
+
+            </div>
+
+            <span>
+                30 Aug 2026
+            </span>
+
+        </div>
+
+
+        <div class="notice">
+
+            <div>
+
+                <h3>
+                    Assignment Submission
+                </h3>
+
+                <p>
+                    Submit your DBMS assignment
+                    before the deadline.
+                </p>
+
+            </div>
+
+            <span>
+                29 Aug 2026
+            </span>
+
+        </div>
+
+
+        <div class="notice">
+
+            <div>
+
+                <h3>
+                    Holiday Notice
+                </h3>
+
+                <p>
+                    The college will remain closed
+                    on the upcoming holiday.
+                </p>
+
+            </div>
+
+            <span>
+                28 Aug 2026
+            </span>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= RECENT HOMEWORK ================= -->
+
+<div class="info-box homework-box">
+
+    <div class="box-header">
+
+        <h2>
+            Recent Homework
+        </h2>
+
+        <a href="student_homework.html">
+            View All
+        </a>
+
+    </div>
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Subject</th>
+
+                <th>Assignment</th>
+
+                <th>Due Date</th>
+
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            <tr>
+
+                <td>DBMS</td>
+
+                <td>Normalization</td>
+
+                <td>02 Sep 2026</td>
+
+                <td>
+                    <span class="status pending">
+                        Pending
+                    </span>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>Python</td>
+
+                <td>File Handling</td>
+
+                <td>04 Sep 2026</td>
+
+                <td>
+                    <span class="status submitted">
+                        Submitted
+                    </span>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>Django</td>
+
+                <td>CRUD Application</td>
+
+                <td>06 Sep 2026</td>
+
+                <td>
+                    <span class="status pending">
+                        Pending
+                    </span>
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>

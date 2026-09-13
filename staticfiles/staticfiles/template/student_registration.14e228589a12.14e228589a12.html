@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Student Registration</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'student_registration.css' %}">
+```
+
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+```
+<!-- HEADER -->
+
+<div class="header">
+
+    <h1>Student Registration</h1>
+
+    <p>
+        Register a new student
+    </p>
+
+</div>
+
+
+<!-- ================= FORM ================= -->
+
+<div class="form-container" >
+
+    <form method="POST">
+        
+        {% csrf_token %}
+
+        <!-- ================= STUDENT DETAILS ================= -->
+
+        <div class="section">
+
+            <h2>Student Details</h2>
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="name">
+                        Student Name
+                    </label> {% endcomment %}
+                    {{ form.name.label }}
+                        {{ form.name}}
+                    {% comment %} <input
+                        type="text"
+                        id="name"
+                        name="Name"
+                        placeholder="Enter student name"
+                        maxlength="30"
+                        required> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="class">
+                        Class
+                    </label> {% endcomment %}
+                    {{ form.class_field.label }}
+                        {{ form.class_field}}
+                    {% comment %} <input
+                        type="number"
+                        id="class"
+                        name="Class"
+                        placeholder="Enter class"
+                        required> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="section">
+                        Section
+                    </label> {% endcomment %}
+                    {{ form.section.label }}
+                        {{ form.section}}
+                    {% comment %} <input
+                        type="text"
+                        id="section"
+                        name="Section"
+                        placeholder="Enter section"
+                        maxlength="5"
+                        required> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="dob">
+                        Date of Birth
+                    </label> {% endcomment %}
+                    {{ form.dob.label }}
+                        {{ form.dob}}
+                    {% comment %} <input
+                        type="date"
+                        id="dob"
+                        name="DOB"
+                        required> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="gender">
+                        Gender
+                    </label> {% endcomment %}
+                    {{ form.gender.label }}
+                        {{ form.gender}}
+                    {% comment %} <select
+                        id="gender"
+                        name="Gender"
+                        required>
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option value="Male">
+                            Male
+                        </option>
+
+                        <option value="Female">
+                            Female
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="house">
+                        House
+                    </label> {% endcomment %}
+                    {{ form.house.label }}
+                        {{ form.house}}
+                    {% comment %} <input
+                        type="text"
+                        id="house"
+                        name="House"
+                        placeholder="Enter house"
+                        maxlength="10"> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="blood_group">
+                        Blood Group
+                    </label> {% endcomment %}
+                    {{ form.blood_group.label }}
+                        {{ form.blood_group}}
+                    {% comment %} <select
+                        id="blood_group"
+                        name="Blood_Group">
+
+                        <option value="">
+                            Select Blood Group
+                        </option>
+
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+
+                    </select> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="transport">
+                        Mode of Transport
+                    </label> {% endcomment %}
+                    {{ form.mode_of_transport.label }}
+                        {{ form.mode_of_transport}}
+                    {% comment %} <select
+                        id="transport"
+                        name="Mode_of_Transport">
+
+                        <option value="">
+                            Select Transport Mode
+                        </option>
+
+                        <option value="School Bus">
+                            School Bus
+                        </option>
+
+                        <option value="Private Vehicle">
+                            Private Vehicle
+                        </option>
+
+                        <option value="Walking">
+                            Walking
+                        </option>
+
+                        <option value="Public Transport">
+                            Public Transport
+                        </option>
+
+                    </select> {% endcomment %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= PARENT DETAILS ================= -->
+
+        <div class="section">
+
+            <h2>Parent Details</h2>
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+
+                    {% comment %} <label for="father_name">
+                        Father's Name
+                    </label> {% endcomment %}
+                    {{ form.father_name.label }}
+                        {{ form.father_name}}
+                    {% comment %} <input
+                        type="text"
+                        id="father_name"
+                        name="Father_Name"
+                        placeholder="Enter father's name"
+                        maxlength="30"
+                        required> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="mother_name"> 
+                        Mother's Name
+                    </label> {% endcomment %}
+                     {{ form.mother_name.label }}
+                        {{ form.mother_name}}
+
+                    {% comment %} <input
+                        type="text"
+                        id="mother_name"
+                        name="Mother_Name"
+                        placeholder="Enter mother's name"
+                        maxlength="30"
+                        required> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="father_occupation">
+                        Father's Occupation
+                    </label> {% endcomment %}
+                     {{ form.father_occupation.label }}
+                        {{ form.father_occupation}}
+
+                    {% comment %} <input
+                        type="text"
+                        id="father_occupation"
+                        name="Father_Occupation"
+                        placeholder="Enter father's occupation"
+                        maxlength="25"> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="mother_occupation">
+                        Mother's Occupation
+                    </label> {% endcomment %}
+                     {{ form.mother_occupation.label }}
+                        {{ form.mother_occupation}}
+
+                    {% comment %} <input
+                        type="text"
+                        id="mother_occupation"
+                        name="Mother_Occupation"
+                        placeholder="Enter mother's occupation"
+                        maxlength="25"> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="father_contact">
+                        Father's Contact
+                    </label> {% endcomment %}
+                     {{ form.father_contact.label }}
+                        {{ form.father_contact}}
+
+                    {% comment %} <input
+                        type="tel"
+                        id="father_contact"
+                        name="Father_Contact"
+                        placeholder="Enter father's contact"
+                        maxlength="10"
+                        pattern="[0-9]{10}"> {% endcomment %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    {% comment %} <label for="mother_contact">
+                        Mother's Contact
+                    </label> {% endcomment %}
+                    {{ form.mother_contact.label }}
+                        {{ form.mother_contact}}
+
+                    {% comment %} <input
+                        type="tel"
+                        id="mother_contact"
+                        name="Mother_Contact"
+                        placeholder="Enter mother's contact"
+                        maxlength="10"
+                        pattern="[0-9]{10}"> {% endcomment %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ADDRESS ================= -->
+
+        <div class="section">
+
+            <h2>Address Details</h2>
+
+            <div class="form-group">
+
+                {% comment %} <label for="address">
+                    Address
+                </label> {% endcomment %}
+        
+                {{ form.address.label }}
+                        {{ form.address}}
+
+                {% comment %} <textarea
+                    id="address"
+                    name="Address"
+                    placeholder="Enter complete address"
+                    maxlength="50"
+                    rows="4"
+                    required></textarea> {% endcomment %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= BUTTONS ================= -->
+
+        <div class="form-buttons">
+
+            <button
+                type="reset"
+                class="reset-btn">
+
+                Reset
+
+            </button>
+            
+            {{ message }}
+            
+
+            <button
+                type="submit"
+                class="submit-btn">
+
+                Register Student
+
+            </button>
+
+        </div>
+
+
+    </form>
+
+</div>
+```
+
+</div>
+
+</body>
+
+</html>

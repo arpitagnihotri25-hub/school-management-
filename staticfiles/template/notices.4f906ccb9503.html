@@ -1,0 +1,2076 @@
+{% comment %} <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notice Management</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'notices.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+{% if role == 'Admin' %}
+    <div class="sidebar">
+
+        <h2>Admin Portal</h2>
+
+        <ul>
+
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'students' %}" class="active">Students</a></li>
+            <li><a href="{% url 'staff' %}">Staff</a></li>
+            <li><a href="{% url 'classes' %}">Classes</a></li>
+            <li><a href="{% url 'attendance' %}">Attendance</a></li>
+            <li><a href="{% url 'marks' %}">Marks</a></li>
+            <li><a href="{% url 'homework' %}">Homework</a></li>
+            <li><a href="{% url 'notices' %}">Notices</a></li>
+            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
+            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
+            <li><a href='admin_profile.html'>Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+
+        </ul>
+
+    </div>
+{% endif %}
+
+{% if role == 'Staff' %}
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+        <!-- ================= HEADER ================= -->
+    
+    <div class="header">
+
+        <div>
+
+            <h1>Notice Management</h1>
+
+            <p>Create, view and manage school notices</p>
+
+        </div>
+
+    </div>
+
+
+        <!-- ================= FILTER SECTION ================= -->
+
+    <div class="filter-box">
+
+
+        <div class="filter-group">
+
+            <label for="audienceFilter">
+                Audience
+            </label>
+
+            <select id="audienceFilter">
+
+                <option value="all">
+                    All
+                </option>
+
+                <option value="Students">
+                    Students
+                </option>
+
+                <option value="Staff">
+                    Staff
+                </option>
+
+                <option value="Students & Staff">
+                    Students & Staff
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="priorityFilter">
+                Priority
+            </label>
+
+            <select id="priorityFilter">
+
+                <option value="all">
+                    All Priorities
+                </option>
+
+                <option value="High">
+                    High
+                </option>
+
+                <option value="Medium">
+                    Medium
+                </option>
+
+                <option value="Low">
+                    Low
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="statusFilter">
+                Status
+            </label>
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="Active">
+                    Active
+                </option>
+
+                <option value="Expired">
+                    Expired
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="filter-btn"
+            onclick="applyFilter()">
+
+            Apply Filter
+
+        </button>
+
+    </div>
+
+
+        <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by notice title or description..."
+            onkeyup="searchNotices()">
+
+    </div>
+
+    <div class="homework-form">
+
+      <h2>Post a Notice</h2>
+        <form method="POST">
+            {% csrf_token %} 
+          <div class="form-grid"> 
+            <!-- CLASS --> 
+            <div class="form-group"> 
+                {% comment %} <label for="class"> Class </label> 
+                <input type="number" id="class" name="Class" placeholder="Enter class" required>  
+                {{ form.class_field.label_tag }} 
+                {{ form.class_field }}
+            </div> 
+             <!-- SUBJECT --> 
+            <div class="form-group"> 
+                {% comment %} <label for="subject"> Subject </label> 
+                <input type="text" id="subject" name="Subject" placeholder="Enter subject" maxlength="30" required>  
+                {{ form.title.label_tag }} 
+                {{ form.title }}
+            </div> 
+            <!-- DESCRIPTION --> 
+            <div class="form-group full-width"> 
+                {% comment %} <label for="description"> Description </label> 
+                <textarea id="description" name="Description" placeholder="Enter homework description" rows="6" required></textarea>  
+                {{ form.description.label_tag }} 
+                {{ form.description }}
+            </div> 
+          </div> 
+          <!-- BUTTONS --> 
+          <div class="form-buttons"> 
+            <button type="reset" class="reset-btn"> Reset </button> 
+            <button type="submit" class="submit-btn"> Post Notice </button> 
+          </div> 
+        </form>
+    </div>
+
+    <!-- ================= NOTICE TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>Notice Records</h2>
+
+
+        <div class="table-wrapper">
+
+            <table id="noticeTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Title</th>
+
+                        <th>Description</th>
+
+                        <th>Posted By</th>
+
+                        <th>Posted Date</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <!-- ================= NOTICE 1 ================= -->
+                    {% for notice in notice_details %}
+                    <tr>
+
+                        <td>{{ notice.title }}</td>
+
+                        <td>
+                            {{ notice.description }}
+                        </td>
+
+                        <td>{{ notice.post_by_name }}</td>
+
+                        <td>{{ notice.post_date }}</td>
+
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+{% endcomment %}
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+    function searchNotices() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("noticeTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowText =
+                rows[i]
+                .innerText
+                .toLowerCase();
+
+            if (rowText.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function applyFilter() {
+
+        let audience =
+            document
+            .getElementById("audienceFilter")
+            .value
+            .toLowerCase();
+
+        let priority =
+            document
+            .getElementById("priorityFilter")
+            .value
+            .toLowerCase();
+
+        let status =
+            document
+            .getElementById("statusFilter")
+            .value
+            .toLowerCase();
+
+
+        let table =
+            document
+            .getElementById("noticeTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowAudience =
+                rows[i]
+                .cells[3]
+                .innerText
+                .toLowerCase();
+
+            let rowPriority =
+                rows[i]
+                .cells[7]
+                .innerText
+                .toLowerCase();
+
+            let rowStatus =
+                rows[i]
+                .cells[8]
+                .innerText
+                .toLowerCase();
+
+
+            let audienceMatch =
+                audience === "all"
+                || rowAudience === audience;
+
+            let priorityMatch =
+                priority === "all"
+                || rowPriority === priority;
+
+            let statusMatch =
+                status === "all"
+                || rowStatus === status;
+
+
+            if (
+                audienceMatch &&
+                priorityMatch &&
+                statusMatch
+            ) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function addNotice() {
+
+        alert("Add Notice form will open here.");
+
+    }
+
+
+    function viewNotice(id) {
+
+        alert(
+            "Viewing Notice: " + id
+        );
+
+    }
+
+
+    function editNotice(id) {
+
+        alert(
+            "Edit Notice: " + id
+        );
+
+    }
+
+
+    function deleteNotice(id) {
+
+        let confirmDelete =
+            confirm(
+                "Are you sure you want to delete "
+                + id
+                + "?"
+            );
+
+
+        if (confirmDelete) {
+
+            alert(
+                "Notice "
+                + id
+                + " deleted successfully."
+            );
+
+        }
+
+    }
+
+</script> 
+
+</body></html> {% endcomment %}
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notice Management</title>
+
+    {% load static %}
+
+    <style>
+
+        /* =========================================================
+           GLOBAL RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 240px;
+            height: 100vh;
+
+            background: #1e293b;
+            color: white;
+
+            padding-top: 25px;
+
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin: 5px 0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+
+            padding: 13px 25px;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 16px;
+
+            transition: 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background: #334155;
+            padding-left: 32px;
+        }
+
+        .sidebar ul li a.active {
+            background: #2563eb;
+            font-weight: bold;
+
+            border-left: 4px solid white;
+        }
+
+
+        /* =========================================================
+           MAIN CONTENT
+        ========================================================= */
+
+        .main-content {
+            margin-left: 240px;
+
+            padding: 30px;
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .header {
+            background: white;
+
+            padding: 25px 30px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+
+            color: #1e293b;
+
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================================================
+           ADD BUTTON
+        ========================================================= */
+
+        .add-btn {
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 20px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================================
+           FILTER BOX
+        ========================================================= */
+
+        .filter-box {
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+
+            align-items: flex-end;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+        .filter-group label {
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #475569;
+        }
+
+        .filter-group select {
+            width: 190px;
+
+            padding: 11px 12px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            background: white;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+        .filter-group select:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .filter-btn {
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 11px 20px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* =========================================================
+           SEARCH BOX
+        ========================================================= */
+
+        .search-box {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-box input {
+            width: 100%;
+
+            padding: 13px 15px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            outline: none;
+
+            font-size: 15px;
+
+            color: #334155;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+
+        /* =========================================================
+           NOTICE FORM
+        ========================================================= */
+
+        .homework-form {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .homework-form h2 {
+            color: #1e293b;
+
+            font-size: 21px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================================================
+           FORM GRID
+        ========================================================= */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+
+        /* =========================================================
+           FORM GROUP
+        ========================================================= */
+
+        .form-group {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+
+            min-width: 0;
+        }
+
+
+        /* =========================================================
+           FORM LABEL
+        ========================================================= */
+
+        .form-group label {
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #475569;
+        }
+
+
+        /* =========================================================
+           DJANGO FORM FIELDS
+        ========================================================= */
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            outline: none;
+
+            background: white;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            transition: 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+
+        /* =========================================================
+           TEXTAREA
+        ========================================================= */
+
+        .form-group textarea {
+            resize: vertical;
+
+            min-height: 130px;
+        }
+
+
+        /* =========================================================
+           SELECT
+        ========================================================= */
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           FULL WIDTH
+        ========================================================= */
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+
+        /* =========================================================
+           FORM BUTTONS
+        ========================================================= */
+
+        .form-buttons {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+        .reset-btn,
+        .submit-btn {
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+
+        /* =========================================================
+           RESET BUTTON
+        ========================================================= */
+
+        .reset-btn {
+            background: #e2e8f0;
+
+            color: #334155;
+        }
+
+        .reset-btn:hover {
+            background: #cbd5e1;
+        }
+
+
+        /* =========================================================
+           SUBMIT BUTTON
+        ========================================================= */
+
+        .submit-btn {
+            background: #2563eb;
+
+            color: white;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================================
+           TABLE CONTAINER
+        ========================================================= */
+
+        .table-container {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .table-container h2 {
+            color: #1e293b;
+
+            font-size: 21px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================================================
+           TABLE WRAPPER
+        ========================================================= */
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+
+        /* =========================================================
+           NOTICE TABLE
+        ========================================================= */
+
+        #noticeTable {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 650px;
+
+            background: white;
+        }
+
+        #noticeTable thead {
+            background: #1e293b;
+
+            color: white;
+        }
+
+        #noticeTable th {
+            padding: 14px 15px;
+
+            text-align: left;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+        #noticeTable td {
+            padding: 14px 15px;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            color: #475569;
+
+            font-size: 14px;
+
+            vertical-align: top;
+        }
+
+        #noticeTable tbody tr {
+            transition: 0.2s;
+        }
+
+        #noticeTable tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        #noticeTable td:nth-child(2) {
+            max-width: 400px;
+
+            line-height: 1.5;
+
+            word-break: break-word;
+        }
+
+
+        /* =========================================================
+           SCROLLBAR
+        ========================================================= */
+
+        .sidebar::-webkit-scrollbar,
+        .table-wrapper::-webkit-scrollbar {
+            width: 6px;
+
+            height: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb,
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #64748b;
+
+            border-radius: 10px;
+        }
+
+
+        /* =========================================================
+           TABLET
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .filter-group select {
+                width: 170px;
+            }
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding-bottom: 15px;
+            }
+
+            .sidebar h2 {
+                margin-bottom: 15px;
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 15px;
+            }
+
+            .header {
+                padding: 20px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .filter-box {
+                padding: 18px;
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .filter-group select {
+                width: 100%;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+
+            .search-box {
+                padding: 15px;
+            }
+
+            .homework-form {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+
+                gap: 15px;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+
+            .reset-btn,
+            .submit-btn {
+                width: 100%;
+            }
+
+            .table-container {
+                padding: 18px;
+            }
+        }
+
+
+        /* =========================================================
+           EXTRA SMALL MOBILE
+        ========================================================= */
+
+        @media (max-width: 450px) {
+
+            .main-content {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 18px;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+            .homework-form {
+                padding: 16px;
+            }
+
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 11px;
+            }
+
+            #noticeTable th,
+            #noticeTable td {
+                padding: 11px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         SIDEBAR - ADMIN
+    ========================================================= -->
+
+    {% if role == 'Admin' %}
+
+    <div class="sidebar">
+
+        <h2>Admin Portal</h2>
+
+        <ul>
+
+            <li>
+                <a href="{% url 'admin_dashboard' %}">
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'students' %}">
+                    Students
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'staff' %}">
+                    Staff
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'classes' %}">
+                    Classes
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'attendance' %}">
+                    Attendance
+                </a>
+            </li>
+
+            {% comment %} <li>
+                <a href="{% url 'marks' %}">
+                    Marks
+                </a>
+            </li> {% endcomment %}
+
+            <li>
+                <a href="{% url 'homework' %}">
+                    Homework
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'notices' %}" class="active">
+                    Notices
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'fees_details' %}">
+                    Fees Details
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'fees_status' %}">
+                    Fees Status
+                </a>
+            </li>
+
+            <li>
+                <a href="admin_profile.html">
+                    Profile
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'logout' %}">
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- =========================================================
+         SIDEBAR - STAFF
+    ========================================================= -->
+
+    {% if role == 'Staff' %}
+
+    <div class="sidebar">
+
+        <h2>Staff Portal</h2>
+
+        <ul>
+
+            <li>
+                <a href="{% url 'staff_dashboard' %}">
+                    Dashboard
+                </a>
+            </li>
+
+
+            {% if staff_role == 'Teacher' %}
+
+            <li>
+                <a href="{% url 'attendance' %}">
+                    Attendance
+                </a>
+            </li>
+
+            {% endif %}
+
+
+            <li>
+                <a href="{% url 'students' %}">
+                    Students
+                </a>
+            </li>
+
+
+            {% if staff_role == 'Accountant' %}
+
+            <li>
+                <a href="{% url 'student_registration' %}">
+                    Add a new Student
+                </a>
+            </li>
+
+            {% endif %}
+
+
+            {% comment %} {% if staff_role == 'Teacher' %}
+
+            <li>
+                <a href="{% url 'marks' %}">
+                    Marks Entry
+                </a>
+            </li>
+
+            {% endif %} {% endcomment %}
+
+
+            {% if staff_role == 'Teacher' %}
+
+            <li>
+                <a href="{% url 'homework' %}">
+                    Homework
+                </a>
+            </li>
+
+            {% endif %}
+
+
+            {% if staff_role == 'Teacher' %}
+
+            <li>
+                <a href="{% url 'notices' %}" class="active">
+                    Notices
+                </a>
+            </li>
+
+            {% endif %}
+
+
+            {% if staff_role == 'Accountant' %}
+
+            <li>
+                <a href="{% url 'fees_status' %}">
+                    Fees Status
+                </a>
+            </li>
+
+            {% endif %}
+
+
+            <li>
+                <a href="teacher_profile.html">
+                    Profile
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{% url 'logout' %}">
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    {% endif %}
+
+{% if role == 'Student' %}
+    <div class="sidebar">
+
+
+<h2>Student Portal</h2>
+
+<ul>
+
+    <li>
+        <a href="{% url 'student_dashboard' %}" class="active">
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+    <li>
+        <a href="student_profile.html">
+            Profile
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+</div>
+    {% endif %}
+
+    {% if role == 'Guardian' %}
+<div class="sidebar">
+
+    <div class="logo">
+        <span>🏫</span>
+        School Management
+    </div>
+
+    <ul class="menu">
+
+        <li class="active">
+            <a href="{% url 'guardian_dashboard' %}">
+                🏠 <span>Dashboard</span>
+            </a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'student_dashboard' %}">
+                👨‍🎓 <span>My Child</span>
+            </a>
+        </li> {% endcomment %}
+
+        <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+        <li>
+            <a href="#">
+                👤 <span>Profile</span>
+            </a>
+        </li>
+
+        <li class="logout">                                  
+            <a href="{% url 'logout' %}">
+                🚪 <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+{% endif %}
+
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================= -->
+
+    <div class="main-content">
+
+
+        <!-- =====================================================
+             HEADER
+        ===================================================== -->
+
+        <div class="header">
+
+            <div>
+
+                <h1>
+                    Notice Management
+                </h1>
+
+                <p>
+                    Create, view and manage school notices
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             FILTER SECTION
+        ===================================================== -->
+
+        <div class="filter-box">
+
+            <div class="filter-group">
+
+                <label for="audienceFilter">
+                    Audience
+                </label>
+
+                <select id="audienceFilter">
+
+                    <option value="all">
+                        All
+                    </option>
+
+                    <option value="Students">
+                        Students
+                    </option>
+
+                    <option value="Staff">
+                        Staff
+                    </option>
+
+                    <option value="Students & Staff">
+                        Students & Staff
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="priorityFilter">
+                    Priority
+                </label>
+
+                <select id="priorityFilter">
+
+                    <option value="all">
+                        All Priorities
+                    </option>
+
+                    <option value="High">
+                        High
+                    </option>
+
+                    <option value="Medium">
+                        Medium
+                    </option>
+
+                    <option value="Low">
+                        Low
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="statusFilter">
+                    Status
+                </label>
+
+                <select id="statusFilter">
+
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="Active">
+                        Active
+                    </option>
+
+                    <option value="Expired">
+                        Expired
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="filter-btn"
+                onclick="applyFilter()">
+
+                Apply Filter
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             SEARCH
+        ===================================================== -->
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by notice title or description..."
+                onkeyup="searchNotices()">
+
+        </div>
+
+
+
+        <!-- =====================================================
+             POST NOTICE FORM
+        ===================================================== -->
+
+        <div class="homework-form">
+
+            <h2>
+                Post a Notice
+            </h2>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <div class="form-grid">
+
+
+                    <!-- CLASS -->
+
+                    <div class="form-group">
+
+                        {{ form.class_field.label_tag }}
+
+                        {{ form.class_field }}
+
+                    </div>
+
+
+
+                    <!-- TITLE -->
+
+                    <div class="form-group">
+
+                        {{ form.title.label_tag }}
+
+                        {{ form.title }}
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group full-width">
+
+                        {{ form.description.label_tag }}
+
+                        {{ form.description }}
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- BUTTONS -->
+
+                <div class="form-buttons">
+
+                    <button
+                        type="reset"
+                        class="reset-btn">
+
+                        Reset
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="submit-btn">
+
+                        Post Notice
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             NOTICE TABLE
+        ===================================================== -->
+
+        <div class="table-container">
+
+            <h2>
+                Notice Records
+            </h2>
+
+
+            <div class="table-wrapper">
+
+                <table id="noticeTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Title
+                            </th>
+
+                            <th>
+                                Description
+                            </th>
+
+                            <th>
+                                Posted By
+                            </th>
+
+                            <th>
+                                Posted Date
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for notice in notice_details %}
+                        {% if role == 'Staff' or role == 'Admin' or notice.class_field == student.class_field %}
+
+                        <tr>
+
+                            <td>
+                                {{ notice.title }}
+                            </td>
+
+
+                            <td>
+                                {{ notice.description }}
+                            </td>
+
+
+                            <td>
+                                {{ notice.post_by_name }}
+                            </td>
+
+
+                            <td>
+                                {{ notice.post_date }}
+                            </td>
+
+                        </tr>
+
+                        {% endif %}
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="4" style="text-align: center;">
+
+                                No notices available.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script>
+
+
+        /* =====================================================
+           SEARCH NOTICES
+        ===================================================== */
+
+        function searchNotices() {
+
+            let input =
+                document
+                .getElementById("searchInput")
+                .value
+                .toLowerCase();
+
+
+            let table =
+                document
+                .getElementById("noticeTable");
+
+
+            let rows =
+                table
+                .getElementsByTagName("tr");
+
+
+            for (let i = 1; i < rows.length; i++) {
+
+                let rowText =
+                    rows[i]
+                    .innerText
+                    .toLowerCase();
+
+
+                if (rowText.includes(input)) {
+
+                    rows[i].style.display = "";
+
+                }
+
+                else {
+
+                    rows[i].style.display = "none";
+
+                }
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           APPLY FILTER
+           
+           NOTE:
+           Your current table contains only:
+           Title
+           Description
+           Posted By
+           Posted Date
+
+           Therefore Audience, Priority and Status are not
+           available in the table to filter.
+        ===================================================== */
+
+        function applyFilter() {
+
+            alert(
+                "Audience, Priority and Status filtering requires these fields to be present in the notice table."
+            );
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

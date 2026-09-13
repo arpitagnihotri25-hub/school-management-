@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Dashboard</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'staff_dashboard.css' %}">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Header -->
+        <div class="header">
+
+            <h1>Welcome, {{ staff_details.name }}</h1>
+
+            <p>{{ staff_details.subject }} {{ staff_details.role }}</p>
+
+        </div>
+
+
+        <!-- Dashboard Cards -->
+        <div class="cards">
+
+            <div class="card">
+                <h3>Total Students</h3>
+                <p>320</p>
+            </div>
+
+            <div class="card">
+                <h3>Classes Today</h3>
+                <p>6</p>
+            </div>
+
+            <div class="card">
+                <h3>Assignments</h3>
+                <p>12 Active</p>
+            </div>
+
+            <div class="card">
+                <h3>Pending Reports</h3>
+                <p>4</p>
+            </div>
+
+        </div>
+
+
+        
+        <!-- Main Dashboard Sections -->
+        <div class="content-section">
+
+
+            <!-- Quick Actions -->
+            <div class="attendance-box">
+
+                <h2>Quick Actions</h2>
+
+                <button onclick="location.href='student_registration.html'"
+                >
+                    Mark Attendance
+                </button>
+
+                <button onclick="location.href='marks_entry.html'">
+                    Upload Marks
+                </button>
+
+                <button onclick="location.href='homework.html'">
+                    Create Assignment
+                </button>
+
+                <button onclick="location.href='notices.html'">
+                    Post Notice
+                </button>
+
+            </div>
+
+
+            <!-- Today's Schedule -->
+            <div class="schedule-box">
+
+                <h2>Today's Schedule</h2>
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Class</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>09:00 AM</td>
+                            <td>BCA 1st Year</td>
+                            <td>Python</td>
+                        </tr>
+
+                        <tr>
+                            <td>11:00 AM</td>
+                            <td>BCA 2nd Year</td>
+                            <td>DBMS</td>
+                        </tr>
+
+                        <tr>
+                            <td>01:00 PM</td>
+                            <td>BCA 3rd Year</td>
+                            <td>Django</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

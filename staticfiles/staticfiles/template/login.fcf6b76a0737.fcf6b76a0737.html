@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+
+<body class="login-page">
+  <div class="login-card">
+    <div class="login-left">
+    <div class="brand"><div class="brand-icon">🎓</div><div><h1>VisionPublic<span>School</span></h1><small>School Management System</small></div></div>
+    <div class="welcome"><h2>Welcome Back!</h2><p>Login to your account</p></div>
+    <form id="loginForm" method="POST">
+      
+      {% csrf_token %}
+      
+      <label>Username / Staff ID / Admission Number / Guardian ID</label>
+      <div class="input"><span>👤</span><input id="username" required placeholder="Enter Username / Staff ID / Admission Number / Guardian ID" name='id'></div>
+      
+      <label>Password</label>
+      <div class="input"><span>🔒</span><input id="password" type="password" required placeholder="Enter password" name='password'><button type="button" id="toggle">👁</button></div>
+     
+      <div class="row"><label class="check"><input type="checkbox"> Remember me</label><a href="#">Forgot Password?</a></div>
+      
+      <button class="primary" type="submit">Login</button>
+
+      {{ message }}
+
+      <div class="login-link">
+                    New Guardian?
+                    <a href="{% url 'guardian_registration' %}">Register here</a>
+                </div>
+      
+      <p id="msg"></p>
+    </form>
+  </div>
+  <div class="login-art">
+    <div class="spark s1">✦</div><div class="spark s2">✦</div><div class="spark s3">✦</div>
+    <div class="art-books">
+      <div class="art-book b1">📖</div><div class="art-book b2">📚</div><div class="art-book b3">💻</div><div class="art-book b4">📕</div>
+    </div>
+    <div class="person p1">👩‍💻</div><div class="person p2">👨‍💻</div>
+    <div class="art-text"><h2>Learn. Grow. Succeed.</h2><p>Everything you need to manage your school in one place.</p></div>
+  </div>
+</div>
+{% comment %} <script src="script.js"></script> {% endcomment %}
+</body>
+
+</html>

@@ -1,0 +1,693 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Homework Management</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'homework.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+{% if role == 'Admin' %}
+    <div class="sidebar">
+
+        <h2>Admin Portal</h2>
+
+        <ul>
+
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'students' %}" class="active">Students</a></li>
+            <li><a href="{% url 'staff' %}">Staff</a></li>
+            <li><a href="{% url 'classes' %}">Classes</a></li>
+            <li><a href="{% url 'attendance' %}">Attendance</a></li>
+            {% comment %} <li><a href="{% url 'marks' %}">Marks</a></li> {% endcomment %}
+            <li><a href="{% url 'homework' %}">Homework</a></li>
+            <li><a href="{% url 'notices' %}">Notices</a></li>
+            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
+            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
+            <li><a href='admin_profile.html'>Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+
+        </ul>
+
+    </div>
+{% endif %}
+
+{% if role == 'Staff' %}
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+ {% if role == 'Student' %}
+    <div class="sidebar">
+
+
+<h2>Student Portal</h2>
+
+<ul>
+
+    <li>
+        <a href="{% url 'student_dashboard' %}" class="active">
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+    <li>
+        <a href="student_profile.html">
+            Profile
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+</div>
+    {% endif %}
+
+    {% if role == 'Guardian' %}
+<div class="sidebar">
+
+    <div class="logo">
+        <span>🏫</span>
+        School Management
+    </div>
+
+    <ul class="menu">
+
+        <li class="active">
+            <a href="{% url 'guardian_dashboard' %}">
+                🏠 <span>Dashboard</span>
+            </a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'student_dashboard' %}">
+                👨‍🎓 <span>My Child</span>
+            </a>
+        </li> {% endcomment %}
+
+        <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+        <li>
+            <a href="#">
+                👤 <span>Profile</span>
+            </a>
+        </li>
+
+        <li class="logout">
+            <a href="{% url 'logout' %}">
+                🚪 <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+{% endif %}
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Homework Management</h1>
+
+            <p>View and manage homework assigned to students</p>
+
+        </div>
+
+        <button
+            class="add-btn"
+            onclick="addHomework()">
+
+            + Add Homework
+
+        </button>
+
+    </div>
+
+
+
+    <!-- ================= FILTER SECTION ================= -->
+
+    <div class="filter-box">
+
+
+        <div class="filter-group">
+
+            <label for="classFilter">
+                Class
+            </label>
+
+            <select id="classFilter">
+
+                <option value="all">
+                    All Classes
+                </option>
+
+                <option value="BCA 1st Year">
+                    BCA 1st Year
+                </option>
+
+                <option value="BCA 2nd Year">
+                    BCA 2nd Year
+                </option>
+
+                <option value="BCA 3rd Year">
+                    BCA 3rd Year
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="subjectFilter">
+                Subject
+            </label>
+
+            <select id="subjectFilter">
+
+                <option value="all">
+                    All Subjects
+                </option>
+
+                <option value="Python">
+                    Python
+                </option>
+
+                <option value="DBMS">
+                    DBMS
+                </option>
+
+                <option value="Django">
+                    Django
+                </option>
+
+                <option value="Mathematics">
+                    Mathematics
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="statusFilter">
+                Status
+            </label>
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="Active">
+                    Active
+                </option>
+
+                <option value="Completed">
+                    Completed
+                </option>
+
+                <option value="Overdue">
+                    Overdue
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="filter-btn"
+            onclick="applyFilter()">
+
+            Apply Filter
+
+        </button>
+
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by homework title, subject or teacher..."
+            onkeyup="searchHomework()">
+
+    </div>
+    {% if role == 'Staff' %}
+    <div class="homework-form">
+
+      <h2>Add Homework</h2>
+        <form method="POST">
+            {% csrf_token %}
+          <div class="form-grid"> 
+            <!-- CLASS --> 
+            <div class="form-group"> 
+                {% comment %} <label for="class"> Class </label> 
+                <input type="number" id="class" name="Class" placeholder="Enter class" required>  {% endcomment %}
+                {{ form.class_field.label_tag }} 
+                {{ form.class_field }}
+            </div> 
+            <!-- SECTION --> 
+            <div class="form-group"> 
+                {% comment %} <label for="section"> Section </label> 
+                <input type="text" id="section" name="Section" placeholder="Enter section" maxlength="5" required>  {% endcomment %}
+                {{ form.section.label_tag }} 
+                {{ form.section }}
+            </div>
+             <!-- SUBJECT --> 
+            {% comment %} <div class="form-group"> 
+                {% comment %} <label for="subject"> Subject </label> 
+                <input type="text" id="subject" name="Subject" placeholder="Enter subject" maxlength="30" required>
+                {{ form.subject.label_tag }} 
+                {{ form.subject }}
+            </div>  {% endcomment %}
+            <!-- DESCRIPTION --> 
+            <div class="form-group full-width"> 
+                {% comment %} <label for="description"> Description </label> 
+                <textarea id="description" name="Description" placeholder="Enter homework description" rows="6" required></textarea>  {% endcomment %}
+                {{ form.description.label_tag }} 
+                {{ form.description }}
+            </div> 
+          </div> 
+          <!-- BUTTONS --> 
+          <div class="form-buttons"> 
+            <button type="reset" class="reset-btn"> Reset </button> 
+            <button type="submit" class="submit-btn"> Post Homework </button> 
+          </div> 
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- ================= HOMEWORK TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>Homework Records</h2>
+
+
+        <div class="table-wrapper">
+
+            <table id="homeworkTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Class</th>
+
+                        <th>Section</th>
+
+                        <th>Subject</th>
+
+                        <th>Description</th>
+
+                        <th>Post Date</th>
+
+                        <th>Teacher</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+               
+                    {% for hw in homework_details %}
+                    {% if role == 'Staff' or role == 'Admin' or hw.class_field == student.class_field %}
+                 
+
+                    <tr>
+
+                        <td>{{ hw.class_field }}</td>
+
+                        <td>{{ hw.section }}</td>
+
+                        <td>{{ hw.subject }}</td>
+
+                        <td>{{ hw.description }}</td>
+
+                        <td>{{ hw.post_date }}</td>
+
+                        <td>{{ hw.post_by_name }}</td>
+
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+
+    function searchHomework() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("homeworkTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowText =
+                rows[i]
+                .innerText
+                .toLowerCase();
+
+            if (rowText.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function applyFilter() {
+
+        let classValue =
+            document
+            .getElementById("classFilter")
+            .value
+            .toLowerCase();
+
+        let subjectValue =
+            document
+            .getElementById("subjectFilter")
+            .value
+            .toLowerCase();
+
+        let statusValue =
+            document
+            .getElementById("statusFilter")
+            .value
+            .toLowerCase();
+
+
+        let table =
+            document
+            .getElementById("homeworkTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let className =
+                rows[i]
+                .cells[2]
+                .innerText
+                .toLowerCase();
+
+            let subject =
+                rows[i]
+                .cells[4]
+                .innerText
+                .toLowerCase();
+
+            let status =
+                rows[i]
+                .cells[8]
+                .innerText
+                .toLowerCase();
+
+
+            let classMatch =
+                classValue === "all"
+                || className === classValue;
+
+            let subjectMatch =
+                subjectValue === "all"
+                || subject === subjectValue;
+
+            let statusMatch =
+                statusValue === "all"
+                || status === statusValue;
+
+
+            if (
+                classMatch &&
+                subjectMatch &&
+                statusMatch
+            ) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function addHomework() {
+
+        alert("Add Homework form will open here.");
+
+    }
+
+
+    function viewHomework(id) {
+
+        alert(
+            "Viewing Homework: "
+            + id
+        );
+
+    }
+
+
+    function editHomework(id) {
+
+        alert(
+            "Edit Homework: "
+            + id
+        );
+
+    }
+
+
+    function deleteHomework(id) {
+
+        let confirmDelete =
+            confirm(
+                "Are you sure you want to delete "
+                + id
+                + "?"
+            );
+
+
+        if (confirmDelete) {
+
+            alert(
+                "Homework "
+                + id
+                + " deleted successfully."
+            );
+
+        }
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

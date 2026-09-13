@@ -1,0 +1,672 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fees Status</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'fees_status.css' %}">
+
+</head><body><!-- ================= SIDEBAR ================= -->
+
+{% if role == 'Admin' %}
+    <div class="sidebar">
+
+        <h2>Admin Portal</h2>
+
+        <ul>
+
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'students' %}" class="active">Students</a></li>
+            <li><a href="{% url 'staff' %}">Staff</a></li>
+            <li><a href="{% url 'classes' %}">Classes</a></li>
+            <li><a href="{% url 'attendance' %}">Attendance</a></li>
+            {% comment %} <li><a href="{% url 'marks' %}">Marks</a></li> {% endcomment %}
+            <li><a href="{% url 'homework' %}">Homework</a></li>
+            <li><a href="{% url 'notices' %}">Notices</a></li>
+            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
+            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
+            <li><a href='admin_profile.html'>Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+
+        </ul>
+
+    </div>
+{% endif %}
+
+{% if role == 'Staff' %}
+    <div class="sidebar">
+
+    <h2>Staff Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'attendance' %}" class="active">
+                Attendance
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+        {% endif %}
+
+        {% comment %} {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'marks' %}">
+                Marks Entry
+            </a>
+        </li>
+        {% endif %} {% endcomment %}
+
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if staff_role == 'Teacher' %}
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+        {% endif %}
+
+        {% if staff_role == 'Accountant' %}
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+        {% endif %}
+        
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+{% if role == 'Student' %}
+    <div class="sidebar">
+
+
+<h2>Student Portal</h2>
+
+<ul>
+
+    <li>
+        <a href="{% url 'student_dashboard' %}" class="active">
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+    <li>
+        <a href="student_profile.html">
+            Profile
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+    </li>
+
+</ul>
+
+</div>
+    {% endif %}
+
+{% if role == 'Guardian' %}
+<div class="sidebar">
+
+    <div class="logo">
+        <span>🏫</span>
+        School Management
+    </div>
+
+    <ul class="menu">
+
+        <li class="active">
+            <a href="{% url 'guardian_dashboard' %}">
+                🏠 <span>Dashboard</span>
+            </a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'student_dashboard' %}">
+                👨‍🎓 <span>My Child</span>
+            </a>
+        </li> {% endcomment %}
+
+        <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+        <li>
+            <a href="#">
+                👤 <span>Profile</span>
+            </a>
+        </li>
+
+        <li class="logout">
+            <a href="{% url 'logout' %}">
+                🚪 <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+{% endif %}
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Fees Status</h1>
+
+            <p>View and manage student fee payment status</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Total Students</h3>
+
+            <p>320</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Fees Paid</h3>
+
+            <p>250</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Fees Pending</h3>
+
+            <p>55</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Partially Paid</h3>
+
+            <p>15</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FILTER ================= -->
+
+    <div class="filter-box">
+
+
+        <div class="filter-group">
+
+            <label for="classFilter">
+                Class
+            </label>
+
+            <select id="classFilter">
+
+                <option value="all">
+                    All Classes
+                </option>
+
+                <option value="1">
+                    Class 1
+                </option>
+
+                <option value="2">
+                    Class 2
+                </option>
+
+                <option value="3">
+                    Class 3
+                </option>
+
+                <option value="4">
+                    Class 4
+                </option>
+
+                <option value="5">
+                    Class 5
+                </option>
+
+                <option value="6">
+                    Class 6
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="statusFilter">
+                Payment Status
+            </label>
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="Paid">
+                    Paid
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Partially Paid">
+                    Partially Paid
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="filter-btn"
+            onclick="applyFilter()">
+
+            Apply Filter
+
+        </button>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by admission number or student name..."
+            onkeyup="searchStudents()">
+
+    </div>
+
+    {% if role == 'Staff' %}
+
+    <div class="homework-form">
+
+      <h2>Add a Record</h2>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-grid"> 
+            <!-- CLASS --> 
+            <div class="form-group"> 
+                {% comment %} <label for="class"> Class </label> 
+                <input type="number" id="class" name="Class" placeholder="Enter class" required>  {% endcomment %}
+                {{ form.admission_no.label_tag }} 
+                {{ form.admission_no }} 
+            </div> 
+            
+            <!-- SECTION --> 
+            <div class="form-group"> 
+                {% comment %} <label for="section"> Section </label> 
+                <input type="text" id="section" name="Section" placeholder="Enter section" maxlength="5" required>  {% endcomment %}
+                {{ form.student_name.label_tag }} 
+                {{ form.student_name }} 
+            
+            </div>
+             
+             <!-- SUBJECT --> 
+            <div class="form-group"> 
+                {% comment %} <label for="subject"> Subject </label> 
+                <input type="text" id="subject" name="Subject" placeholder="Enter subject" maxlength="30" required>  {% endcomment %}
+                {{ form.class_field.label_tag }} 
+                {{ form.class_field }} 
+           
+            </div> 
+            
+            <!-- POST DATE --> 
+            <div class="form-group"> 
+                {% comment %} <label for="post_date"> Post Date </label> 
+                <input type="date" id="post_date" name="Post_Date" required>  {% endcomment %}
+                 {{ form.section.label_tag }} 
+                {{ form.section }} 
+            </div> 
+            
+            <!-- DESCRIPTION --> 
+            <div class="form-group full-width"> 
+                {% comment %} <label for="description"> Description </label> 
+                <textarea id="description" name="Description" placeholder="Enter homework description" rows="6" required></textarea>  {% endcomment %}
+                {{ form.deposit_date.label_tag }} 
+                {{ form.deposit_date }} 
+            </div> 
+            <div class="form-group"> 
+                {{ form.deposit_amount.label_tag }} 
+                {{ form.deposit_amount }}
+            </div>
+          </div> 
+          <!-- BUTTONS --> 
+          <div class="form-buttons"> 
+            <button type="reset" class="reset-btn"> Reset </button> 
+            <button type="submit" class="submit-btn"> Send </button> 
+          </div> 
+        </form>
+    </div>
+
+    {% endif %}
+
+    
+    <!-- ================= FEES STATUS TABLE ================= -->
+
+    <div class="table-container">
+
+        <h2>Student Fees Records</h2>
+
+
+        <div class="table-wrapper">
+
+            <table id="feesTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Admission No.</th>
+
+                        <th>Student Name</th>
+
+                        <th>Class</th>
+
+                        <th>Section</th>
+
+                        <th>Amount</th>
+
+                        <th>Date</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for status in fees_record%}
+                    {% if role == 'Admin' or role == 'Staff' or status.admission_no.admission_no == student.admission_no %}
+                    <tr>
+
+                        <td>{{ status.admission_no.admission_no }}</td>
+
+                        <td>{{ status.student_name}}</td>
+
+                        <td>{{ status.class_field }}</td>
+
+                        <td>{{ status.section }}</td>
+
+                        <td>{{ status.deposit_amount }}</td>
+
+                        <td>{{ status.deposit_date }}</td>
+
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+{% comment %} <script>
+
+    function searchStudents() {
+
+        let input =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        let table =
+            document
+            .getElementById("feesTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let rowText =
+                rows[i]
+                .innerText
+                .toLowerCase();
+
+            if (rowText.includes(input)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function applyFilter() {
+
+        let classValue =
+            document
+            .getElementById("classFilter")
+            .value;
+
+        let statusValue =
+            document
+            .getElementById("statusFilter")
+            .value
+            .toLowerCase();
+
+
+        let table =
+            document
+            .getElementById("feesTable");
+
+        let rows =
+            table
+            .getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+
+            let className =
+                rows[i]
+                .cells[2]
+                .innerText;
+
+            let status =
+                rows[i]
+                .cells[7]
+                .innerText
+                .toLowerCase();
+
+
+            let classMatch =
+                classValue === "all"
+                || className === classValue;
+
+            let statusMatch =
+                statusValue === "all"
+                || status === statusValue;
+
+
+            if (
+                classMatch &&
+                statusMatch
+            ) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+
+    function viewFees(admissionNo) {
+
+        alert(
+            "Viewing fees details for "
+            + admissionNo
+        );
+
+    }
+
+
+    function editFees(admissionNo) {
+
+        alert(
+            "Edit fees status for "
+            + admissionNo
+        );
+
+    }
+
+</script> {% endcomment %}
+
+</body></html>

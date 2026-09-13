@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>About School</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo">V</div>
+            <div>
+                <h1>VISION PUBLIC SCHOOL</h1><small>School Management & Information Portal</small>
+            </div>
+        </div>
+        <div>📞 1800-123-4567</div>
+    </header>
+    <div class="nav">
+        <div class="navlinks">
+            <a href="{% url 'home' %}" class="">HOME</a>
+            <a href="{% url 'about' %}" class="active">ABOUT</a>
+            <a href="{% url 'contact' %}" class="">CONTACT</a>
+            <a href="{% url 'services' %}" class="">SERVICES</a>
+        </div><a class="login-btn" href="{% url 'login' %}">LOGIN</a>
+    </div>
+    <div class="ticker"><span>📢 Latest Update: School admission and examination notices are available.</span><span>📅
+            Academic Session 2026–27</span></div>
+    <main class="page">
+        <div class="pagehead">
+            <h2>About Our School</h2>
+            <p>School information and facilities</p>
+        </div>
+        <div class="content-card">
+            <h3>Vision Public School</h3>
+            <p>Our school provides quality education, co-curricular activities, sports, digital learning and a safe
+                environment for students.</p>
+            <div class="grid2">
+                <div>
+                    <h3>Vision</h3>
+                    <p>To develop confident, responsible and skilled learners.</p>
+                </div>
+                <div>
+                    <h3>Mission</h3>
+                    <p>To provide inclusive and technology-enabled education.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">© 2026 Vision Public School | School Management Portal</footer>
+    {% comment %} <script src="script.js"></script> {% endcomment %}
+</body>
+
+</html>

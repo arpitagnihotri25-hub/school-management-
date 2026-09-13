@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo">V</div>
+            <div>
+                <h1>VISION PUBLIC SCHOOL</h1><small>School Management & Information Portal</small>
+            </div>
+        </div>
+        <div>📞 1800-123-4567</div>
+    </header>
+    <div class="nav">
+        <div class="navlinks">
+            <a href="{% url 'home' %}" class="">HOME</a>
+            <a href="{% url 'about' %}" class="">ABOUT</a>
+            <a href="{% url 'contact' %}" class="active">CONTACT</a>
+            <a href="{% url 'services' %}" class="">SERVICES</a>
+        </div><a class="login-btn" href="{% url 'login' %}">LOGIN</a>
+    </div>
+    <div class="ticker"><span>📢 Latest Update: School admission and examination notices are available.</span><span>📅
+            Academic Session 2026–27</span></div>
+    <main class="page">
+        <div class="pagehead">
+            <h2>Contact Us</h2>
+            <p>Get in touch with the school</p>
+        </div>
+        <div class="content-card">
+            <form class="form"
+                onsubmit="event.preventDefault();alert('Your message has been submitted successfully!');this.reset();">
+                <input required placeholder="Your Name"><input required type="email" placeholder="Email"><input
+                    placeholder="Mobile Number"><textarea required rows="5" placeholder="Message"></textarea><button
+                    class="btn">Submit Message</button></form>
+        </div>
+    </main>
+    <footer class="footer">© 2026 Vision Public School | School Management Portal</footer>
+    {% comment %} <script src="script.js"></script> {% endcomment %}
+</body>
+
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Guardian Dashboard</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/guardian_dashboard.css' %}">
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        <span>🏫</span>
+        School Management
+    </div>
+
+    <ul class="menu">
+
+        <li class="active">
+            <a href="{% url 'guardian_dashboard' %}">
+                🏠 <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'student_dashboard' %}">
+                👨‍🎓 <span>My Child</span>
+            </a>
+        </li>
+
+        <li>
+        <a href="{% url 'attendance' %}">
+            Attendance
+        </a>
+    </li>
+
+    {% comment %} <li>
+        <a href="{% url 'marks' %}">
+            Marks
+        </a>
+    </li> {% endcomment %}
+
+    <li>
+        <a href="{% url 'homework' %}">
+            Homework
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'notices' %}">
+            Notices
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'fees_status' %}">
+            Fees Status
+        </a>
+    </li>
+
+        <li>
+            <a href="#">
+                👤 <span>Profile</span>
+            </a>
+        </li>
+
+        <li class="logout">
+            <a href="{% url 'logout' %}">
+                🚪 <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main">
+
+    <!-- TOP NAVBAR -->
+
+    <header>
+
+        <div class="header-left">
+            <h2>Guardian Dashboard</h2>
+            <p>School Management System</p>
+        </div>
+
+        <div class="guardian-info">
+
+            <div class="avatar">
+                {{ guardian.name|default:"G" |slice:":1"|upper }}
+            </div>
+
+            <div>
+                <strong>
+                    {{ guardian.name|default:"Guardian" }}
+                </strong>
+
+                <small>Guardian{{ guardian.relation }} of {{student.name}}</small>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- PAGE CONTENT -->
+
+    <section class="content">
+
+        <div class="welcome">
+
+            <div>
+                <h1>
+                    Welcome,
+                    {{ guardian.name|default:"Guardian" }} 👋
+                </h1>
+
+                <p>
+                    Here's an overview of your child's academic progress.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- ================= CHILD INFO ================= -->
+
+        <div class="child-card">
+
+            <div class="child-avatar">
+                👨‍🎓
+            </div>
+
+            <div class="child-details">
+
+                <h2>
+                    {{ student.name|default:"Student Name" }}
+                </h2>
+
+                <p>
+                    Admission No:
+                    <strong>
+                        {{ student.admission_number|default:"STD001" }}
+                    </strong>
+                </p>
+
+                <p>
+                    Class:
+                    <strong>
+                        {{ student.class_field|default:"10" }}
+                    </strong>
+
+                    &nbsp;&nbsp;
+
+                    Section:
+                    <strong>
+                        {{ student.section|default:"A" }}
+                    </strong>
+                </p>
+
+            </div>
+
+            <a href="#" class="view-profile">
+                View Profile
+            </a>
+
+        </div>
+
+
+        <!-- ================= STAT CARDS ================= -->
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📅
+                </div>
+
+                <div>
+                    <h3>Attendance</h3>
+
+                    <h1>
+                        {{ attendance_percentage|default:"92" }}%
+                    </h1>
+
+                    <p>Overall Attendance</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📊
+                </div>
+
+                <div>
+                    <h3>Average Marks</h3>
+
+                    <h1>
+                        {{ average_marks|default:"78" }}%
+                    </h1>
+
+                    <p>Academic Performance</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    💰
+                </div>
+
+                <div>
+                    <h3>Fees Status</h3>
+
+                    <h1 class="paid">
+                        {{ fee_status|default:"Paid" }}
+                    </h1>
+
+                    <p>Current Fee Status</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📝
+                </div>
+
+                <div>
+                    <h3>Homework</h3>
+
+                    <h1>
+                        {{ pending_homework|default:"3" }}
+                    </h1>
+
+                    <p>Pending Homework</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= LOWER SECTION ================= -->
+
+        <div class="dashboard-grid">
+
+
+            <!-- HOMEWORK -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>📝 Recent Homework</h2>
+
+                    <a href="#">View All</a>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Subject</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for hw in homework_details %}
+
+                            <tr>
+
+                                <td>
+                                    {{ hw.subject }}
+                                </td>
+
+                                <td>
+                                    {{ hw.description }}
+                                </td>
+
+                                <td>
+                                    {{ hw.post_by_date }}
+                                </td>
+
+                                <td>
+                                    <span class="status pending">
+                                        Pending
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            {% empty %}
+
+                            <tr>
+                                <td colspan="4">
+                                    No homework available.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTICES -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>📢 Latest Notices</h2>
+
+                    <a href="#">View All</a>
+
+                </div>
+
+
+                <div class="notice-list">
+
+                    {% for notice in notices %}
+
+                    <div class="notice">
+
+                        <div class="notice-icon">
+                            📢
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                {{ notice.title|default:"School Notice" }}
+                            </h3>
+
+                            <p>
+                                {{ notice.description|truncatechars:80 }}
+                            </p>
+
+                            <small>
+                                {{ notice.post_date }}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    {% empty %}
+
+                    <div class="empty">
+                        No notices available.
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= QUICK LINKS ================= -->
+
+        <div class="quick-section">
+
+            <h2>Quick Access</h2>
+
+            <div class="quick-links">
+
+                <a href="#" class="quick-card">
+                    <span>📅</span>
+                    <strong>Attendance</strong>
+                    <small>Check attendance</small>
+                </a>
+
+                <a href="#" class="quick-card">
+                    <span>📊</span>
+                    <strong>Report Card</strong>
+                    <small>View marks</small>
+                </a>
+
+                <a href="#" class="quick-card">
+                    <span>💰</span>
+                    <strong>Fees</strong>
+                    <small>Fee details</small>
+                </a>
+
+                <a href="#" class="quick-card">
+                    <span>🕐</span>
+                    <strong>Timetable</strong>
+                    <small>Class schedule</small>
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+</html>
+```

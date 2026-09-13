@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Guardian Registration</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'guardian_registration.css' %}">
+</head>
+
+<body>
+
+    <div class="registration-container">
+
+        <div class="registration-card">
+
+            <div class="header">
+                <h1>Guardian Registration</h1>
+                <p>Create your guardian account</p>
+            </div>
+
+            <form method="POST" action="{% url 'guardian_registration' %}">
+                {% csrf_token %}
+
+                <!-- Student Information -->
+                <h2>Student Information</h2>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        {{ form.admission_no.label }}
+                        {{ form.admission_no}}
+                        {% comment %} <label for="admission_number">Student Admission Number</label>
+                        <input
+                            type="text"
+                            id="admission_number"
+                            name="admission_number"
+                            placeholder="Enter admission number"
+                            required> {% endcomment %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.relation.label }}
+                        {{ form.relation}}
+                        {% comment %} <label for="relationship">Relationship with Student</label>
+                        <select id="relationship" name="relationship" required>
+                            <option value="">Select relationship</option>
+                            <option value="Father">Father</option>
+                            <option value="Mother">Mother</option>
+                            <option value="Guardian">Guardian</option>
+                            <option value="Grandfather">Grandfather</option>
+                            <option value="Grandmother">Grandmother</option>
+                            <option value="Other">Other</option>
+                        </select> {% endcomment %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Guardian Information -->
+                <h2>Guardian Information</h2>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        {{ form.name.label }}
+                        {{ form.name}}
+                        {% comment %} <label for="guardian_id">Guardian ID</label>
+                        <input
+                            type="text"
+                            id="guardian_id"
+                            name="guardian_id"
+                            placeholder="Enter guardian ID"
+                            required> {% endcomment %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.contact.label }}
+                        {{ form.contact}}
+                        {% comment %} <label for="name">Full Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter full name"
+                            required> {% endcomment %}
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        {{ form.email.label }}
+                        {{ form.email}}
+                        {% comment %} <label for="email">Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter email address"
+                            required> {% endcomment %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.occupation.label }}
+                        {{ form.occupation}}
+                        {% comment %} <label for="phone">Phone Number</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Enter phone number"
+                            maxlength="10"
+                            required> {% endcomment %}
+                    </div>
+
+                </div>
+
+
+                <!-- Address -->
+                <h2>Address</h2>
+
+                <div class="form-group">
+                    {{ form.address.label }}
+                        {{ form.address}}
+                    {% comment %} <label for="address">Full Address</label>
+                    <textarea
+                        id="address"
+                        name="address"
+                        rows="3"
+                        placeholder="Enter complete address"
+                        required></textarea> {% endcomment %}
+                </div>
+
+
+                <!-- Account Security -->
+                {% comment %} <h2>Account Security</h2>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create password"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Confirm password"
+                            required>
+                    </div> 
+
+                </div>{% endcomment %}
+
+
+                <!-- OTP -->
+                {% comment %} <div class="otp-section">
+
+                    <div class="form-group">
+                        <label for="otp">OTP Verification</label>
+
+                        <div class="otp-row">
+                            <input
+                                type="text"
+                                id="otp"
+                                name="otp"
+                                placeholder="Enter OTP"
+                                maxlength="6">
+
+                            <button type="button" class="otp-btn">
+                                Send OTP
+                            </button>
+                        </div>
+                    </div> 
+
+                </div>{% endcomment %}
+
+
+                <!-- Terms -->
+                <div class="terms">
+
+                    <label>
+                        <input type="checkbox" name="terms" required>
+                        I agree to the terms and conditions.
+                    </label>
+
+                </div>
+
+
+                <!-- Submit -->
+                <button type="submit" class="register-btn">
+                    Register Guardian
+                </button>
+
+
+                <div class="login-link">
+                    Already have an account?
+                    <a href="{% url 'login' %}">Login here</a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

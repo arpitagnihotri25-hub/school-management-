@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Upload Marks</title>
+
+    {% load static %}
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 240px;
+            height: 100vh;
+
+            background: #1e293b;
+            color: white;
+
+            padding-top: 25px;
+
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+
+            margin-bottom: 30px;
+
+            font-size: 24px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin: 5px 0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+
+            padding: 13px 25px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+            transition: 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background: #334155;
+
+            padding-left: 32px;
+        }
+
+        .sidebar ul li a.active {
+            background: #2563eb;
+
+            font-weight: bold;
+
+            border-left: 4px solid white;
+        }
+
+
+        /* ================= MAIN CONTENT ================= */
+
+        .main-content {
+            margin-left: 240px;
+
+            padding: 30px;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: white;
+
+            padding: 25px 30px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+
+            color: #1e293b;
+
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+
+        /* ================= BACK BUTTON ================= */
+
+        .back-btn {
+            background: #64748b;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 11px 18px;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #475569;
+        }
+
+
+        /* ================= FORM CONTAINER ================= */
+
+        .form-container {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-container h2 {
+            color: #1e293b;
+
+            font-size: 21px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* ================= FORM ROW ================= */
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #475569;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            background: white;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            border-color: #2563eb;
+
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+
+        /* ================= TABLE CONTAINER ================= */
+
+        .table-container {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .table-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .table-header h2 {
+            color: #1e293b;
+
+            font-size: 21px;
+        }
+
+
+        /* ================= TABLE ================= */
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 700px;
+        }
+
+        table th {
+            background: #f1f5f9;
+
+            color: #334155;
+
+            padding: 14px 12px;
+
+            text-align: left;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        table td {
+            padding: 12px;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            font-size: 14px;
+
+            color: #475569;
+
+            white-space: nowrap;
+        }
+
+        table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+
+        /* ================= ADMISSION NUMBER ================= */
+
+        table td:first-child {
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+
+        /* ================= MARKS INPUT ================= */
+
+        .marks-input {
+            width: 120px;
+
+            padding: 9px 10px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 5px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        .marks-input:focus {
+            border-color: #2563eb;
+
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+
+        /* ================= SAVE BUTTON ================= */
+
+        .save-section {
+            margin-top: 25px;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+        }
+
+        .save-btn {
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 25px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+        .save-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+
+                padding: 20px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding-bottom: 10px;
+            }
+
+            .sidebar h2 {
+                margin-bottom: 15px;
+            }
+
+            .sidebar ul {
+                display: flex;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+            .sidebar ul li {
+                margin: 2px;
+            }
+
+            .sidebar ul li a {
+                padding: 9px 11px;
+
+                font-size: 13px;
+            }
+
+            .sidebar ul li a:hover {
+                padding-left: 11px;
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 15px;
+            }
+
+            .header {
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 15px;
+
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .back-btn {
+                text-align: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container,
+            .table-container {
+                padding: 18px;
+            }
+
+            .save-section {
+                justify-content: stretch;
+            }
+
+            .save-btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+{% if role == 'Admin' %}
+
+<div class="sidebar">
+
+    <h2>Admin Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff' %}">
+                Staff
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'classes' %}">
+                Classes
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'attendance' %}">
+                Attendance
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'marks' %}" class="active">
+                Marks
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_details' %}">
+                Fees Details
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+
+        <li>
+            <a href="admin_profile.html">
+                Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+
+
+<!-- ================= STAFF SIDEBAR ================= -->
+
+{% if role == 'Staff' %}
+
+<div class="sidebar">
+
+    <h2>Staff Portal</h2>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'attendance' %}">
+                Attendance
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        <li>
+            <a href="{% url 'students' %}">
+                Students
+            </a>
+        </li>
+
+
+        {% if staff_role == 'Accountant' %}
+
+        <li>
+            <a href="{% url 'student_registration' %}">
+                Add a new Student
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'marks' %}" class="active">
+                Marks Entry
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'homework' %}">
+                Homework
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}">
+                Notices
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        {% if staff_role == 'Accountant' %}
+
+        <li>
+            <a href="{% url 'fees_status' %}">
+                Fees Status
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        <li>
+            <a href="teacher_profile.html">
+                Profile
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>
+                Upload Marks
+            </h1>
+
+            <p>
+                Select examination details and enter student marks
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'marks' %}"
+            class="back-btn">
+
+            ← Back to Marks
+
+        </a>
+
+    </div>
+
+    <!-- ================= EXAMINATION DETAILS ================= -->
+
+    <div class="form-container">
+
+        <h2>
+            Examination Details
+        </h2>
+
+        <form>
+        <div class="form-row">
+
+
+            <!-- CLASS -->
+
+            <div class="form-group">
+
+                <label for="class">
+                    Class
+                </label>
+
+                <select id="class" name="class">
+
+                    <option value="">
+                        Select Class
+                    </option>
+
+                    <option value="9">
+                        Class 9
+                    </option>
+
+                    <option value="10">
+                        Class 10
+                    </option>
+
+                    <option value="11">
+                        Class 11
+                    </option>
+
+                    <option value="12">
+                        Class 12
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- SECTION -->
+
+            <div class="form-group">
+
+                <label for="section">
+                    Section
+                </label>
+
+                <select id="section" name="section">
+
+                    <option value="">
+                        Select Section
+                    </option>
+
+                    <option value="A">
+                        Section A
+                    </option>
+
+                    <option value="B">
+                        Section B
+                    </option>
+
+                    <option value="C">
+                        Section C
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- EXAM TYPE -->
+
+            <div class="form-group">
+
+                <label for="exam_type">
+                    Examination Type
+                </label>
+
+                <select id="exam_type" name="exam_type">
+
+                    <option value="">
+                        Select Examination
+                    </option>
+
+                    <option value="First unit Test">
+                        First unit Test
+                    </option>
+
+                    <option value="Half Yearly Exam">
+                        Half Yearly Exam
+                    </option>
+
+                    <option value="Second unit Test">
+                        Second unit Test
+                    </option>
+
+                    <option value="Annual Exam">
+                        Annual Exam
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- MAXIMUM MARKS -->
+
+            <div class="form-group">
+
+                <label for="maximum_marks">
+                    Maximum Marks
+                </label>
+
+                <input
+                    type="number"
+                    id="maximum_marks"
+                    name="maximum_marks"
+                    placeholder="Enter maximum marks"
+                    min="1">
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= STUDENT MARKS TABLE ================= -->
+
+    <div class="table-container">
+
+
+        <div class="table-header">
+
+            <h2>
+                Student Marks
+            </h2>
+
+        </div>
+
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            S.No.
+                        </th>
+
+                        <th>
+                            Admission No.
+                        </th>
+
+                        <th>
+                            Student Name
+                        </th>
+
+                        <th>
+                            Class
+                        </th>
+
+                        <th>
+                            Section
+                        </th>
+
+                        <th>
+                            Marks Obtained
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <!-- ================= STUDENT 1 ================= -->
+
+                    <tr>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            STD0001
+                        </td>
+
+                        <td>
+                            Aarav Sharma
+                        </td>
+
+                        <td>
+                            10
+                        </td>
+
+                        <td>
+                            A
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="number"
+                                class="marks-input"
+                                name="marks_STD0001"
+                                placeholder="Enter marks"
+                                min="0">
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <!-- ================= STUDENT 2 ================= -->
+
+                    <tr>
+
+                        <td>
+                            2
+                        </td>
+
+                        <td>
+                            STD0002
+                        </td>
+
+                        <td>
+                            Ananya Singh
+                        </td>
+
+                        <td>
+                            10
+                        </td>
+
+                        <td>
+                            A
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="number"
+                                class="marks-input"
+                                name="marks_STD0002"
+                                placeholder="Enter marks"
+                                min="0">
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <!-- ================= STUDENT 3 ================= -->
+
+                    <tr>
+
+                        <td>
+                            3
+                        </td>
+
+                        <td>
+                            STD0003
+                        </td>
+
+                        <td>
+                            Rahul Verma
+                        </td>
+
+                        <td>
+                            10
+                        </td>
+
+                        <td>
+                            A
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="number"
+                                class="marks-input"
+                                name="marks_STD0003"
+                                placeholder="Enter marks"
+                                min="0">
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <!-- ================= STUDENT 4 ================= -->
+
+                    <tr>
+
+                        <td>
+                            4
+                        </td>
+
+                        <td>
+                            STD0004
+                        </td>
+
+                        <td>
+                            Priya Gupta
+                        </td>
+
+                        <td>
+                            10
+                        </td>
+
+                        <td>
+                            A
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="number"
+                                class="marks-input"
+                                name="marks_STD0004"
+                                placeholder="Enter marks"
+                                min="0">
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <!-- ================= STUDENT 5 ================= -->
+
+                    <tr>
+
+                        <td>
+                            5
+                        </td>
+
+                        <td>
+                            STD0005
+                        </td>
+
+                        <td>
+                            Vivek Yadav
+                        </td>
+
+                        <td>
+                            10
+                        </td>
+
+                        <td>
+                            A
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="number"
+                                class="marks-input"
+                                name="marks_STD0005"
+                                placeholder="Enter marks"
+                                min="0">
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- ================= SAVE BUTTON ================= -->
+
+        <div class="save-section">
+
+            <button
+                type="submit"
+                class="save-btn">
+
+                Save Marks
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
