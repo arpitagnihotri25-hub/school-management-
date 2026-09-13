@@ -13,26 +13,67 @@
 {% if role == 'Admin' %}
     <div class="sidebar">
 
-        <h2>Admin Portal</h2>
+    <h2>Admin Portal</h2>
 
-        <ul>
+    <ul>
 
-            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
-            <li><a href="{% url 'students' %}" class="active">Students</a></li>
-            <li><a href="{% url 'staff' %}">Staff</a></li>
-            <li><a href="{% url 'classes' %}">Classes</a></li>
-            <li><a href="{% url 'attendance' %}">Attendance</a></li>
-            {% comment %} <li><a href="{% url 'marks' %}">Marks</a></li> {% endcomment %}
-            <li><a href="{% url 'homework' %}">Homework</a></li>
-            <li><a href="{% url 'notices' %}">Notices</a></li>
-            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
-            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
-            <li><a href='admin_profile.html'>Profile</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+        <li>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
 
-        </ul>
+        <li>
+            <a href="{% url 'students' %}">Students</a>
+        </li>
 
-    </div>
+        <li>
+            <a href="{% url 'staff' %}">Staff</a>
+        </li>
+
+        <li>
+            <a href="{% url 'classes' %}">Classes</a>
+        </li>
+
+        <li>
+            <a href="{% url 'attendance' %}">Attendance</a>
+        </li>
+
+        {% comment %} <li>
+            <a href="{% url 'marks' %}">Marks</a>
+        </li> {% endcomment %}
+
+        <li>
+            <a href="{% url 'homework' %}">Homework</a>
+        </li>
+
+        <li>
+            <a href="{% url 'notices' %}">Notices</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_details' %}">Fees Details</a>
+        </li>
+
+        <li>
+            <a href="{% url 'fees_status' %}">Fees Status</a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff_registration' %}" class="active">
+                Add new Staff Member
+            </a>
+        </li>
+
+        <li>
+            <a href="admin_profile.html">Profile</a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">Logout</a>
+        </li>
+
+    </ul>
+
+</div>
 {% endif %}
 
 {% if role == 'Staff' %}
