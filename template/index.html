@@ -1,140 +1,1772 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Vision Public School</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vision Public School | School Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #06478b;
+            --primary-dark: #052e60;
+            --secondary: #1675cb;
+            --yellow: #ffcc24;
+            --light: #f3f7fc;
+            --text: #172b4d;
+            --muted: #64748b;
+            --border: #dce7f3;
+            --white: #ffffff;
+            --shadow: 0 8px 28px rgba(5, 46, 96, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        /* HEADER */
+
+        .topbar {
+            background: linear-gradient(110deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            background: white;
+            color: var(--primary);
+            border: 4px solid var(--yellow);
+            border-radius: 50%;
+            font-size: 30px;
+            font-weight: 800;
+            box-shadow: 0 4px 15px #0002;
+        }
+
+        .brand h1 {
+            font-size: clamp(18px, 2.5vw, 28px);
+            line-height: 1.3;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+
+        .brand small {
+            display: block;
+            font-size: 12px;
+            color: #dbeafe;
+        }
+
+        .phone {
+            font-weight: 700;
+            white-space: nowrap;
+            font-size: 15px;
+        }
+
+        /* NAVIGATION */
+
+        .nav {
+            background: #0754a0;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            gap: 12px;
+            box-shadow: 0 4px 12px #052e6020;
+        }
+
+        .navlinks {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navlinks span {
+            display: inline-block;
+            padding: 16px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: default;
+            transition: background 0.25s, color 0.25s;
+        }
+
+        .navlinks span:first-child,
+        .navlinks span:hover {
+            background: var(--yellow);
+            color: #172b4d;
+        }
+
+        .login-btn {
+            background: #e63946;
+            color: white;
+            padding: 11px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.25s;
+            white-space: nowrap;
+        }
+
+        .login-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        /* ANNOUNCEMENT BAR */
+
+        .ticker {
+            background: var(--yellow);
+            color: #172b4d;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 11px 5%;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* HERO SECTION */
+
+        .hero {
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            padding: 65px 6%;
+            color: white;
+            position: relative;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(3, 35, 76, 0.97) 0%,
+                    rgba(4, 57, 111, 0.90) 38%,
+                    rgba(4, 57, 111, 0.20) 100%
+                ),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2000&q=85");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            color: var(--yellow);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .hero h2 {
+            font-size: clamp(32px, 5vw, 54px);
+            line-height: 1.15;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero h2 span {
+            color: var(--yellow);
+        }
+
+        .hero p {
+            max-width: 570px;
+            color: #e4efff;
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 28px;
+        }
+
+        .hero-label {
+            display: inline-block;
+            background: var(--yellow);
+            color: var(--primary-dark);
+            padding: 13px 25px;
+            border-radius: 9px;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        /* COMMON LAYOUT */
+
+        .page {
+            max-width: 1400px;
+            margin: 55px auto;
+            padding: 0 25px;
+        }
+
+        .pagehead {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .eyebrow {
+            color: var(--secondary);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .pagehead h2 {
+            font-size: clamp(27px, 4vw, 38px);
+            color: var(--primary-dark);
+            margin: 8px 0;
+        }
+
+        .pagehead p {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .content-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .content-card h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        .content-card p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        /* ACHIEVEMENTS SECTION */
+
+        .achievements-section {
+            max-width: 1400px;
+            margin: 35px auto;
+            padding: 0 25px;
+        }
+
+        .achievement-container {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .achievement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 28px;
+            background: linear-gradient(120deg, #edf6ff, #ffffff);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .achievement-tag {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--secondary);
+        }
+
+        .achievement-header h2 {
+            font-size: clamp(21px, 3vw, 30px);
+            color: var(--primary-dark);
+            margin: 7px 0;
+        }
+
+        .achievement-header p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .achievement-icon {
+            width: 65px;
+            height: 65px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: var(--yellow);
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        /* ACHIEVEMENT SUMMARY */
+
+        .achievement-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 15px;
+            padding: 25px 28px;
+        }
+
+        .achievement-stat {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 18px;
+            background: #f8fbff;
+            border: 1px solid #e2ebf5;
+            border-radius: 12px;
+            transition: 0.25s;
+        }
+
+        .achievement-stat:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px #052e6012;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            font-size: 23px;
+            flex-shrink: 0;
+        }
+
+        .stat-icon.blue {
+            background: #dceeff;
+        }
+
+        .stat-icon.orange {
+            background: #fff0d8;
+        }
+
+        .stat-icon.green {
+            background: #dcfce7;
+        }
+
+        .achievement-stat h3 {
+            font-size: 13px;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .achievement-stat p {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        /* ACHIEVEMENT TABLE */
+
+        .achievement-table-wrapper {
+            padding: 0 28px 25px;
+            overflow-x: auto;
+        }
+
+        .achievement-table {
+            width: 100%;
+            min-width: 720px;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .achievement-table th {
+            background: var(--primary);
+            color: white;
+            padding: 16px 14px;
+            text-align: left;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .achievement-table td {
+            padding: 17px 14px;
+            border-bottom: 1px solid #e8eef6;
+            font-size: 12px;
+            color: #475569;
+            vertical-align: middle;
+        }
+
+        .achievement-table tbody tr {
+            transition: background 0.2s;
+        }
+
+        .achievement-table tbody tr:hover {
+            background: #f0f7ff;
+        }
+
+        .achievement-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .achievement-table td strong {
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        .table-date {
+            display: block;
+            font-weight: 800;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .achievement-table td small {
+            color: #94a3b8;
+            font-size: 10px;
+        }
+
+        /* CATEGORY BADGES */
+
+        .category-badge,
+        .status-badge {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .category-badge.academic {
+            background: #e0edff;
+            color: #1556a0;
+        }
+
+        .category-badge.sports {
+            background: #ffedd5;
+            color: #c2410c;
+        }
+
+        .category-badge.cultural {
+            background: #f3e8ff;
+            color: #7e22ce;
+        }
+
+        .category-badge.event {
+            background: #fce7f3;
+            color: #be185d;
+        }
+
+        .category-badge.notice {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+
+        .status-badge.completed {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .status-badge.upcoming {
+            background: #fff7d6;
+            color: #9a6700;
+        }
+
+        .achievement-footer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 28px 28px;
+            padding: 18px;
+            background: linear-gradient(100deg, #eaf3ff, #f7faff);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .achievement-footer span {
+            font-size: 25px;
+        }
+
+        .achievement-footer p {
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ABOUT SCHOOL */
+
+        .about-card {
+            display: grid;
+            grid-template-columns: 38% 1fr;
+            background: white;
+            border-radius: 13px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .about-image {
+            min-height: 350px;
+            background:
+                url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=85")
+                center / cover;
+        }
+
+        .about-content {
+            padding: 30px;
+        }
+
+        .about-content h3 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .about-content p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.9;
+        }
+
+        .vision-mission {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+            margin-top: 22px;
+        }
+
+        .vm-box {
+            background: #f0f6ff;
+            border: 1px solid #e0ebfa;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .vm-box h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .vm-box p {
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* FULL ABOUT SECTION */
+
+        .about-full {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .about-full img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        /* SERVICES */
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .service-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 35px #052e6018;
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 175px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .service-body {
+            padding: 22px;
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            background: #eaf3ff;
+            border-radius: 12px;
+            font-size: 25px;
+            margin-bottom: 13px;
+        }
+
+        .service-body h3 {
+            font-size: 17px;
+            color: var(--primary);
+            margin-bottom: 9px;
+        }
+
+        .service-body p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--muted);
+        }
+
+        /* CONTACT SECTION */
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            overflow: hidden;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            background: white;
+        }
+
+        .contact-info {
+            background:
+                linear-gradient(
+                    0deg,
+                    rgba(3, 39, 83, 0.95),
+                    rgba(3, 39, 83, 0.78)
+                ),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=85")
+                center / cover;
+
+            color: white;
+            padding: 38px;
+        }
+
+        .contact-info h3 {
+            font-size: 27px;
+            margin-bottom: 12px;
+        }
+
+        .contact-info > p {
+            color: #dbeafe;
+            font-size: 13px;
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+
+        .contact-line {
+            margin-top: 23px;
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+        }
+
+        .contact-line span {
+            color: var(--yellow);
+            font-size: 21px;
+        }
+
+        /* CONTACT INFORMATION CARD */
+
+        .contact-details {
+            padding: 38px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 18px;
+            background: linear-gradient(135deg, #ffffff, #f0f6ff);
+        }
+
+        .contact-details h3 {
+            color: var(--primary);
+            font-size: 25px;
+        }
+
+        .contact-details > p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 17px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: 0.25s;
+        }
+
+        .contact-detail:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px #052e6010;
+        }
+
+        .contact-detail > span {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            background: #e8f2ff;
+            border-radius: 10px;
+            font-size: 23px;
+            flex-shrink: 0;
+        }
+
+        .contact-detail strong {
+            display: block;
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .contact-detail p {
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
+        .contact-highlight {
+            padding: 17px;
+            background: var(--yellow);
+            color: var(--primary-dark);
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            margin-top: 65px;
+            background: linear-gradient(110deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 38px 5%;
+            text-align: center;
+        }
+
+        .footer h3 {
+            font-size: 23px;
+            margin-bottom: 8px;
+        }
+
+        .footer p {
+            font-size: 13px;
+            color: #dbeafe;
+        }
+
+        .footer-bottom {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #ffffff25;
+            font-size: 12px;
+            color: #dbeafe;
+        }
+
+        /* RESPONSIVE DESIGN */
+
+        @media (max-width: 1100px) {
+            .services-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .achievement-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .topbar {
+                padding: 15px 4%;
+            }
+
+            .phone {
+                font-size: 12px;
+            }
+
+            .logo {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+            }
+
+            .brand {
+                gap: 10px;
+            }
+
+            .brand small {
+                font-size: 10px;
+            }
+
+            .nav {
+                padding: 8px 4%;
+                flex-wrap: wrap;
+            }
+
+            .navlinks {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .navlinks span {
+                padding: 11px 12px;
+                font-size: 11px;
+            }
+
+            .login-btn {
+                margin: 5px auto;
+                padding: 9px 30px;
+            }
+
+            .ticker {
+                flex-wrap: wrap;
+                gap: 7px;
+                font-size: 11px;
+            }
+
+            .hero {
+                min-height: 390px;
+                padding: 45px 6%;
+                background-position: center;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .page {
+                padding: 0 15px;
+                margin: 40px auto;
+            }
+
+            .about-card {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                min-height: 260px;
+            }
+
+            .about-content {
+                padding: 23px;
+            }
+
+            .about-full {
+                grid-template-columns: 1fr;
+            }
+
+            .about-full img {
+                height: 280px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info,
+            .contact-details {
+                padding: 25px;
+            }
+
+            .achievements-section {
+                padding: 0 15px;
+                margin: 25px auto;
+            }
+
+            .achievement-header {
+                padding: 20px;
+            }
+
+            .achievement-stats {
+                padding: 18px;
+            }
+
+            .achievement-table-wrapper {
+                padding: 0 18px 20px;
+            }
+
+            .achievement-footer {
+                margin: 0 18px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .topbar {
+                align-items: flex-start;
+            }
+
+            .phone {
+                font-size: 10px;
+                padding-top: 8px;
+            }
+
+            .brand h1 {
+                font-size: 14px;
+            }
+
+            .brand small {
+                max-width: 190px;
+                line-height: 1.5;
+            }
+
+            .navlinks span {
+                padding: 10px 8px;
+                font-size: 10px;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .hero {
+                min-height: 360px;
+            }
+
+            .vision-mission {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .achievement-header h2 {
+                font-size: 21px;
+            }
+
+            .achievement-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 23px;
+            }
+
+            .achievement-stat {
+                padding: 14px;
+            }
+
+            .achievement-footer {
+                align-items: flex-start;
+            }
+
+            .content-card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
+
+    <!-- HEADER -->
+
     <header class="topbar">
+
         <div class="brand">
+
             <div class="logo">V</div>
+
             <div>
-                <h1>VISION PUBLIC SCHOOL</h1><small>School Management & Information Portal</small>
+                <h1>VISION PUBLIC SCHOOL</h1>
+                <small>School Management & Information Portal</small>
             </div>
+
         </div>
-        <div>📞 1800-123-4567</div>
+
+        <div class="phone">📞 1800-123-4567</div>
+
     </header>
-    <div class="nav">
+
+    <!-- NAVIGATION -->
+
+    <nav class="nav">
+
         <div class="navlinks">
-            <a href="{% url 'home' %}" class="active">HOME</a>
-            <a href="{% url 'about' %}" class="">ABOUT</a>
-            <a href="{% url 'contact' %}" class="">CONTACT</a>
-            <a href="{% url 'services' %}" class="">SERVICES</a>
-        </div><a class="login-btn" href="{% url 'login' %}">LOGIN</a>
+            <span>⌂ Home</span>
+        
+            <span>
+                <a href="{% url 'about' %}">▣ About</a>
+            </span>
+            <span>
+                <a href="{% url 'services' %}">⚙ Services</a>
+            </span>
+            <span>
+                <a href="{% url 'gallery' %}">▧ Gallery</a>
+            </span>
+            <span>
+                <a href="{% url 'facilities' %}">▤ Facilities</a>
+            </span>
+            <span>
+                <a href="{% url 'contact' %}">Contact</a>
+            </span>
+            {% comment %} <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="#">Facilities</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="#">Contact</a></li>
+            </ul> {% endcomment %}
+        </div>
+
+        <a class="login-btn" href="{% url 'login' %}">
+            ♙ Login
+        </a>
+
+    </nav>
+
+    <!-- ANNOUNCEMENT BAR -->
+
+    <div class="ticker">
+
+        <span>
+            📢 Latest Update: School admission and examination notices are available.
+        </span>
+
+        <span>
+            📅 Academic Session 2026–27
+        </span>
+
     </div>
-    <div class="ticker"><span>📢 Latest Update: School admission and examination notices are available.</span><span>📅
-            Academic Session 2026–27</span></div>
-    <main class="layout">
-        <aside>
-            <div class="card side">
-                <h3>Useful Links</h3>
-                <a href="homework.html">📚 Homework</a><a href="attendance.html">📝 Attendance</a><a
-                    href="timetable.html">🕘 Time Table</a>
-                <a href="result.html">📊 Result</a><a href="fees.html">💳 Fees</a><a href="notices.html">📢
-                    Notices</a><a href="profile.html">👤 Profile</a>
-            </div>
-        </aside>
-        <section>
-            <div class="hero">
-                <div>
-                    <h2>Welcome to Vision Public School</h2>
-                    <p>Official school information and management portal for students, teachers, guardians and
-                        administrators.</p><a class="btn" href="{% url 'about' %}">Know More</a>
-                </div>
-            </div>
-            <div class="grid2 section">
-                <div class="card">
-                    <h3>Latest Notices</h3>
-                    <div class="notice"><b>10 Aug 2026</b><br>Unit Test schedule published.</div>
-                    <div class="notice"><b>08 Aug 2026</b><br>Parent meeting notice available.</div>
-                    <div class="notice"><b>05 Aug 2026</b><br>Fee submission reminder.</div>
-                </div>
-                <div class="card">
-                    <h3>Quick Links</h3>
-                    <div class="notice"><a href="homework.html">Homework & Assignments</a></div>
-                    <div class="notice"><a href="attendance.html">Attendance</a></div>
-                    <div class="notice"><a href="result.html">Examination Result</a></div>
-                    <div class="notice"><a href="fees.html">Fee Details</a></div>
-                </div>
-            </div>
-        </section>
-        <aside class="rightbar">
-            <div class="card">
-                <h3>All Circulars</h3>
-                <div class="notice">School timing circular</div>
-                <div class="notice">Holiday notice</div>
-                <div class="notice">Exam instructions</div>
-            </div>
-        </aside>
-    </main>
-    <main class="page">
-        <div class="pagehead">
-            <h2>About Our School</h2>
-            <p>School information and facilities</p>
-        </div>
-        <div class="content-card">
-            <h3>Vision Public School</h3>
-            <p>Our school provides quality education, co-curricular activities, sports, digital learning and a safe
-                environment for students.</p>
-            <div class="grid2">
-                <div>
-                    <h3>Vision</h3>
-                    <p>To develop confident, responsible and skilled learners.</p>
-                </div>
-                <div>
-                    <h3>Mission</h3>
-                    <p>To provide inclusive and technology-enabled education.</p>
-                </div>
-            </div>
-        </div>
-    </main>
 
-      <main class="page">
-        <div class="pagehead">
-            <h2>Contact Us</h2>
-            <p>Get in touch with the school</p>
-        </div>
-        <div class="content-card">
-            <form class="form"
-                onsubmit="event.preventDefault();alert('Your message has been submitted successfully!');this.reset();">
-                <input required placeholder="Your Name"><input required type="email" placeholder="Email"><input
-                    placeholder="Mobile Number"><textarea required rows="5" placeholder="Message"></textarea><button
-                    class="btn">Submit Message</button></form>
-        </div>
-    </main>
+    <!-- HERO SECTION -->
 
-     <main class="page">
-        <div class="pagehead">
-            <h2>School Services</h2>
-            <p>Student and parent facilities</p>
-        </div>
-        <div class="grid2">
-            <div class="content-card">
-                <h3>Academic Services</h3>
-                <p>Homework, timetable, attendance, results and examination information.</p>
-            </div>
-            <div class="content-card">
-                <h3>Student Services</h3>
-                <p>Profile, notices, fee information and communication facilities.</p>
-            </div>
-            <div class="content-card">
-                <h3>Parent Services</h3>
-                <p>Guardian access to attendance, fees, results and notices.</p>
-            </div>
-            <div class="content-card">
-                <h3>Digital Learning</h3>
-                <p>Online assignments, announcements and academic resources.</p>
-            </div>
-        </div>
-    </main>
+    <section class="hero">
 
-    <footer class="footer">© 2026 Vision Public School | School Management Portal</footer>
-    {% comment %} <script src="script.js"></script> {% endcomment %}
+        <div class="hero-content">
+
+            <span class="hero-tag">
+                LEARN &nbsp; | &nbsp; GROW &nbsp; | &nbsp; ACHIEVE
+            </span>
+
+            <h2>
+                Welcome to<br>
+                <span>Vision Public School</span>
+            </h2>
+
+            <p>
+                Official school information and management portal for
+                students, teachers, guardians and administrators.
+                Discover a world of knowledge, creativity and opportunities.
+            </p>
+
+            <div class="hero-label">
+                Building a Brighter Future ✨
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SCHOOL ACHIEVEMENTS & HIGHLIGHTS -->
+
+    <section class="achievements-section">
+
+        <div class="achievement-container">
+
+            <!-- ACHIEVEMENT HEADER -->
+
+            <div class="achievement-header">
+
+                <div>
+
+                    <span class="achievement-tag">
+                        OUR PROGRESS & ACTIVITIES
+                    </span>
+
+                    <h2>School Achievements & Highlights</h2>
+
+                    <p>
+                        Celebrating success, learning and memorable moments.
+                    </p>
+
+                </div>
+
+                <div class="achievement-icon">🏆</div>
+
+            </div>
+
+            <!-- ACHIEVEMENT SUMMARY CARDS -->
+
+            <div class="achievement-stats">
+
+                <div class="achievement-stat">
+
+                    <div class="stat-icon blue">🎓</div>
+
+                    <div>
+                        <h3>Academic Excellence</h3>
+                        <p>Learning with dedication</p>
+                    </div>
+
+                </div>
+
+                <div class="achievement-stat">
+
+                    <div class="stat-icon orange">🏆</div>
+
+                    <div>
+                        <h3>Sports & Fitness</h3>
+                        <p>Building teamwork</p>
+                    </div>
+
+                </div>
+
+                <div class="achievement-stat">
+
+                    <div class="stat-icon green">🎨</div>
+
+                    <div>
+                        <h3>Creative Activities</h3>
+                        <p>Encouraging creativity</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ACHIEVEMENTS TABLE -->
+
+            <div class="achievement-table-wrapper">
+
+                <table class="achievement-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>DATE</th>
+                            <th>CATEGORY</th>
+                            <th>ACHIEVEMENT / ACTIVITY</th>
+                            <th>DESCRIPTION</th>
+                            <th>STATUS</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                <span class="table-date">10 Aug</span>
+                                <small>2026</small>
+                            </td>
+
+                            <td>
+                                <span class="category-badge academic">
+                                    🎓 Academic
+                                </span>
+                            </td>
+
+                            <td>
+                                <strong>Academic Excellence</strong>
+                            </td>
+
+                            <td>
+                                Students recognized for their dedication
+                                and academic progress.
+                            </td>
+
+                            <td>
+                                <span class="status-badge completed">
+                                    ★ Highlight
+                                </span>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <span class="table-date">08 Aug</span>
+                                <small>2026</small>
+                            </td>
+
+                            <td>
+                                <span class="category-badge sports">
+                                    🏆 Sports
+                                </span>
+                            </td>
+
+                            <td>
+                                <strong>Inter-House Sports Activities</strong>
+                            </td>
+
+                            <td>
+                                Students participate in sports and
+                                team-building activities.
+                            </td>
+
+                            <td>
+                                <span class="status-badge completed">
+                                    ★ Highlight
+                                </span>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <span class="table-date">05 Aug</span>
+                                <small>2026</small>
+                            </td>
+
+                            <td>
+                                <span class="category-badge cultural">
+                                    🎨 Cultural
+                                </span>
+                            </td>
+
+                            <td>
+                                <strong>Creative Learning Activities</strong>
+                            </td>
+
+                            <td>
+                                Art, presentations and classroom
+                                activities encourage creativity.
+                            </td>
+
+                            <td>
+                                <span class="status-badge completed">
+                                    ★ Highlight
+                                </span>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <span class="table-date">15 Aug</span>
+                                <small>2026</small>
+                            </td>
+
+                            <td>
+                                <span class="category-badge event">
+                                    🇮🇳 Event
+                                </span>
+                            </td>
+
+                            <td>
+                                <strong>Independence Day Celebration</strong>
+                            </td>
+
+                            <td>
+                                A school celebration featuring cultural
+                                activities and patriotic performances.
+                            </td>
+
+                            <td>
+                                <span class="status-badge upcoming">
+                                    ● Upcoming
+                                </span>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <span class="table-date">20 Aug</span>
+                                <small>2026</small>
+                            </td>
+
+                            <td>
+                                <span class="category-badge notice">
+                                    📢 Notice
+                                </span>
+                            </td>
+
+                            <td>
+                                <strong>Parent-Teacher Interaction</strong>
+                            </td>
+
+                            <td>
+                                An opportunity to discuss student
+                                progress and academic development.
+                            </td>
+
+                            <td>
+                                <span class="status-badge upcoming">
+                                    ● Scheduled
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- ACHIEVEMENT FOOTER -->
+
+            <div class="achievement-footer">
+
+                <span>🌟</span>
+
+                <p>
+                    Every achievement is a step towards a brighter future.
+                    Keep learning, keep growing!
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ABOUT SCHOOL PREVIEW -->
+
+    <section class="page">
+
+        <div class="about-card">
+
+            <div class="about-image"></div>
+
+            <div class="about-content">
+
+                <h3>🏫 About Our School</h3>
+
+                <p>
+                    Vision Public School provides quality education,
+                    co-curricular activities, sports, digital learning
+                    and a safe environment for students.
+                </p>
+
+                <div class="vision-mission">
+
+                    <div class="vm-box">
+
+                        <h4>🎯 Our Vision</h4>
+
+                        <p>
+                            To develop confident, responsible and
+                            skilled learners.
+                        </p>
+
+                    </div>
+
+                    <div class="vm-box">
+
+                        <h4>🌟 Our Mission</h4>
+
+                        <p>
+                            To provide inclusive and technology-enabled
+                            education.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ABOUT SCHOOL -->
+
+    <section class="page">
+
+        <div class="pagehead">
+
+            <span class="eyebrow">Who We Are</span>
+
+            <h2>About Vision Public School</h2>
+
+            <p>
+                Building knowledge, character and a brighter future.
+            </p>
+
+        </div>
+
+        <div class="content-card about-full">
+
+            <div>
+
+                <h3>Welcome to Our School</h3>
+
+                <p>
+                    Vision Public School is committed to providing students
+                    with an educational environment that encourages curiosity,
+                    creativity, discipline and lifelong learning.
+                </p>
+
+                <br>
+
+                <p>
+                    Our school combines academic learning with sports,
+                    co-curricular activities and technology-enabled
+                    educational resources to support students in their
+                    overall development.
+                </p>
+
+                <div class="vision-mission">
+
+                    <div class="vm-box">
+
+                        <h4>🎯 Vision</h4>
+
+                        <p>
+                            To develop confident, responsible and skilled
+                            learners prepared for the future.
+                        </p>
+
+                    </div>
+
+                    <div class="vm-box">
+
+                        <h4>🌟 Mission</h4>
+
+                        <p>
+                            To provide inclusive, accessible and
+                            technology-enabled education.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <img
+                src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000&q=85"
+                alt="Students learning in a classroom"
+                loading="lazy"
+            >
+
+        </div>
+
+    </section>
+
+    <!-- SCHOOL SERVICES -->
+
+    <section class="page">
+
+        <div class="pagehead">
+
+            <span class="eyebrow">What We Offer</span>
+
+            <h2>Our School Services</h2>
+
+            <p>
+                Student, teacher and parent facilities in one place.
+            </p>
+
+        </div>
+
+        <div class="services-grid">
+
+            <!-- ACADEMIC SERVICES -->
+
+            <div class="service-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=80"
+                    alt="Academic classroom"
+                    loading="lazy"
+                >
+
+                <div class="service-body">
+
+                    <div class="service-icon">🎓</div>
+
+                    <h3>Academic Services</h3>
+
+                    <p>
+                        Homework, timetable, attendance, results
+                        and examination information.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- STUDENT SERVICES -->
+
+            <div class="service-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=700&q=80"
+                    alt="Students studying"
+                    loading="lazy"
+                >
+
+                <div class="service-body">
+
+                    <div class="service-icon">👨‍🎓</div>
+
+                    <h3>Student Services</h3>
+
+                    <p>
+                        Student profiles, notices, fee information
+                        and communication facilities.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- PARENT SERVICES -->
+
+            <div class="service-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=700&q=80"
+                    alt="Teacher helping students"
+                    loading="lazy"
+                >
+
+                <div class="service-body">
+
+                    <div class="service-icon">👨‍👩‍👧</div>
+
+                    <h3>Parent Services</h3>
+
+                    <p>
+                        Guardian access to attendance, fees,
+                        results and school notices.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- DIGITAL LEARNING -->
+
+            <div class="service-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=700&q=80"
+                    alt="Digital learning on a laptop"
+                    loading="lazy"
+                >
+
+                <div class="service-body">
+
+                    <div class="service-icon">💻</div>
+
+                    <h3>Digital Learning</h3>
+
+                    <p>
+                        Online assignments, announcements
+                        and academic resources.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CONTACT SECTION -->
+
+    <section class="page">
+
+        <div class="pagehead">
+
+            <span class="eyebrow">Get In Touch</span>
+
+            <h2>Contact Our School</h2>
+
+            <p>
+                We welcome your questions and enquiries.
+            </p>
+
+        </div>
+
+        <div class="contact-grid">
+
+            <!-- SCHOOL CONTACT INFORMATION -->
+
+            <div class="contact-info">
+
+                <h3>Get in Touch</h3>
+
+                <p>
+                    Have questions about admissions, academics,
+                    or school facilities? Our team is happy to assist you.
+                </p>
+
+                <div class="contact-line">
+
+                    <span>📞</span>
+
+                    <div>
+                        1800-123-4567
+                    </div>
+
+                </div>
+
+                <div class="contact-line">
+
+                    <span>✉️</span>
+
+                    <div>
+                        info@visionpublicschool.in
+                    </div>
+
+                </div>
+
+                <div class="contact-line">
+
+                    <span>📍</span>
+
+                    <div>
+                        Vision Public School<br>
+                        Kanpur, Uttar Pradesh, India
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CONTACT DETAILS INSTEAD OF FORM -->
+
+            <div class="contact-details">
+
+                <h3>We're Here to Help!</h3>
+
+                <p>
+                    Connect with our school for information
+                    about admissions, academics, and facilities.
+                    We look forward to assisting you.
+                </p>
+
+                <div class="contact-detail">
+
+                    <span>🕘</span>
+
+                    <div>
+
+                        <strong>Office Hours</strong>
+
+                        <p>
+                            Monday – Saturday<br>
+                            9:00 AM – 4:00 PM
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="contact-detail">
+
+                    <span>📞</span>
+
+                    <div>
+
+                        <strong>Call Our School</strong>
+
+                        <p>1800-123-4567</p>
+
+                    </div>
+
+                </div>
+
+                <div class="contact-detail">
+
+                    <span>✉️</span>
+
+                    <div>
+
+                        <strong>Email Us</strong>
+
+                        <p>info@visionpublicschool.in</p>
+
+                    </div>
+
+                </div>
+
+                <div class="contact-highlight">
+                    🎓 Building a brighter future together!
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <h3>VISION PUBLIC SCHOOL</h3>
+
+        <p>
+            Inspiring young minds. Building brighter futures.
+        </p>
+
+        <div class="footer-bottom">
+
+            © 2026 Vision Public School |
+            School Management Portal
+
+            <br><br>
+
+            Better Education &nbsp; | &nbsp; Brighter Future
+
+        </div>
+
+    </footer>
+
 </body>
 
 </html>

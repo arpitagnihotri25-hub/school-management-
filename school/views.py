@@ -478,3 +478,9 @@ def services(request):
 
 def contact(request):
     return render(request,"contact.html")
+
+def facilities(request):
+    return render(request,"facilities.html")
+
+def gallery(request):
+    return render(request,"gallery.html")

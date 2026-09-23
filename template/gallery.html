@@ -1,19 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     {% load static %}
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Services | Vision Public School</title>
+    <title>Gallery | Vision Public School</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -53,6 +50,7 @@
 
         img {
             max-width: 100%;
+            display: block;
         }
 
         /* HEADER */
@@ -141,6 +139,10 @@
             color: #172b4d;
         }
 
+        .navlinks a {
+            display: block;
+        }
+
         .login-btn {
             background: #e63946;
             color: white;
@@ -171,7 +173,7 @@
             font-weight: 600;
         }
 
-        /* COMMON LAYOUT */
+        /* PAGE HEADER */
 
         .page {
             max-width: 1400px;
@@ -181,7 +183,7 @@
 
         .pagehead {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .eyebrow {
@@ -203,60 +205,118 @@
             color: var(--muted);
         }
 
-        /* SERVICES */
+        /* GALLERY INTRO */
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 20px;
+        .gallery-intro {
+            background: linear-gradient(120deg, #edf6ff, #ffffff);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
         }
 
-        .service-card {
+        .gallery-intro h3 {
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .gallery-intro p {
+            color: var(--muted);
+            font-size: 14px;
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.9;
+        }
+
+        /* GALLERY GRID */
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .gallery-card {
             background: white;
             border: 1px solid var(--border);
-            border-radius: 13px;
+            border-radius: 14px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .service-card:hover {
-            transform: translateY(-7px);
+        .gallery-card:hover {
+            transform: translateY(-6px);
             box-shadow: 0 15px 35px #052e6018;
         }
 
-        .service-card img {
-            width: 100%;
-            height: 175px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .service-body {
-            padding: 22px;
-        }
-
-        .service-icon {
-            width: 48px;
-            height: 48px;
-            display: grid;
-            place-items: center;
+        .gallery-image {
+            height: 250px;
+            overflow: hidden;
             background: #eaf3ff;
-            border-radius: 12px;
-            font-size: 25px;
-            margin-bottom: 13px;
         }
 
-        .service-body h3 {
-            font-size: 17px;
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .gallery-card:hover .gallery-image img {
+            transform: scale(1.06);
+        }
+
+        .gallery-caption {
+            padding: 20px;
+        }
+
+        .gallery-caption h3 {
             color: var(--primary);
-            margin-bottom: 9px;
+            font-size: 17px;
+            margin-bottom: 7px;
         }
 
-        .service-body p {
+        .gallery-caption p {
+            color: var(--muted);
             font-size: 13px;
             line-height: 1.8;
+        }
+
+        .gallery-tag {
+            display: inline-block;
+            background: #e0edff;
+            color: #1556a0;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        /* GALLERY NOTE */
+
+        .gallery-note {
+            margin-top: 35px;
+            padding: 22px;
+            background: linear-gradient(100deg, #eaf3ff, #f7faff);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .gallery-note h3 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 7px;
+        }
+
+        .gallery-note p {
             color: var(--muted);
+            font-size: 13px;
         }
 
         /* FOOTER */
@@ -289,8 +349,8 @@
 
         /* RESPONSIVE DESIGN */
 
-        @media (max-width: 1100px) {
-            .services-grid {
+        @media (max-width: 1000px) {
+            .gallery-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
@@ -325,7 +385,7 @@
 
             .navlinks {
                 width: 100%;
-                justify-content: flex-start;
+                justify-content: center;
             }
 
             .navlinks span {
@@ -347,6 +407,10 @@
             .page {
                 padding: 0 15px;
                 margin: 40px auto;
+            }
+
+            .gallery-image {
+                height: 220px;
             }
         }
 
@@ -374,8 +438,16 @@
                 font-size: 10px;
             }
 
-            .services-grid {
+            .gallery-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .gallery-image {
+                height: 230px;
+            }
+
+            .gallery-intro {
+                padding: 20px;
             }
         }
     </style>
@@ -386,10 +458,8 @@
     <!-- HEADER -->
 
     <header class="topbar">
-
         <div class="brand">
             <div class="logo">V</div>
-
             <div>
                 <h1>VISION PUBLIC SCHOOL</h1>
                 <small>School Management & Information Portal</small>
@@ -397,15 +467,12 @@
         </div>
 
         <div class="phone">📞 1800-123-4567</div>
-
     </header>
 
     <!-- NAVIGATION -->
 
     <nav class="nav">
-
         <div class="navlinks">
-
             <span>
                 <a href="{% url 'home' %}">⌂ Home</a>
             </span>
@@ -429,19 +496,16 @@
             <span>
                 <a href="{% url 'contact' %}">Contact</a>
             </span>
-
         </div>
 
         <a class="login-btn" href="{% url 'login' %}">
             ♙ Login
         </a>
-
     </nav>
 
     <!-- ANNOUNCEMENT BAR -->
 
     <div class="ticker">
-
         <span>
             📢 Latest Update: School admission and examination notices are available.
         </span>
@@ -449,135 +513,178 @@
         <span>
             📅 Academic Session 2026–27
         </span>
-
     </div>
 
-    <!-- SCHOOL SERVICES -->
+    <!-- GALLERY SECTION -->
 
-    <section class="page">
+    <main class="page">
 
         <div class="pagehead">
-
-            <span class="eyebrow">What We Offer</span>
-
-            <h2>Our School Services</h2>
-
+            <span class="eyebrow">Our Memories</span>
+            <h2>School Gallery</h2>
             <p>
-                Student, teacher and parent facilities in one place.
+                A glimpse of learning, creativity, celebrations and school life.
             </p>
-
         </div>
 
-        <div class="services-grid">
+        <!-- GALLERY INTRO -->
 
-            <!-- ACADEMIC SERVICES -->
+        <section class="gallery-intro">
+            <h3>📸 Moments at Vision Public School</h3>
+            <p>
+                Explore moments from classroom learning, academic activities,
+                sports, cultural celebrations and other school events.
+                Every picture represents an opportunity to learn, grow and achieve.
+            </p>
+        </section>
 
-            <div class="service-card">
+        <!-- GALLERY GRID -->
 
-                <img
-                    src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=80"
-                    alt="Academic classroom"
-                    loading="lazy"
-                >
+        <section class="gallery-grid">
 
-                <div class="service-body">
+            <!-- CLASSROOM LEARNING -->
 
-                    <div class="service-icon">🎓</div>
-
-                    <h3>Academic Services</h3>
-
-                    <p>
-                        Homework, timetable, attendance, results
-                        and examination information.
-                    </p>
-
+            <article class="gallery-card">
+                <div class="gallery-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=85"
+                        alt="Students learning in a classroom"
+                        loading="lazy"
+                    >
                 </div>
 
-            </div>
-
-            <!-- STUDENT SERVICES -->
-
-            <div class="service-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=700&q=80"
-                    alt="Students studying"
-                    loading="lazy"
-                >
-
-                <div class="service-body">
-
-                    <div class="service-icon">👨‍🎓</div>
-
-                    <h3>Student Services</h3>
-
+                <div class="gallery-caption">
+                    <span class="gallery-tag">ACADEMICS</span>
+                    <h3>Classroom Learning</h3>
                     <p>
-                        Student profiles, notices, fee information
-                        and communication facilities.
+                        Students learning, sharing ideas and developing
+                        knowledge in a classroom environment.
                     </p>
+                </div>
+            </article>
 
+            <!-- STUDENT ACTIVITIES -->
+
+            <article class="gallery-card">
+                <div class="gallery-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=85"
+                        alt="Students participating in learning activities"
+                        loading="lazy"
+                    >
                 </div>
 
-            </div>
-
-            <!-- PARENT SERVICES -->
-
-            <div class="service-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=700&q=80"
-                    alt="Teacher helping students"
-                    loading="lazy"
-                >
-
-                <div class="service-body">
-
-                    <div class="service-icon">👨‍👩‍👧</div>
-
-                    <h3>Parent Services</h3>
-
+                <div class="gallery-caption">
+                    <span class="gallery-tag">STUDENT LIFE</span>
+                    <h3>Student Activities</h3>
                     <p>
-                        Guardian access to attendance, fees,
-                        results and school notices.
+                        Encouraging students to participate in activities
+                        that support learning and personal development.
                     </p>
+                </div>
+            </article>
 
+            <!-- TEACHING -->
+
+            <article class="gallery-card">
+                <div class="gallery-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=900&q=85"
+                        alt="Teacher assisting students"
+                        loading="lazy"
+                    >
                 </div>
 
-            </div>
+                <div class="gallery-caption">
+                    <span class="gallery-tag">EDUCATION</span>
+                    <h3>Teaching & Guidance</h3>
+                    <p>
+                        Supporting students through guidance,
+                        classroom interaction and collaborative learning.
+                    </p>
+                </div>
+            </article>
 
             <!-- DIGITAL LEARNING -->
 
-            <div class="service-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=700&q=80"
-                    alt="Digital learning on a laptop"
-                    loading="lazy"
-                >
-
-                <div class="service-body">
-
-                    <div class="service-icon">💻</div>
-
-                    <h3>Digital Learning</h3>
-
-                    <p>
-                        Online assignments, announcements
-                        and academic resources.
-                    </p>
-
+            <article class="gallery-card">
+                <div class="gallery-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85"
+                        alt="Digital learning using a laptop"
+                        loading="lazy"
+                    >
                 </div>
 
-            </div>
+                <div class="gallery-caption">
+                    <span class="gallery-tag">TECHNOLOGY</span>
+                    <h3>Digital Learning</h3>
+                    <p>
+                        Using digital resources and technology
+                        to support modern educational experiences.
+                    </p>
+                </div>
+            </article>
 
-        </div>
+            <!-- SCHOOL CAMPUS -->
 
-    </section>
+            <article class="gallery-card">
+                <div class="gallery-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=85"
+                        alt="School campus building"
+                        loading="lazy"
+                    >
+                </div>
+
+                <div class="gallery-caption">
+                    <span class="gallery-tag">CAMPUS</span>
+                    <h3>School Campus</h3>
+                    <p>
+                        A welcoming educational environment
+                        designed to support students' school life.
+                    </p>
+                </div>
+            </article>
+
+            <!-- CREATIVE LEARNING -->
+
+            <article class="gallery-card">
+                <div class="gallery-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=85"
+                        alt="Art and creative learning materials"
+                        loading="lazy"
+                    >
+                </div>
+
+                <div class="gallery-caption">
+                    <span class="gallery-tag">CREATIVITY</span>
+                    <h3>Creative Activities</h3>
+                    <p>
+                        Inspiring imagination, artistic expression
+                        and creative thinking among learners.
+                    </p>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- GALLERY NOTE -->
+
+        <section class="gallery-note">
+            <h3>🌟 Learning, Growing & Creating Memories</h3>
+            <p>
+                Our school gallery celebrates the experiences
+                that make school life meaningful.
+            </p>
+        </section>
+
+    </main>
 
     <!-- FOOTER -->
 
     <footer class="footer">
-
         <h3>VISION PUBLIC SCHOOL</h3>
 
         <p>
@@ -585,16 +692,11 @@
         </p>
 
         <div class="footer-bottom">
-
             © 2026 Vision Public School |
             School Management Portal
-
             <br><br>
-
-            Better Education &nbsp; | &nbsp; Brighter Future
-
+            Better Education | Brighter Future
         </div>
-
     </footer>
 
 </body>
