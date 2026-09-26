@@ -108,16 +108,16 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'school_Management',   
-#         'USER': 'root',                                  
-#         'PASSWORD': 'Arpit25@',                   
-#         'HOST': 'localhost',                           
-#         'PORT': '3306',                
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'school_Management',   
+        'USER': 'root',                                  
+        'PASSWORD': 'Arpit25@',                   
+        'HOST': 'localhost',                           
+        'PORT': '3306',                
+    }
+}
 
 
 # Password validation
