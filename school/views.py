@@ -466,8 +466,8 @@ def fees_status(request):
     return render(request,"fees_status.html")
 
 def userlogout(request):
-    logout(request)
-    redirect('/login/')
+    if request.method == "POST":
+        logout(request)
     return render(request,"logout.html")
 
 def about(request):

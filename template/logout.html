@@ -21,7 +21,7 @@
 
 <body>
 
-```
+
 <div class="logout-container">
 
     <div class="logout-box">
@@ -36,10 +36,11 @@
             Are you sure you want to logout?
         </p>
 
-        <div class="buttons">
+        <div class="buttons" method="POST">
 
             <button
                 class="cancel-btn"
+                name="action"
                 onclick="history.back()">
 
                 Cancel
@@ -48,6 +49,7 @@
 
             <button
                 class="logout-btn"
+                name="action"
                 onclick="location.href='{% url 'login' %}'">
 
                 Logout
