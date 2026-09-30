@@ -1,115 +1,1146 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<!DOCTYPE html>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
 
-<title>Fees Details</title>
+<head>
 
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'fees_details.css' %}">
+<meta charset="UTF-8">
 
-</head><body><!-- ================= SIDEBAR ================= -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vision Public School | Fees Details</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+
+    :root {
+        --primary: #06478b;
+        --primary-dark: #052e60;
+        --secondary: #1675cb;
+        --yellow: #ffcc24;
+        --light: #f3f7fc;
+        --text: #172b4d;
+        --muted: #64748b;
+        --border: #dce7f3;
+        --white: #ffffff;
+
+        --green: #16a34a;
+        --red: #dc2626;
+        --orange: #ea580c;
+
+        --shadow: 0 8px 28px rgba(5, 46, 96, 0.08);
+    }
+
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+
+    body {
+        font-family: 'Inter', Arial, sans-serif;
+        background: var(--light);
+        color: var(--text);
+        line-height: 1.6;
+    }
+
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        width: 255px;
+        height: 100vh;
+
+        background: linear-gradient(
+            180deg,
+            var(--primary-dark),
+            var(--primary)
+        );
+
+        color: white;
+
+        padding: 25px 16px;
+
+        overflow-y: auto;
+
+        box-shadow: 5px 0 20px rgba(5, 46, 96, 0.12);
+
+        z-index: 1000;
+    }
+
+
+    .sidebar-brand {
+        text-align: center;
+
+        padding-bottom: 25px;
+
+        border-bottom: 1px solid rgba(255,255,255,0.15);
+
+        margin-bottom: 20px;
+    }
+
+
+    .sidebar-logo {
+        width: 58px;
+        height: 58px;
+
+        margin: 0 auto 10px;
+
+        display: grid;
+        place-items: center;
+
+        background: white;
+        color: var(--primary);
+
+        border: 4px solid var(--yellow);
+
+        border-radius: 50%;
+
+        font-size: 28px;
+        font-weight: 800;
+
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+
+    .sidebar-brand h2 {
+        font-size: 19px;
+        font-weight: 800;
+
+        letter-spacing: 0.5px;
+    }
+
+
+    .sidebar-brand p {
+        margin-top: 3px;
+
+        font-size: 10px;
+
+        color: #dbeafe;
+
+        letter-spacing: 0.5px;
+    }
+
+
+    .sidebar ul {
+        list-style: none;
+    }
+
+
+    .sidebar ul li {
+        margin: 6px 0;
+    }
+
+
+    .sidebar ul li a {
+        display: flex;
+        align-items: center;
+
+        padding: 11px 13px;
+
+        border-radius: 8px;
+
+        color: #e5efff;
+
+        font-size: 13px;
+        font-weight: 600;
+
+        transition: 0.25s;
+    }
+
+
+    .sidebar ul li a:hover {
+        background: rgba(255,255,255,0.12);
+
+        color: white;
+
+        transform: translateX(3px);
+    }
+
+
+    .sidebar ul li a.active {
+        background: var(--yellow);
+
+        color: var(--primary-dark);
+
+        font-weight: 800;
+
+        box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+    }
+
+
+    .menu-icon {
+        width: 27px;
+
+        font-size: 16px;
+    }
+
+
+    /* ================= MAIN CONTENT ================= */
+
+    .main-content {
+        margin-left: 255px;
+
+        min-height: 100vh;
+
+        padding: 28px;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    .header {
+        display: flex;
+
+        justify-content: space-between;
+        align-items: center;
+
+        gap: 20px;
+
+        padding: 25px 28px;
+
+        margin-bottom: 25px;
+
+        background:
+            linear-gradient(
+                110deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
+        color: white;
+
+        border-radius: 15px;
+
+        box-shadow: var(--shadow);
+    }
+
+
+    .header-tag {
+        display: inline-block;
+
+        color: var(--yellow);
+
+        font-size: 10px;
+        font-weight: 800;
+
+        letter-spacing: 2px;
+
+        margin-bottom: 6px;
+    }
+
+
+    .header h1 {
+        font-size: clamp(23px, 3vw, 32px);
+
+        line-height: 1.25;
+
+        font-weight: 800;
+    }
+
+
+    .header p {
+        margin-top: 5px;
+
+        color: #dbeafe;
+
+        font-size: 13px;
+    }
+
+
+    .admin-badge {
+        padding: 11px 16px;
+
+        background: var(--yellow);
+
+        color: var(--primary-dark);
+
+        border-radius: 9px;
+
+        font-size: 12px;
+        font-weight: 800;
+
+        white-space: nowrap;
+    }
+
+
+    /* ================= SUMMARY CARDS ================= */
+
+    .cards {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+
+        gap: 18px;
+
+        margin-bottom: 28px;
+    }
+
+
+    .card {
+        position: relative;
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 13px;
+
+        padding: 20px;
+
+        box-shadow: var(--shadow);
+
+        transition: 0.25s;
+
+        overflow: hidden;
+    }
+
+
+    .card:hover {
+        transform: translateY(-5px);
+
+        box-shadow:
+            0 14px 32px rgba(5, 46, 96, 0.12);
+    }
+
+
+    .card::before {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 4px;
+
+        background: var(--secondary);
+    }
+
+
+    .card-icon {
+        width: 45px;
+        height: 45px;
+
+        display: grid;
+        place-items: center;
+
+        margin-bottom: 13px;
+
+        background: #eaf3ff;
+
+        border-radius: 11px;
+
+        font-size: 22px;
+    }
+
+
+    .card h3 {
+        color: var(--muted);
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        margin-bottom: 5px;
+    }
+
+
+    .card p {
+        color: var(--primary-dark);
+
+        font-size: 25px;
+
+        line-height: 1.3;
+
+        font-weight: 800;
+
+        margin-bottom: 12px;
+    }
+
+
+    .card a {
+        display: inline-block;
+
+        color: var(--secondary);
+
+        font-size: 11px;
+
+        font-weight: 800;
+    }
+
+
+    .card a:hover {
+        color: var(--primary-dark);
+    }
+
+
+    /* ================= SECTION ================= */
+
+    .section-title {
+        margin: 32px 0 15px;
+    }
+
+
+    .section-title span {
+        color: var(--secondary);
+
+        font-size: 11px;
+
+        font-weight: 800;
+
+        letter-spacing: 2px;
+
+        text-transform: uppercase;
+    }
+
+
+    .section-title h2 {
+        color: var(--primary-dark);
+
+        font-size: 25px;
+
+        margin-top: 5px;
+    }
+
+
+    /* ================= INFORMATION SECTION ================= */
+
+    .content-section {
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+
+    .info-box {
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+
+        overflow: hidden;
+
+        box-shadow: var(--shadow);
+    }
+
+
+    .box-header {
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        gap: 15px;
+
+        padding: 20px 23px;
+
+        background:
+            linear-gradient(
+                120deg,
+                #edf6ff,
+                #ffffff
+            );
+
+        border-bottom: 1px solid var(--border);
+    }
+
+
+    .box-header h2 {
+        color: var(--primary-dark);
+
+        font-size: 18px;
+
+        font-weight: 800;
+    }
+
+
+    .box-header a {
+        padding: 7px 12px;
+
+        background: var(--yellow);
+
+        color: var(--primary-dark);
+
+        border-radius: 6px;
+
+        font-size: 10px;
+
+        font-weight: 800;
+
+        white-space: nowrap;
+    }
+
+
+    .box-header a:hover {
+        background: #f3bd00;
+    }
+
+
+    /* ================= FORM ================= */
+
+    .form-content {
+        padding: 23px;
+    }
+
+
+    .form-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 20px;
+    }
+
+
+    .form-group {
+        display: flex;
+
+        flex-direction: column;
+    }
+
+
+    .form-group label {
+        color: var(--text);
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        margin-bottom: 7px;
+    }
+
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+
+        padding: 11px 12px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 8px;
+
+        outline: none;
+
+        background: white;
+
+        color: var(--text);
+
+        font-family: inherit;
+
+        font-size: 12px;
+
+        transition: 0.2s;
+    }
+
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: var(--secondary);
+
+        box-shadow:
+            0 0 0 3px rgba(22,117,203,0.10);
+    }
+
+
+    .form-buttons {
+        display: flex;
+
+        justify-content: flex-end;
+
+        gap: 10px;
+
+        margin-top: 20px;
+    }
+
+
+    .reset-btn,
+    .submit-btn {
+        padding: 10px 17px;
+
+        border: none;
+
+        border-radius: 7px;
+
+        font-family: inherit;
+
+        font-size: 11px;
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+    }
+
+
+    .reset-btn {
+        background: #e8eef6;
+
+        color: var(--text);
+    }
+
+
+    .reset-btn:hover {
+        background: #dce5f0;
+    }
+
+
+    .submit-btn {
+        background: var(--primary);
+
+        color: white;
+    }
+
+
+    .submit-btn:hover {
+        background: var(--primary-dark);
+
+        transform: translateY(-1px);
+    }
+
+
+    .message {
+        margin-top: 15px;
+
+        padding: 10px 12px;
+
+        background: #ecfdf5;
+
+        color: var(--green);
+
+        border: 1px solid #bbf7d0;
+
+        border-radius: 7px;
+
+        font-size: 11px;
+
+        font-weight: 600;
+    }
+
+
+    /* ================= TABLE ================= */
+
+    .table-wrapper {
+        width: 100%;
+
+        overflow-x: auto;
+
+        padding: 20px 23px 23px;
+    }
+
+
+    table {
+        width: 100%;
+
+        min-width: 650px;
+
+        border-collapse: separate;
+
+        border-spacing: 0;
+
+        border: 1px solid var(--border);
+
+        border-radius: 9px;
+
+        overflow: hidden;
+    }
+
+
+    table th {
+        background: var(--primary);
+
+        color: white;
+
+        padding: 13px 12px;
+
+        text-align: left;
+
+        font-size: 10px;
+
+        font-weight: 800;
+
+        letter-spacing: 0.4px;
+
+        white-space: nowrap;
+    }
+
+
+    table td {
+        padding: 13px 12px;
+
+        border-bottom: 1px solid #e8eef6;
+
+        color: #475569;
+
+        font-size: 11px;
+
+        vertical-align: middle;
+    }
+
+
+    table tbody tr {
+        transition: 0.2s;
+    }
+
+
+    table tbody tr:hover {
+        background: #f0f7ff;
+    }
+
+
+    table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+
+    table td:first-child {
+        color: var(--primary);
+
+        font-weight: 700;
+    }
+
+
+    /* ================= ACTION BUTTONS ================= */
+
+    .edit-btn,
+    .delete-btn {
+        border: none;
+
+        padding: 6px 10px;
+
+        border-radius: 6px;
+
+        font-family: inherit;
+
+        font-size: 9px;
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+        margin-right: 5px;
+
+        transition: 0.2s;
+    }
+
+
+    .edit-btn {
+        background: #e0edff;
+
+        color: #1556a0;
+    }
+
+
+    .delete-btn {
+        background: #fee2e2;
+
+        color: var(--red);
+    }
+
+
+    .edit-btn:hover,
+    .delete-btn:hover {
+        opacity: 0.8;
+    }
+
+
+    /* ================= FOOTER ================= */
+
+    .dashboard-footer {
+        margin-top: 35px;
+
+        padding: 22px;
+
+        background:
+            linear-gradient(
+                110deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
+        border-radius: 13px;
+
+        color: white;
+
+        text-align: center;
+
+        box-shadow: var(--shadow);
+    }
+
+
+    .dashboard-footer h3 {
+        font-size: 17px;
+
+        margin-bottom: 5px;
+    }
+
+
+    .dashboard-footer p {
+        color: #dbeafe;
+
+        font-size: 11px;
+    }
+
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 1200px) {
+
+        .cards {
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+        }
+
+    }
+
+
+    @media (max-width: 950px) {
+
+        .sidebar {
+            width: 220px;
+        }
+
+
+        .main-content {
+            margin-left: 220px;
+
+            padding: 20px;
+        }
+
+
+        .cards {
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+        }
+
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+
+    @media (max-width: 700px) {
+
+        .sidebar {
+            position: relative;
+
+            width: 100%;
+
+            height: auto;
+
+            min-height: auto;
+
+            padding: 15px;
+        }
+
+
+        .sidebar-brand {
+            padding-bottom: 15px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .sidebar-logo {
+            width: 48px;
+            height: 48px;
+
+            font-size: 23px;
+        }
+
+
+        .sidebar-brand h2 {
+            font-size: 16px;
+        }
+
+
+        .sidebar ul {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 5px;
+        }
+
+
+        .sidebar ul li {
+            margin: 0;
+        }
+
+
+        .sidebar ul li a {
+            font-size: 11px;
+
+            padding: 9px;
+        }
+
+
+        .main-content {
+            margin-left: 0;
+
+            padding: 15px;
+        }
+
+
+        .header {
+            padding: 20px;
+
+            align-items: flex-start;
+
+            flex-direction: column;
+        }
+
+
+        .cards {
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 12px;
+        }
+
+
+        .card {
+            padding: 16px;
+        }
+
+
+        .card p {
+            font-size: 21px;
+        }
+
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+
+    @media (max-width: 480px) {
+
+        .sidebar ul {
+            grid-template-columns: 1fr;
+        }
+
+
+        .cards {
+            grid-template-columns: 1fr;
+        }
+
+
+        .header h1 {
+            font-size: 22px;
+        }
+
+
+        .admin-badge {
+            font-size: 10px;
+        }
+
+
+        .box-header {
+            padding: 16px;
+        }
+
+
+        .box-header h2 {
+            font-size: 15px;
+        }
+
+
+        .table-wrapper {
+            padding: 15px;
+        }
+
+
+        .form-content {
+            padding: 16px;
+        }
+
+
+        .section-title h2 {
+            font-size: 21px;
+        }
+
+
+        .form-buttons {
+            justify-content: stretch;
+
+            flex-direction: column;
+        }
+
+
+        .reset-btn,
+        .submit-btn {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= ADMIN SIDEBAR ================= -->
 
 {% if role == 'Admin' %}
-    <div class="sidebar">
+
+<div class="sidebar">
+
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
 
         <h2>Admin Portal</h2>
 
-        <ul>
-
-            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
-            <li><a href="{% url 'students' %}" class="active">Students</a></li>
-            <li><a href="{% url 'staff' %}">Staff</a></li>
-            <li><a href="{% url 'classes' %}">Classes</a></li>
-            <li><a href="{% url 'attendance' %}">Attendance</a></li>
-            {% comment %} <li><a href="{% url 'marks' %}">Marks</a></li> {% endcomment %}
-            <li><a href="{% url 'homework' %}">Homework</a></li>
-            <li><a href="{% url 'notices' %}">Notices</a></li>
-            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
-            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
-            <li><a href='admin_profile.html'>Profile</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-
-        </ul>
+        <p>VISION PUBLIC SCHOOL</p>
 
     </div>
-{% endif %}
 
-{% if role == 'Staff' %}
-    <div class="sidebar">
-
-    <h2>Staff Portal</h2>
 
     <ul>
 
         <li>
-            <a href="{% url 'staff_dashboard' %}">
+            <a href="{% url 'admin_dashboard' %}">
+                <span class="menu-icon">⌂</span>
                 Dashboard
             </a>
         </li>
 
-        {% if staff_role == 'Teacher' %}
-        <li>
-            <a href="{% url 'attendance' %}" class="active">
-                Attendance
-            </a>
-        </li>
-        {% endif %}
 
         <li>
             <a href="{% url 'students' %}">
+                <span class="menu-icon">🎓</span>
                 Students
             </a>
         </li>
 
-        {% if staff_role == 'Accountant' %}
+
         <li>
-            <a href="{% url 'student_registration' %}">
-                Add a new Student
+            <a href="{% url 'staff' %}">
+                <span class="menu-icon">👨‍🏫</span>
+                Staff
             </a>
         </li>
-        {% endif %}
 
-        {% comment %} {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'classes' %}">
+                <span class="menu-icon">🏫</span>
+                Classes
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'attendance' %}">
+                <span class="menu-icon">📋</span>
+                Attendance
+            </a>
+        </li>
+
+
+        {% comment %}
+
         <li>
             <a href="{% url 'marks' %}">
-                Marks Entry
+                <span class="menu-icon">📊</span>
+                Marks
             </a>
         </li>
-        {% endif %} {% endcomment %}
 
-        {% if staff_role == 'Teacher' %}
+        {% endcomment %}
+
+
         <li>
             <a href="{% url 'homework' %}">
+                <span class="menu-icon">📝</span>
                 Homework
             </a>
         </li>
-        {% endif %}
-        
-        {% if staff_role == 'Teacher' %}
+
+
         <li>
             <a href="{% url 'notices' %}">
+                <span class="menu-icon">📢</span>
                 Notices
             </a>
         </li>
-        {% endif %}
 
-        {% if staff_role == 'Accountant' %}
+
+        <li>
+            <a href="{% url 'fees_details' %}" class="active">
+                <span class="menu-icon">💰</span>
+                Fees Details
+            </a>
+        </li>
+
+
         <li>
             <a href="{% url 'fees_status' %}">
+                <span class="menu-icon">💳</span>
                 Fees Status
             </a>
         </li>
-        {% endif %}
-        
+
+
         <li>
-            <a href="teacher_profile.html">
+            <a href="admin_profile.html">
+                <span class="menu-icon">👤</span>
                 Profile
             </a>
         </li>
 
+
         <li>
             <a href="{% url 'logout' %}">
+                <span class="menu-icon">↪</span>
                 Logout
             </a>
         </li>
@@ -119,6 +1150,143 @@
 </div>
 
 {% endif %}
+
+
+
+<!-- ================= STAFF SIDEBAR ================= -->
+
+{% if role == 'Staff' %}
+
+<div class="sidebar">
+
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
+
+        <h2>Staff Portal</h2>
+
+        <p>VISION PUBLIC SCHOOL</p>
+
+    </div>
+
+
+    <ul>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                <span class="menu-icon">⌂</span>
+                Dashboard
+            </a>
+        </li>
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'attendance' %}">
+                <span class="menu-icon">📋</span>
+                Attendance
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        <li>
+            <a href="{% url 'students' %}">
+                <span class="menu-icon">🎓</span>
+                Students
+            </a>
+        </li>
+
+
+        {% if staff_role == 'Accountant' %}
+
+        <li>
+            <a href="{% url 'student_registration' %}">
+                <span class="menu-icon">➕</span>
+                Add a new Student
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        {% comment %}
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'marks' %}">
+                <span class="menu-icon">📊</span>
+                Marks Entry
+            </a>
+        </li>
+
+        {% endif %}
+
+        {% endcomment %}
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'homework' %}">
+                <span class="menu-icon">📝</span>
+                Homework
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'notices' %}">
+                <span class="menu-icon">📢</span>
+                Notices
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        {% if staff_role == 'Accountant' %}
+
+        <li>
+            <a href="{% url 'fees_status' %}" class="active">
+                <span class="menu-icon">💳</span>
+                Fees Status
+            </a>
+        </li>
+
+        {% endif %}
+
+
+        <li>
+            <a href="teacher_profile.html">
+                <span class="menu-icon">👤</span>
+                Profile
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'logout' %}">
+                <span class="menu-icon">↪</span>
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
 
 
 <!-- ================= MAIN CONTENT ================= -->
@@ -132,126 +1300,398 @@
 
         <div>
 
-            <h1>Fees Details</h1>
+            <span class="header-tag">
+                FEES MANAGEMENT
+            </span>
 
-            <p>Manage class-wise fees structure</p>
+            <h1>
+                Fees Details
+            </h1>
+
+            <p>
+                Manage class-wise fees structure
+            </p>
 
         </div>
 
-        
+
+        <div class="admin-badge">
+
+            {% if role == 'Admin' %}
+                💰 Fees Management
+            {% else %}
+                💳 Accountant Portal
+            {% endif %}
+
+        </div>
 
     </div>
 
-    {% if role == 'Admin' %}
-    <div class="homework-form">
 
-      <h2>Add Fees Structure</h2>
-      <form method="POST">
-    {% csrf_token %}
 
-        <div class="form-grid">
+    <!-- ================= SUMMARY ================= -->
 
-            <div class="form-group">
-                {{ form.class_field.label_tag }} 
-                {{ form.class_field }}
-                {% comment %} <label for="id_class_field">Class</label>
-                <input
-                type="number"
-                id="id_class_field"
-                name="class_field"
-                placeholder="Enter class"
-                required
-                > {% endcomment %}
-            </div>
+    <div class="section-title">
 
-            <div class="form-group">
-                {{ form.amount.label_tag }} 
-                {{ form.amount }}
-                {% comment %} <label for="id_amount">Fees Amount</label>
-                <input
-                type="number"
-                id="id_amount"
-                name="amount"
-                placeholder="Enter fees amount"
-                required
-                > {% endcomment %}
-            </div>
+        <span>
+            FEES OVERVIEW
+        </span>
 
-        </div>
-
-        <div class="form-buttons">
-            <button type="reset" class="reset-btn">Reset</button>
-            <button type="submit" class="submit-btn">Add Details</button>
-        </div>
-        {{ message }}
+        <h2>
+            Fees Summary
+        </h2>
 
     </div>
-    {% endif %}
-
-    <!-- ================= FEES TABLE ================= -->
-
-    <div class="table-container">
-
-        <h2>Class Fees Structure</h2>
 
 
-        <div class="table-wrapper">
-
-            <table id="feesTable">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Class Number</th>
-
-                        <th>Fees Amount</th>
-
-                        <th>Action</th>
-
-                    </tr>
-
-                </thead>
+    <div class="cards">
 
 
-                <tbody>
-                   
-                    {% for f in fees %}
+        <!-- TOTAL FEE RECORDS -->
 
-                    <tr>
+        <div class="card">
 
-                        <td>{{ f.class_field }}</td>
+            <div class="card-icon">
+                💰
+            </div>
 
-                        <td>₹{{ f.amount|floatformat:2 }}</td>
+            <h3>
+                Total Fee Records
+            </h3>
 
-                        <td>
+            <p>
+                {{ fees|length }}
+            </p>
 
-                            <button
-                                class="edit-btn"
-                                onclick="editFees(1)">
-
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteFees(1)">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
+            <a href="#feesTable">
+                View Records →
+            </a>
 
         </div>
+
+
+
+        <!-- CLASS STRUCTURES -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                🏫
+            </div>
+
+            <h3>
+                Class-wise Structure
+            </h3>
+
+            <p>
+                {{ fees|length }}
+            </p>
+
+            <a href="#feesTable">
+                View Structure →
+            </a>
+
+        </div>
+
+
+
+        <!-- FEE MANAGEMENT -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                📋
+            </div>
+
+            <h3>
+                Fee Management
+            </h3>
+
+            <p>
+                Active
+            </p>
+
+            <a href="#feesTable">
+                Manage Fees →
+            </a>
+
+        </div>
+
+
+
+        <!-- CURRENT ROLE -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                👤
+            </div>
+
+            <h3>
+                Current Role
+            </h3>
+
+            <p>
+                {% if role == 'Admin' %}
+                    Admin
+                {% else %}
+                    Accountant
+                {% endif %}
+            </p>
+
+            {% if role == 'Admin' %}
+
+            <a href="#addFees">
+                Add Structure →
+            </a>
+
+            {% else %}
+
+            <a href="{% url 'fees_status' %}">
+                View Fees Status →
+            </a>
+
+            {% endif %}
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= MANAGEMENT INFORMATION ================= -->
+
+    <div class="section-title">
+
+        <span>
+            FEES MANAGEMENT
+        </span>
+
+        <h2>
+            Fees Information
+        </h2>
+
+    </div>
+
+
+    <div class="content-section">
+
+
+        <!-- ================= ADD FEES STRUCTURE ================= -->
+
+        {% if role == 'Admin' %}
+
+        <div class="info-box" id="addFees">
+
+            <div class="box-header">
+
+                <h2>
+                    ➕ Add Fees Structure
+                </h2>
+
+                <a href="#feesTable">
+                    View Existing
+                </a>
+
+            </div>
+
+
+            <div class="form-content">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            {{ form.class_field.label_tag }}
+
+                            {{ form.class_field }}
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            {{ form.amount.label_tag }}
+
+                            {{ form.amount }}
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="reset"
+                            class="reset-btn"
+                        >
+                            Reset
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="submit-btn"
+                        >
+                            Add Details
+                        </button>
+
+                    </div>
+
+
+                    {% if message %}
+
+                    <div class="message">
+                        {{ message }}
+                    </div>
+
+                    {% endif %}
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- ================= FEES TABLE ================= -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>
+                    💰 Class Fees Structure
+                </h2>
+
+                <a href="#feesTable">
+                    {{ fees|length }} Records
+                </a>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table id="feesTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Class Number
+                            </th>
+
+                            <th>
+                                Fees Amount
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for f in fees %}
+
+                        <tr>
+
+                            <td>
+                                {{ f.class_field }}
+                            </td>
+
+
+                            <td>
+                                ₹{{ f.amount|floatformat:2 }}
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="edit-btn"
+                                    onclick="editFees('{{ f.class_field }}')"
+                                >
+                                    Edit
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="delete-btn"
+                                    onclick="deleteFees('{{ f.class_field }}')"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="3"
+                                style="
+                                    text-align:center;
+                                    padding:25px;
+                                    color:#64748b;
+                                "
+                            >
+                                No fees structure records found.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="dashboard-footer">
+
+        <h3>
+            VISION PUBLIC SCHOOL
+        </h3>
+
+        <p>
+            School Management & Information Portal
+        </p>
 
     </div>
 
@@ -259,57 +1699,12 @@
 </div>
 
 
+
 <!-- ================= JAVASCRIPT ================= -->
 
-{% comment %} <script>
+{% comment %}
 
-    function searchFees() {
-
-        let input =
-            document
-            .getElementById("searchInput")
-            .value
-            .toLowerCase();
-
-        let table =
-            document
-            .getElementById("feesTable");
-
-        let rows =
-            table
-            .getElementsByTagName("tr");
-
-
-        for (let i = 1; i < rows.length; i++) {
-
-            let classNumber =
-                rows[i]
-                .cells[0]
-                .innerText
-                .toLowerCase();
-
-
-            if (classNumber.includes(input)) {
-
-                rows[i].style.display = "";
-
-            } else {
-
-                rows[i].style.display = "none";
-
-            }
-
-        }
-
-    }
-
-
-    function addFees() {
-
-        alert("Add Fees form will open here.");
-
-    }
-
+<script>
 
     function editFees(classNumber) {
 
@@ -343,6 +1738,11 @@
 
     }
 
-</script> {% endcomment %}
+</script>
 
-</body></html>
+{% endcomment %}
+
+
+</body>
+
+</html>

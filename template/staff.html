@@ -1,73 +1,1102 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="en">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
 
-<title>Staff Management</title>
+    {% load static %}
 
-{% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="{% static 'staff.css' %}">
+    <title>Vision Public School | Staff Management</title>
 
-</head><body><!-- ================= SIDEBAR ================= -->
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --primary: #06478b;
+            --primary-dark: #052e60;
+            --secondary: #1675cb;
+            --yellow: #ffcc24;
+
+            --light: #f3f7fc;
+            --text: #172b4d;
+            --muted: #64748b;
+
+            --border: #dce7f3;
+            --white: #ffffff;
+
+            --green: #16a34a;
+            --red: #dc2626;
+            --orange: #ea580c;
+
+            --shadow: 0 8px 28px rgba(5, 46, 96, 0.08);
+        }
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 255px;
+            height: 100vh;
+
+            background: linear-gradient(
+                180deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
+            color: white;
+
+            padding: 25px 16px;
+
+            overflow-y: auto;
+
+            box-shadow: 5px 0 20px rgba(5, 46, 96, 0.12);
+
+            z-index: 1000;
+        }
+
+
+        .sidebar-brand {
+            text-align: center;
+
+            padding-bottom: 25px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+
+            margin-bottom: 20px;
+        }
+
+
+        .sidebar-logo {
+            width: 58px;
+            height: 58px;
+
+            margin: 0 auto 10px;
+
+            display: grid;
+            place-items: center;
+
+            background: white;
+
+            color: var(--primary);
+
+            border: 4px solid var(--yellow);
+
+            border-radius: 50%;
+
+            font-size: 28px;
+            font-weight: 800;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+
+        .sidebar-brand h2 {
+            font-size: 19px;
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .sidebar-brand p {
+            margin-top: 3px;
+
+            font-size: 10px;
+
+            color: #dbeafe;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+
+        .sidebar ul li {
+            margin: 6px 0;
+        }
+
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+
+            padding: 11px 13px;
+
+            border-radius: 8px;
+
+            color: #e5efff;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: 0.25s;
+        }
+
+
+        .sidebar ul li a:hover {
+            background: rgba(255,255,255,0.12);
+
+            color: white;
+
+            transform: translateX(3px);
+        }
+
+
+        .sidebar ul li a.active {
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            font-weight: 800;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+        }
+
+
+        .menu-icon {
+            width: 27px;
+            font-size: 16px;
+        }
+
+
+        /* ================= MAIN CONTENT ================= */
+
+        .main-content {
+            margin-left: 255px;
+
+            min-height: 100vh;
+
+            padding: 28px;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 25px 28px;
+
+            margin-bottom: 25px;
+
+            background: linear-gradient(
+                110deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
+            color: white;
+
+            border-radius: 15px;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .header-tag {
+            display: inline-block;
+
+            color: var(--yellow);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .header h1 {
+            font-size: clamp(23px, 3vw, 32px);
+
+            line-height: 1.25;
+
+            font-weight: 800;
+        }
+
+
+        .header p {
+            margin-top: 5px;
+
+            color: #dbeafe;
+
+            font-size: 13px;
+        }
+
+
+        .add-btn {
+            border: none;
+
+            padding: 11px 16px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+
+            transition: 0.25s;
+        }
+
+
+        .add-btn:hover {
+            background: #f3bd00;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-title {
+            margin: 32px 0 15px;
+        }
+
+
+        .section-title span {
+            color: var(--secondary);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        .section-title h2 {
+            color: var(--primary-dark);
+
+            font-size: 25px;
+
+            margin-top: 5px;
+        }
+
+
+        /* ================= SUMMARY CARDS ================= */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+        }
+
+
+        .card {
+            position: relative;
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            box-shadow: var(--shadow);
+
+            transition: 0.25s;
+
+            overflow: hidden;
+        }
+
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 14px 32px rgba(5, 46, 96, 0.12);
+        }
+
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 4px;
+
+            background: var(--secondary);
+        }
+
+
+        .card-icon {
+            width: 45px;
+            height: 45px;
+
+            display: grid;
+            place-items: center;
+
+            margin-bottom: 13px;
+
+            background: #eaf3ff;
+
+            border-radius: 11px;
+
+            font-size: 22px;
+        }
+
+
+        .card h3 {
+            color: var(--muted);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+
+        .card p {
+            color: var(--primary-dark);
+
+            font-size: 25px;
+
+            line-height: 1.3;
+
+            font-weight: 800;
+        }
+
+
+        /* ================= SEARCH ================= */
+
+        .search-box {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 20px 23px;
+
+            margin-bottom: 20px;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .search-box label {
+            display: block;
+
+            color: var(--primary-dark);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        .search-box input {
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            color: var(--text);
+
+            background: white;
+
+            transition: 0.25s;
+        }
+
+
+        .search-box input:focus {
+            border-color: var(--secondary);
+
+            box-shadow:
+                0 0 0 3px rgba(22,117,203,0.10);
+        }
+
+
+        /* ================= INFORMATION SECTION ================= */
+
+        .content-section {
+            display: grid;
+
+            grid-template-columns: 1fr;
+
+            gap: 20px;
+        }
+
+
+        .info-box {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .box-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 20px 23px;
+
+            background: linear-gradient(
+                120deg,
+                #edf6ff,
+                #ffffff
+            );
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .box-header h2 {
+            color: var(--primary-dark);
+
+            font-size: 18px;
+
+            font-weight: 800;
+        }
+
+
+        .box-header .record-count {
+            padding: 7px 12px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 6px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        /* ================= TABLE ================= */
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+
+            padding: 20px 23px 23px;
+        }
+
+
+        table {
+            width: 100%;
+
+            min-width: 1200px;
+
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            overflow: hidden;
+        }
+
+
+        table th {
+            background: var(--primary);
+
+            color: white;
+
+            padding: 13px 12px;
+
+            text-align: left;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.4px;
+
+            white-space: nowrap;
+        }
+
+
+        table td {
+            padding: 13px 12px;
+
+            border-bottom: 1px solid #e8eef6;
+
+            color: #475569;
+
+            font-size: 11px;
+
+            vertical-align: middle;
+        }
+
+
+        table tbody tr {
+            transition: 0.2s;
+        }
+
+
+        table tbody tr:hover {
+            background: #f0f7ff;
+        }
+
+
+        table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        table td:first-child {
+            color: var(--primary);
+
+            font-weight: 700;
+        }
+
+
+        /* ================= ROLE BADGES ================= */
+
+        .role {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 6px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        .role.teacher {
+            background: #e0edff;
+
+            color: #1556a0;
+        }
+
+
+        .role.accountant {
+            background: #dcfce7;
+
+            color: #15803d;
+        }
+
+
+        .role.admin {
+            background: #fff7d6;
+
+            color: #9a6700;
+        }
+
+
+        .role.other {
+            background: #f1f5f9;
+
+            color: #475569;
+        }
+
+
+        /* ================= ACTION BUTTONS ================= */
+
+        .action-buttons {
+            display: flex;
+
+            gap: 6px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .view-btn,
+        .edit-btn {
+            border: none;
+
+            padding: 6px 10px;
+
+            border-radius: 6px;
+
+            font-family: inherit;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .view-btn {
+            background: #e0edff;
+
+            color: #1556a0;
+        }
+
+
+        .view-btn:hover {
+            background: #c9ddfa;
+        }
+
+
+        .edit-btn {
+            background: #fff7d6;
+
+            color: #9a6700;
+        }
+
+
+        .edit-btn:hover {
+            background: #ffefad;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .dashboard-footer {
+            margin-top: 35px;
+
+            padding: 22px;
+
+            background: linear-gradient(
+                110deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
+            border-radius: 13px;
+
+            color: white;
+
+            text-align: center;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .dashboard-footer h3 {
+            font-size: 17px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .dashboard-footer p {
+            color: #dbeafe;
+
+            font-size: 11px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1200px) {
+
+            .cards {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 950px) {
+
+            .sidebar {
+                width: 220px;
+            }
+
+
+            .main-content {
+                margin-left: 220px;
+
+                padding: 20px;
+            }
+
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                min-height: auto;
+
+                padding: 15px;
+            }
+
+
+            .sidebar-brand {
+                padding-bottom: 15px;
+
+                margin-bottom: 12px;
+            }
+
+
+            .sidebar-logo {
+                width: 48px;
+
+                height: 48px;
+
+                font-size: 23px;
+            }
+
+
+            .sidebar-brand h2 {
+                font-size: 16px;
+            }
+
+
+            .sidebar ul {
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 5px;
+            }
+
+
+            .sidebar ul li {
+                margin: 0;
+            }
+
+
+            .sidebar ul li a {
+                font-size: 11px;
+
+                padding: 9px;
+            }
+
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 15px;
+            }
+
+
+            .header {
+                padding: 20px;
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 12px;
+            }
+
+
+            .card {
+                padding: 16px;
+            }
+
+
+            .card p {
+                font-size: 21px;
+            }
+
+
+            .box-header {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .sidebar ul {
+                grid-template-columns: 1fr;
+            }
+
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+
+            .add-btn {
+                font-size: 10px;
+            }
+
+
+            .box-header {
+                padding: 16px;
+            }
+
+
+            .box-header h2 {
+                font-size: 15px;
+            }
+
+
+            .table-wrapper {
+                padding: 15px;
+            }
+
+
+            .section-title h2 {
+                font-size: 21px;
+            }
+
+
+            .search-box {
+                padding: 16px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
 
 <div class="sidebar">
 
-    <h2>Admin Portal</h2>
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
+
+        <h2>Admin Portal</h2>
+
+        <p>VISION PUBLIC SCHOOL</p>
+
+    </div>
+
 
     <ul>
 
         <li>
-            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
-        </li>
-
-        <li>
-            <a href="{% url 'students' %}">Students</a>
-        </li>
-
-        <li>
-            <a href="{% url 'staff' %}" class="active">Staff</a>
-        </li>
-
-        <li>
-            <a href="{% url 'classes' %}">Classes</a>
-        </li>
-
-        <li>
-            <a href="{% url 'attendance' %}">Attendance</a>
-        </li>
-
-        {% comment %} <li>
-            <a href="{% url 'marks' %}">Marks</a>
-        </li> {% endcomment %}
-
-        <li>
-            <a href="{% url 'homework' %}">Homework</a>
-        </li>
-
-        <li>
-            <a href="{% url 'notices' %}">Notices</a>
-        </li>
-
-        <li>
-            <a href="{% url 'fees_details' %}">Fees Details</a>
-        </li>
-
-        <li>
-            <a href="{% url 'fees_status' %}">Fees Status</a>
-        </li>
-
-        <li>
-            <a href="{% url 'staff_registration' %}" class="active">
-                Add new Staff Member
+            <a href="{% url 'admin_dashboard' %}">
+                <span class="menu-icon">⌂</span>
+                Dashboard
             </a>
         </li>
 
-        <li>
-            <a href="admin_profile.html">Profile</a>
-        </li>
 
         <li>
-            <a href="{% url 'logout' %}">Logout</a>
+            <a href="{% url 'students' %}">
+                <span class="menu-icon">🎓</span>
+                Students
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'staff' %}" class="active">
+                <span class="menu-icon">👨‍🏫</span>
+                Staff
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'classes' %}">
+                <span class="menu-icon">🏫</span>
+                Classes
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'attendance' %}">
+                <span class="menu-icon">📋</span>
+                Attendance
+            </a>
+        </li>
+
+
+        {% comment %}
+        <li>
+            <a href="{% url 'marks' %}">
+                <span class="menu-icon">📊</span>
+                Marks
+            </a>
+        </li>
+        {% endcomment %}
+
+
+        <li>
+            <a href="{% url 'homework' %}">
+                <span class="menu-icon">📝</span>
+                Homework
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'notices' %}">
+                <span class="menu-icon">📢</span>
+                Notices
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'fees_details' %}">
+                <span class="menu-icon">💰</span>
+                Fees Details
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'fees_status' %}">
+                <span class="menu-icon">💳</span>
+                Fees Status
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'staff_registration' %}">
+                <span class="menu-icon">➕</span>
+                Add New Staff
+            </a>
+        </li>
+
+
+        <li>
+            <a href="admin_profile.html">
+                <span class="menu-icon">👤</span>
+                Profile
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'logout' %}">
+                <span class="menu-icon">↪</span>
+                Logout
+            </a>
         </li>
 
     </ul>
@@ -75,75 +1104,161 @@
 </div>
 
 
+
 <!-- ================= MAIN CONTENT ================= -->
 
 <div class="main-content">
 
 
-    <!-- HEADER -->
+    <!-- ================= HEADER ================= -->
 
     <div class="header">
 
         <div>
 
-            <h1>Staff Management</h1>
+            <span class="header-tag">
+                STAFF MANAGEMENT
+            </span>
 
-            <p>View and manage all staff members</p>
+            <h1>
+                Staff Management
+            </h1>
+
+            <p>
+                View and manage all staff members of Vision Public School
+            </p>
 
         </div>
 
-        <button class="add-btn" onclick="window.location.href='{% url 'staff_registration' %}'">
-            + Add Staff
+
+        <button
+            class="add-btn"
+            onclick="window.location.href='{% url 'staff_registration' %}'"
+        >
+            ➕ Add Staff
         </button>
 
     </div>
 
 
-    <!-- ================= SUMMARY CARDS ================= -->
+
+    <!-- ================= SUMMARY ================= -->
+
+    <div class="section-title">
+
+        <span>
+            STAFF OVERVIEW
+        </span>
+
+        <h2>
+            Staff Summary
+        </h2>
+
+    </div>
+
 
     <div class="cards">
 
+
+        <!-- TOTAL STAFF -->
+
         <div class="card">
 
-            <h3>Total Staff</h3>
+            <div class="card-icon">
+                👨‍🏫
+            </div>
 
-            <p>48</p>
+            <h3>
+                Total Staff
+            </h3>
+
+            <p>
+                48
+            </p>
 
         </div>
 
 
+        <!-- TEACHERS -->
+
         <div class="card">
 
-            <h3>Teachers</h3>
+            <div class="card-icon">
+                👩‍🏫
+            </div>
 
-            <p>38</p>
+            <h3>
+                Teachers
+            </h3>
+
+            <p>
+                38
+            </p>
 
         </div>
 
 
+        <!-- ADMINISTRATIVE STAFF -->
+
         <div class="card">
 
-            <h3>Administrative Staff</h3>
+            <div class="card-icon">
+                🧑‍💼
+            </div>
 
-            <p>6</p>
+            <h3>
+                Administrative Staff
+            </h3>
+
+            <p>
+                6
+            </p>
 
         </div>
 
 
+        <!-- OTHER STAFF -->
+
         <div class="card">
 
-            <h3>Other Staff</h3>
+            <div class="card-icon">
+                👤
+            </div>
 
-            <p>4</p>
+            <h3>
+                Other Staff
+            </h3>
+
+            <p>
+                4
+            </p>
 
         </div>
 
     </div>
 
 
+
     <!-- ================= SEARCH ================= -->
 
+    <div class="section-title">
+
+        <span>
+            STAFF DIRECTORY
+        </span>
+
+        <h2>
+            Search Staff
+        </h2>
+
+    </div>
+
+
     <div class="search-box">
+
+        <label for="searchInput">
+            Search Staff Members
+        </label>
 
         <input
             type="text"
@@ -155,107 +1270,199 @@
     </div>
 
 
+
     <!-- ================= STAFF TABLE ================= -->
 
-    <div class="table-container">
+    <div class="content-section">
 
-        <h2>All Staff Members</h2>
-
-        <div class="table-wrapper">
-
-            <table id="staffTable">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Staff ID</th>
-
-                        <th>Name</th>
-
-                        <th>Email</th>
-
-                        <th>Contact</th>
-
-                        <th>Qualification</th>
-
-                        <th>Experience</th>
-
-                        <th>Subject</th>
-
-                        <th>Class</th>
-
-                        <th>Address</th>
-
-                        <th>Gender</th>
-
-                        <th>Role</th>
-
-                        <th>Action</th>
-
-                    </tr>
-
-                </thead>
-                
-                {% for staff in staff_details %}
-
-                <tbody>
+        <div class="info-box">
 
 
-                    <!-- STAFF 1 -->
+            <div class="box-header">
 
-                    <tr>
+                <h2>
+                    👨‍🏫 All Staff Members
+                </h2>
 
-                        <td>{{ staff.staff_id }}</td>
+                <span class="record-count">
+                    STAFF DIRECTORY
+                </span>
 
-                        <td>{{ staff.name }}</td>
+            </div>
 
-                        <td>{{ staff.email }}</td>
 
-                        <td>{{ staff.contact }}</td>
 
-                        <td>{{ staff.qualifications }}</td>
+            <div class="table-wrapper">
 
-                        <td>{{ staff.experience }}</td>
+                <table id="staffTable">
 
-                        <td>{{ staff.subject }}</td>
 
-                        <td>{{ staff.class_field }}</td>
+                    <thead>
 
-                        <td>{{ staff.address }}</td>
+                        <tr>
 
-                        <td>{{ staff.gender }}</td>
+                            <th>Staff ID</th>
 
-                        <td>
-                            <span class="role teacher">
-                                {{ staff.role }}
-                            </span>
-                        </td>
+                            <th>Name</th>
 
-                        <td>
+                            <th>Email</th>
 
-                            <button
-                                class="view-btn"
-                                onclick="viewStaff('STF001')">
-                                View
-                            </button>
+                            <th>Contact</th>
 
-                            <button
-                                class="edit-btn"
-                                onclick="editStaff('STF001')">
-                                Edit
-                            </button>
+                            <th>Qualification</th>
 
-                        </td>
+                            <th>Experience</th>
 
-                    </tr>
-                {% endfor %}
+                            <th>Subject</th>
 
-                </tbody>
+                            <th>Class</th>
 
-            </table>
+                            <th>Address</th>
+
+                            <th>Gender</th>
+
+                            <th>Role</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+                        {% for staff in staff_details %}
+
+                        <tr>
+
+                            <td>
+                                {{ staff.staff_id }}
+                            </td>
+
+
+                            <td>
+                                {{ staff.name }}
+                            </td>
+
+
+                            <td>
+                                {{ staff.email }}
+                            </td>
+
+
+                            <td>
+                                {{ staff.contact }}
+                            </td>
+
+
+                            <td>
+                                {{ staff.qualifications }}
+                            </td>
+
+
+                            <td>
+                                {{ staff.experience }}
+                            </td>
+
+
+                            <td>
+                                {{ staff.subject }}
+                            </td>
+
+
+                            <td>
+                                {{ staff.class_field }}
+                            </td>
+
+
+                            <td>
+                                {{ staff.address }}
+                            </td>
+
+
+                            <td>
+                                {{ staff.gender }}
+                            </td>
+
+
+                            <td>
+
+                                <span class="role teacher">
+                                    {{ staff.role }}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="action-buttons">
+
+                                    <button
+                                        class="view-btn"
+                                        onclick="viewStaff('{{ staff.staff_id }}')"
+                                    >
+                                        View
+                                    </button>
+
+
+                                    <button
+                                        class="edit-btn"
+                                        onclick="editStaff('{{ staff.staff_id }}')"
+                                    >
+                                        Edit
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="12"
+                                style="
+                                    text-align:center;
+                                    padding:25px;
+                                    color:#64748b;
+                                "
+                            >
+                                No staff members found.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </div>
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="dashboard-footer">
+
+        <h3>
+            VISION PUBLIC SCHOOL
+        </h3>
+
+        <p>
+            School Management & Information Portal
+        </p>
 
     </div>
 
@@ -263,9 +1470,12 @@
 </div>
 
 
+
 <!-- ================= JAVASCRIPT ================= -->
 
-{% comment %} <script>
+{% comment %}
+
+<script>
 
     function searchStaff() {
 
@@ -320,6 +1530,11 @@
 
     }
 
-</script> {% endcomment %}
+</script>
+{% endcomment %}
 
-</body></html>
+
+
+</body>
+
+</html>

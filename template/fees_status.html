@@ -1,116 +1,1646 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="en">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
 
-<title>Fees Status</title>
+    {% load static %}
 
-{% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="{% static 'fees_status.css' %}">
+    <title>Vision Public School | Fees Status</title>
 
-</head><body><!-- ================= SIDEBAR ================= -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+
+            --primary: #06478b;
+            --primary-dark: #052e60;
+            --secondary: #1675cb;
+            --yellow: #ffcc24;
+
+            --light: #f3f7fc;
+            --text: #172b4d;
+            --muted: #64748b;
+            --border: #dce7f3;
+            --white: #ffffff;
+
+            --green: #16a34a;
+            --red: #dc2626;
+            --orange: #ea580c;
+
+            --shadow: 0 8px 28px rgba(5, 46, 96, 0.08);
+
+        }
+
+
+        * {
+
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+        body {
+
+            font-family: 'Inter', Arial, sans-serif;
+
+            background: var(--light);
+
+            color: var(--text);
+
+            line-height: 1.6;
+
+        }
+
+
+        a {
+
+            text-decoration: none;
+
+            color: inherit;
+
+        }
+
+
+        button,
+        input,
+        select {
+
+            font-family: inherit;
+
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 255px;
+            height: 100vh;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--primary-dark),
+                    var(--primary)
+                );
+
+            color: white;
+
+            padding: 25px 16px;
+
+            overflow-y: auto;
+
+            box-shadow:
+                5px 0 20px rgba(5, 46, 96, 0.12);
+
+            z-index: 1000;
+
+        }
+
+
+        .sidebar-brand {
+
+            text-align: center;
+
+            padding-bottom: 25px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.15);
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .sidebar-logo {
+
+            width: 58px;
+            height: 58px;
+
+            margin: 0 auto 10px;
+
+            display: grid;
+
+            place-items: center;
+
+            background: white;
+
+            color: var(--primary);
+
+            border:
+                4px solid var(--yellow);
+
+            border-radius: 50%;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.2);
+
+        }
+
+
+        .sidebar-brand h2 {
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        .sidebar-brand p {
+
+            margin-top: 3px;
+
+            font-size: 10px;
+
+            color: #dbeafe;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        .sidebar ul {
+
+            list-style: none;
+
+        }
+
+
+        .sidebar ul li {
+
+            margin: 6px 0;
+
+        }
+
+
+        .sidebar ul li a {
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 11px 13px;
+
+            border-radius: 8px;
+
+            color: #e5efff;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.25s;
+
+        }
+
+
+        .sidebar ul li a:hover {
+
+            background:
+                rgba(255,255,255,0.12);
+
+            color: white;
+
+            transform:
+                translateX(3px);
+
+        }
+
+
+        .sidebar ul li a.active {
+
+            background:
+                var(--yellow);
+
+            color:
+                var(--primary-dark);
+
+            font-weight: 800;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.12);
+
+        }
+
+
+        .menu-icon {
+
+            width: 27px;
+
+            font-size: 16px;
+
+        }
+
+
+        /* ================= MAIN CONTENT ================= */
+
+        .main-content {
+
+            margin-left: 255px;
+
+            min-height: 100vh;
+
+            padding: 28px;
+
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 25px 28px;
+
+            margin-bottom: 25px;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    var(--primary-dark),
+                    var(--primary)
+                );
+
+            color: white;
+
+            border-radius: 15px;
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        .header-tag {
+
+            display: inline-block;
+
+            color: var(--yellow);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .header h1 {
+
+            font-size:
+                clamp(23px, 3vw, 32px);
+
+            line-height: 1.25;
+
+            font-weight: 800;
+
+        }
+
+
+        .header p {
+
+            margin-top: 5px;
+
+            color: #dbeafe;
+
+            font-size: 13px;
+
+        }
+
+
+        .header-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .admin-badge {
+
+            padding: 11px 16px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* ================= SUMMARY CARDS ================= */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .card {
+
+            position: relative;
+
+            background: white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            box-shadow: var(--shadow);
+
+            transition: 0.25s;
+
+            overflow: hidden;
+
+        }
+
+
+        .card:hover {
+
+            transform:
+                translateY(-5px);
+
+            box-shadow:
+                0 14px 32px
+                rgba(5, 46, 96, 0.12);
+
+        }
+
+
+        .card::before {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 4px;
+
+            background:
+                var(--secondary);
+
+        }
+
+
+        .card-icon {
+
+            width: 45px;
+            height: 45px;
+
+            display: grid;
+
+            place-items: center;
+
+            margin-bottom: 13px;
+
+            background: #eaf3ff;
+
+            border-radius: 11px;
+
+            font-size: 22px;
+
+        }
+
+
+        .card h3 {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .card p {
+
+            color: var(--primary-dark);
+
+            font-size: 25px;
+
+            line-height: 1.3;
+
+            font-weight: 800;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .card a {
+
+            display: inline-block;
+
+            color: var(--secondary);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+
+        .card a:hover {
+
+            color:
+                var(--primary-dark);
+
+        }
+
+
+        /* ================= SECTION ================= */
+
+        .section-title {
+
+            margin: 32px 0 15px;
+
+        }
+
+
+        .section-title span {
+
+            color: var(--secondary);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .section-title h2 {
+
+            color: var(--primary-dark);
+
+            font-size: 25px;
+
+            margin-top: 5px;
+
+        }
+
+
+        /* ================= INFORMATION SECTION ================= */
+
+        .content-section {
+
+            display: grid;
+
+            grid-template-columns: 1fr;
+
+            gap: 20px;
+
+        }
+
+
+        .info-box {
+
+            background: white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        .box-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 20px 23px;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #edf6ff,
+                    #ffffff
+                );
+
+            border-bottom:
+                1px solid var(--border);
+
+        }
+
+
+        .box-header h2 {
+
+            color:
+                var(--primary-dark);
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+        }
+
+
+        .box-header a {
+
+            padding: 7px 12px;
+
+            background:
+                var(--yellow);
+
+            color:
+                var(--primary-dark);
+
+            border-radius: 6px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+        }
+
+
+        .box-header a:hover {
+
+            background: #f3bd00;
+
+        }
+
+
+        .box-label {
+
+            padding: 7px 11px;
+
+            background: #eaf3ff;
+
+            color: var(--secondary);
+
+            border-radius: 6px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* ================= FILTER ================= */
+
+        .filter-content {
+
+            padding: 20px 23px 23px;
+
+        }
+
+
+        .filter-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 18px;
+
+            align-items: end;
+
+        }
+
+
+        .filter-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+
+        }
+
+
+        .filter-group label {
+
+            color: var(--primary-dark);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+
+        .filter-group select {
+
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            background: white;
+
+            color: var(--text);
+
+            font-size: 12px;
+
+            outline: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        .filter-group select:focus {
+
+            border-color:
+                var(--secondary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(22,117,203,0.10);
+
+        }
+
+
+        .filter-btn {
+
+            padding: 11px 18px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background:
+                var(--primary);
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .filter-btn:hover {
+
+            background:
+                var(--primary-dark);
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        /* ================= SEARCH ================= */
+
+        .search-content {
+
+            padding: 20px 23px 23px;
+
+        }
+
+
+        .search-content input {
+
+            width: 100%;
+
+            padding: 13px 15px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            background: white;
+
+            color: var(--text);
+
+            font-size: 12px;
+
+            outline: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        .search-content input:focus {
+
+            border-color:
+                var(--secondary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(22,117,203,0.10);
+
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-content {
+
+            padding: 23px;
+
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 18px;
+
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+
+        }
+
+
+        .form-group.full-width {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .form-group label {
+
+            color:
+                var(--primary-dark);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            background: white;
+
+            color: var(--text);
+
+            font-size: 12px;
+
+            outline: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+
+            border-color:
+                var(--secondary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(22,117,203,0.10);
+
+        }
+
+
+        .form-buttons {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 22px;
+
+        }
+
+
+        .reset-btn,
+        .submit-btn {
+
+            border: none;
+
+            border-radius: 8px;
+
+            padding: 10px 18px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .reset-btn {
+
+            background:
+                #e8eef6;
+
+            color:
+                var(--primary-dark);
+
+        }
+
+
+        .reset-btn:hover {
+
+            background:
+                #dbe5f0;
+
+        }
+
+
+        .submit-btn {
+
+            background:
+                var(--primary);
+
+            color: white;
+
+        }
+
+
+        .submit-btn:hover {
+
+            background:
+                var(--primary-dark);
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        /* ================= TABLE ================= */
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+            padding: 20px 23px 23px;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            min-width: 700px;
+
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            overflow: hidden;
+
+        }
+
+
+        table th {
+
+            background:
+                var(--primary);
+
+            color: white;
+
+            padding: 13px 12px;
+
+            text-align: left;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.4px;
+
+            white-space: nowrap;
+
+        }
+
+
+        table td {
+
+            padding: 13px 12px;
+
+            border-bottom:
+                1px solid #e8eef6;
+
+            color: #475569;
+
+            font-size: 11px;
+
+            vertical-align: middle;
+
+        }
+
+
+        table tbody tr {
+
+            transition: 0.2s;
+
+        }
+
+
+        table tbody tr:hover {
+
+            background:
+                #f0f7ff;
+
+        }
+
+
+        table tbody tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+
+        table td:first-child {
+
+            color:
+                var(--primary);
+
+            font-weight: 700;
+
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 6px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+        }
+
+
+        .status.paid {
+
+            background:
+                #dcfce7;
+
+            color:
+                #15803d;
+
+        }
+
+
+        .status.pending {
+
+            background:
+                #fff7d6;
+
+            color:
+                #9a6700;
+
+        }
+
+
+        .status.partial {
+
+            background:
+                #e0edff;
+
+            color:
+                #1556a0;
+
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .dashboard-footer {
+
+            margin-top: 35px;
+
+            padding: 22px;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    var(--primary-dark),
+                    var(--primary)
+                );
+
+            border-radius: 13px;
+
+            color: white;
+
+            text-align: center;
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        .dashboard-footer h3 {
+
+            font-size: 17px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .dashboard-footer p {
+
+            color: #dbeafe;
+
+            font-size: 11px;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1200px) {
+
+            .cards {
+
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+
+            }
+
+        }
+
+
+        @media (max-width: 950px) {
+
+            .sidebar {
+
+                width: 220px;
+
+            }
+
+
+            .main-content {
+
+                margin-left: 220px;
+
+                padding: 20px;
+
+            }
+
+
+            .cards {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                min-height: auto;
+
+                padding: 15px;
+
+            }
+
+
+            .sidebar-brand {
+
+                padding-bottom: 15px;
+
+                margin-bottom: 12px;
+
+            }
+
+
+            .sidebar-logo {
+
+                width: 48px;
+                height: 48px;
+
+                font-size: 23px;
+
+            }
+
+
+            .sidebar-brand h2 {
+
+                font-size: 16px;
+
+            }
+
+
+            .sidebar ul {
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 5px;
+
+            }
+
+
+            .sidebar ul li {
+
+                margin: 0;
+
+            }
+
+
+            .sidebar ul li a {
+
+                font-size: 11px;
+
+                padding: 9px;
+
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+                padding: 15px;
+
+            }
+
+
+            .header {
+
+                padding: 20px;
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+            }
+
+
+            .header-actions {
+
+                width: 100%;
+
+            }
+
+
+            .admin-badge {
+
+                width: 100%;
+
+                text-align: center;
+
+            }
+
+
+            .cards {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 12px;
+
+            }
+
+
+            .card {
+
+                padding: 16px;
+
+            }
+
+
+            .card p {
+
+                font-size: 21px;
+
+            }
+
+
+            .filter-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .form-group.full-width {
+
+                grid-column: auto;
+
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .sidebar ul {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .cards {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .header h1 {
+
+                font-size: 22px;
+
+            }
+
+
+            .admin-badge {
+
+                font-size: 10px;
+
+            }
+
+
+            .box-header {
+
+                padding: 16px;
+
+            }
+
+
+            .box-header h2 {
+
+                font-size: 15px;
+
+            }
+
+
+            .table-wrapper {
+
+                padding: 15px;
+
+            }
+
+
+            .search-content {
+
+                padding: 15px;
+
+            }
+
+
+            .filter-content {
+
+                padding: 15px;
+
+            }
+
+
+            .form-content {
+
+                padding: 16px;
+
+            }
+
+
+            .section-title h2 {
+
+                font-size: 21px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================================= -->
+<!-- ===================== ADMIN SIDEBAR ===================== -->
+<!-- ========================================================= -->
 
 {% if role == 'Admin' %}
-    <div class="sidebar">
+
+<div class="sidebar">
+
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
 
         <h2>Admin Portal</h2>
 
-        <ul>
-
-            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
-            <li><a href="{% url 'students' %}" class="active">Students</a></li>
-            <li><a href="{% url 'staff' %}">Staff</a></li>
-            <li><a href="{% url 'classes' %}">Classes</a></li>
-            <li><a href="{% url 'attendance' %}">Attendance</a></li>
-            {% comment %} <li><a href="{% url 'marks' %}">Marks</a></li> {% endcomment %}
-            <li><a href="{% url 'homework' %}">Homework</a></li>
-            <li><a href="{% url 'notices' %}">Notices</a></li>
-            <li><a href="{% url 'fees_details' %}">Fees Details</a></li>
-            <li><a href="{% url 'fees_status' %}">Fees Status</a></li>
-            <li><a href='admin_profile.html'>Profile</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-
-        </ul>
+        <p>VISION PUBLIC SCHOOL</p>
 
     </div>
-{% endif %}
 
-{% if role == 'Staff' %}
-    <div class="sidebar">
-
-    <h2>Staff Portal</h2>
 
     <ul>
 
         <li>
-            <a href="{% url 'staff_dashboard' %}">
+            <a href="{% url 'admin_dashboard' %}">
+
+                <span class="menu-icon">⌂</span>
+
                 Dashboard
+
             </a>
         </li>
 
-        {% if staff_role == 'Teacher' %}
-        <li>
-            <a href="{% url 'attendance' %}" class="active">
-                Attendance
-            </a>
-        </li>
-        {% endif %}
 
         <li>
             <a href="{% url 'students' %}">
+
+                <span class="menu-icon">🎓</span>
+
                 Students
+
             </a>
         </li>
 
-        {% if staff_role == 'Accountant' %}
+
         <li>
-            <a href="{% url 'student_registration' %}">
-                Add a new Student
+            <a href="{% url 'staff' %}">
+
+                <span class="menu-icon">👨‍🏫</span>
+
+                Staff
+
             </a>
         </li>
-        {% endif %}
 
-        {% comment %} {% if staff_role == 'Teacher' %}
+
+        <li>
+            <a href="{% url 'classes' %}">
+
+                <span class="menu-icon">🏫</span>
+
+                Classes
+
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'attendance' %}">
+
+                <span class="menu-icon">📋</span>
+
+                Attendance
+
+            </a>
+        </li>
+
+
+        {% comment %}
+
         <li>
             <a href="{% url 'marks' %}">
-                Marks Entry
+
+                <span class="menu-icon">📊</span>
+
+                Marks
+
             </a>
         </li>
-        {% endif %} {% endcomment %}
 
-        {% if staff_role == 'Teacher' %}
+        {% endcomment %}
+
+
         <li>
             <a href="{% url 'homework' %}">
+
+                <span class="menu-icon">📝</span>
+
                 Homework
+
             </a>
         </li>
-        {% endif %}
-        
-        {% if staff_role == 'Teacher' %}
+
+
         <li>
             <a href="{% url 'notices' %}">
-                Notices
-            </a>
-        </li>
-        {% endif %}
 
-        {% if staff_role == 'Accountant' %}
+                <span class="menu-icon">📢</span>
+
+                Notices
+
+            </a>
+        </li>
+
+
         <li>
-            <a href="{% url 'fees_status' %}">
+            <a href="{% url 'fees_details' %}">
+
+                <span class="menu-icon">💰</span>
+
+                Fees Details
+
+            </a>
+        </li>
+
+
+        <li>
+            <a
+                href="{% url 'fees_status' %}"
+                class="active"
+            >
+
+                <span class="menu-icon">💳</span>
+
                 Fees Status
+
             </a>
         </li>
-        {% endif %}
-        
+
+
         <li>
-            <a href="teacher_profile.html">
-                Profile
+            <a href="{% url 'staff_registration' %}">
+
+                <span class="menu-icon">➕</span>
+
+                Add New Staff
+
             </a>
         </li>
+
+
+        <li>
+            <a href="admin_profile.html">
+
+                <span class="menu-icon">👤</span>
+
+                Profile
+
+            </a>
+        </li>
+
 
         <li>
             <a href="{% url 'logout' %}">
+
+                <span class="menu-icon">↪</span>
+
                 Logout
+
             </a>
         </li>
 
@@ -120,138 +1650,484 @@
 
 {% endif %}
 
-{% if role == 'Student' %}
-    <div class="sidebar">
 
 
-<h2>Student Portal</h2>
+<!-- ========================================================= -->
+<!-- ===================== STAFF SIDEBAR ===================== -->
+<!-- ========================================================= -->
 
-<ul>
+{% if role == 'Staff' %}
 
-    <li>
-        <a href="{% url 'student_dashboard' %}" class="active">
-            Dashboard
-        </a>
-    </li>
-
-    <li>
-        <a href="{% url 'attendance' %}">
-            Attendance
-        </a>
-    </li>
-
-    {% comment %} <li>
-        <a href="{% url 'marks' %}">
-            Marks
-        </a>
-    </li> {% endcomment %}
-
-    <li>
-        <a href="{% url 'homework' %}">
-            Homework
-        </a>
-    </li>
-
-    <li>
-        <a href="{% url 'notices' %}">
-            Notices
-        </a>
-    </li>
-
-    <li>
-        <a href="{% url 'fees_status' %}">
-            Fees Status
-        </a>
-    </li>
-
-    <li>
-        <a href="student_profile.html">
-            Profile
-        </a>
-    </li>
-
-    <li>
-        <a href="{% url 'logout' %}">
-            Logout
-        </a>
-    </li>
-
-</ul>
-
-</div>
-    {% endif %}
-
-{% if role == 'Guardian' %}
 <div class="sidebar">
 
-    <div class="logo">
-        <span>🏫</span>
-        School Management
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
+
+        <h2>Staff Portal</h2>
+
+        <p>VISION PUBLIC SCHOOL</p>
+
     </div>
 
-    <ul class="menu">
 
-        <li class="active">
-            <a href="{% url 'guardian_dashboard' %}">
-                🏠 <span>Dashboard</span>
-            </a>
-        </li>
-
-        {% comment %} <li>
-            <a href="{% url 'student_dashboard' %}">
-                👨‍🎓 <span>My Child</span>
-            </a>
-        </li> {% endcomment %}
+    <ul>
 
         <li>
-        <a href="{% url 'attendance' %}">
-            Attendance
-        </a>
-    </li>
 
-    {% comment %} <li>
-        <a href="{% url 'marks' %}">
-            Marks
-        </a>
-    </li> {% endcomment %}
+            <a href="{% url 'staff_dashboard' %}">
 
-    <li>
-        <a href="{% url 'homework' %}">
-            Homework
-        </a>
-    </li>
+                <span class="menu-icon">⌂</span>
 
-    <li>
-        <a href="{% url 'notices' %}">
-            Notices
-        </a>
-    </li>
+                Dashboard
 
-    <li>
-        <a href="{% url 'fees_status' %}">
-            Fees Status
-        </a>
-    </li>
-
-        <li>
-            <a href="#">
-                👤 <span>Profile</span>
             </a>
+
         </li>
 
-        <li class="logout">
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+
+            <a href="{% url 'attendance' %}">
+
+                <span class="menu-icon">📋</span>
+
+                Attendance
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <li>
+
+            <a href="{% url 'students' %}">
+
+                <span class="menu-icon">🎓</span>
+
+                Students
+
+            </a>
+
+        </li>
+
+
+        {% if staff_role == 'Accountant' %}
+
+        <li>
+
+            <a href="{% url 'student_registration' %}">
+
+                <span class="menu-icon">➕</span>
+
+                Add a New Student
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        {% comment %}
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+
+            <a href="{% url 'marks' %}">
+
+                <span class="menu-icon">📊</span>
+
+                Marks Entry
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+        {% endcomment %}
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+
+            <a href="{% url 'homework' %}">
+
+                <span class="menu-icon">📝</span>
+
+                Homework
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+
+            <a href="{% url 'notices' %}">
+
+                <span class="menu-icon">📢</span>
+
+                Notices
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        {% if staff_role == 'Accountant' %}
+
+        <li>
+
+            <a
+                href="{% url 'fees_status' %}"
+                class="active"
+            >
+
+                <span class="menu-icon">💳</span>
+
+                Fees Status
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+
+        <li>
+
+            <a href="teacher_profile.html">
+
+                <span class="menu-icon">👤</span>
+
+                Profile
+
+            </a>
+
+        </li>
+
+
+        <li>
+
             <a href="{% url 'logout' %}">
-                🚪 <span>Logout</span>
+
+                <span class="menu-icon">↪</span>
+
+                Logout
+
             </a>
+
         </li>
 
     </ul>
 
 </div>
+
 {% endif %}
 
 
-<!-- ================= MAIN CONTENT ================= -->
+
+<!-- ========================================================= -->
+<!-- ==================== STUDENT SIDEBAR ==================== -->
+<!-- ========================================================= -->
+
+{% if role == 'Student' %}
+
+<div class="sidebar">
+
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
+
+        <h2>Student Portal</h2>
+
+        <p>VISION PUBLIC SCHOOL</p>
+
+    </div>
+
+
+    <ul>
+
+        <li>
+
+            <a href="{% url 'student_dashboard' %}">
+
+                <span class="menu-icon">⌂</span>
+
+                Dashboard
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{% url 'attendance' %}">
+
+                <span class="menu-icon">📋</span>
+
+                Attendance
+
+            </a>
+
+        </li>
+
+
+        {% comment %}
+
+        <li>
+
+            <a href="{% url 'marks' %}">
+
+                <span class="menu-icon">📊</span>
+
+                Marks
+
+            </a>
+
+        </li>
+
+        {% endcomment %}
+
+
+        <li>
+
+            <a href="{% url 'homework' %}">
+
+                <span class="menu-icon">📝</span>
+
+                Homework
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{% url 'notices' %}">
+
+                <span class="menu-icon">📢</span>
+
+                Notices
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="{% url 'fees_status' %}"
+                class="active"
+            >
+
+                <span class="menu-icon">💳</span>
+
+                Fees Status
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="student_profile.html">
+
+                <span class="menu-icon">👤</span>
+
+                Profile
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{% url 'logout' %}">
+
+                <span class="menu-icon">↪</span>
+
+                Logout
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+
+
+<!-- ========================================================= -->
+<!-- ==================== GUARDIAN SIDEBAR =================== -->
+<!-- ========================================================= -->
+
+{% if role == 'Guardian' %}
+
+<div class="sidebar">
+
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
+
+        <h2>Guardian Portal</h2>
+
+        <p>VISION PUBLIC SCHOOL</p>
+
+    </div>
+
+
+    <ul>
+
+        <li>
+
+            <a href="{% url 'guardian_dashboard' %}">
+
+                <span class="menu-icon">⌂</span>
+
+                Dashboard
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{% url 'attendance' %}">
+
+                <span class="menu-icon">📋</span>
+
+                Attendance
+
+            </a>
+
+        </li>
+
+
+        {% comment %}
+
+        <li>
+
+            <a href="{% url 'marks' %}">
+
+                <span class="menu-icon">📊</span>
+
+                Marks
+
+            </a>
+
+        </li>
+
+        {% endcomment %}
+
+
+        <li>
+
+            <a href="{% url 'homework' %}">
+
+                <span class="menu-icon">📝</span>
+
+                Homework
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{% url 'notices' %}">
+
+                <span class="menu-icon">📢</span>
+
+                Notices
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="{% url 'fees_status' %}"
+                class="active"
+            >
+
+                <span class="menu-icon">💳</span>
+
+                Fees Status
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="#">
+
+                <span class="menu-icon">👤</span>
+
+                Profile
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{% url 'logout' %}">
+
+                <span class="menu-icon">↪</span>
+
+                Logout
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+
+
+<!-- ========================================================= -->
+<!-- ===================== MAIN CONTENT ====================== -->
+<!-- ========================================================= -->
 
 <div class="main-content">
 
@@ -262,288 +2138,582 @@
 
         <div>
 
-            <h1>Fees Status</h1>
+            <span class="header-tag">
+                FINANCE & MANAGEMENT
+            </span>
 
-            <p>View and manage student fee payment status</p>
+            <h1>
+                Fees Status
+            </h1>
+
+            <p>
+                View and manage student fee payment status
+            </p>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <div class="admin-badge">
+                💳 Fee Management
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- ================= SUMMARY CARDS ================= -->
+
+    <!-- ================= SUMMARY ================= -->
+
+    <div class="section-title">
+
+        <span>
+            FEES OVERVIEW
+        </span>
+
+        <h2>
+            Payment Summary
+        </h2>
+
+    </div>
+
 
     <div class="cards">
 
-        <div class="card">
 
-            <h3>Total Students</h3>
-
-            <p>320</p>
-
-        </div>
-
+        <!-- TOTAL STUDENTS -->
 
         <div class="card">
 
-            <h3>Fees Paid</h3>
-
-            <p>250</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Fees Pending</h3>
-
-            <p>55</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>Partially Paid</h3>
-
-            <p>15</p>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================= FILTER ================= -->
-
-    <div class="filter-box">
-
-
-        <div class="filter-group">
-
-            <label for="classFilter">
-                Class
-            </label>
-
-            <select id="classFilter">
-
-                <option value="all">
-                    All Classes
-                </option>
-
-                <option value="1">
-                    Class 1
-                </option>
-
-                <option value="2">
-                    Class 2
-                </option>
-
-                <option value="3">
-                    Class 3
-                </option>
-
-                <option value="4">
-                    Class 4
-                </option>
-
-                <option value="5">
-                    Class 5
-                </option>
-
-                <option value="6">
-                    Class 6
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="filter-group">
-
-            <label for="statusFilter">
-                Payment Status
-            </label>
-
-            <select id="statusFilter">
-
-                <option value="all">
-                    All Status
-                </option>
-
-                <option value="Paid">
-                    Paid
-                </option>
-
-                <option value="Pending">
-                    Pending
-                </option>
-
-                <option value="Partially Paid">
-                    Partially Paid
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <button
-            class="filter-btn"
-            onclick="applyFilter()">
-
-            Apply Filter
-
-        </button>
-
-    </div>
-
-
-    <!-- ================= SEARCH ================= -->
-
-    <div class="search-box">
-
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search by admission number or student name..."
-            onkeyup="searchStudents()">
-
-    </div>
-
-    {% if role == 'Staff' %}
-
-    <div class="homework-form">
-
-      <h2>Add a Record</h2>
-        <form method="POST">
-          {% csrf_token %}
-          <div class="form-grid"> 
-            <!-- CLASS --> 
-            <div class="form-group"> 
-                {% comment %} <label for="class"> Class </label> 
-                <input type="number" id="class" name="Class" placeholder="Enter class" required>  {% endcomment %}
-                {{ form.admission_no.label_tag }} 
-                {{ form.admission_no }} 
-            </div> 
-            
-            <!-- SECTION --> 
-            <div class="form-group"> 
-                {% comment %} <label for="section"> Section </label> 
-                <input type="text" id="section" name="Section" placeholder="Enter section" maxlength="5" required>  {% endcomment %}
-                {{ form.student_name.label_tag }} 
-                {{ form.student_name }} 
-            
+            <div class="card-icon">
+                🎓
             </div>
-             
-             <!-- SUBJECT --> 
-            <div class="form-group"> 
-                {% comment %} <label for="subject"> Subject </label> 
-                <input type="text" id="subject" name="Subject" placeholder="Enter subject" maxlength="30" required>  {% endcomment %}
-                {{ form.class_field.label_tag }} 
-                {{ form.class_field }} 
-           
-            </div> 
-            
-            <!-- POST DATE --> 
-            <div class="form-group"> 
-                {% comment %} <label for="post_date"> Post Date </label> 
-                <input type="date" id="post_date" name="Post_Date" required>  {% endcomment %}
-                 {{ form.section.label_tag }} 
-                {{ form.section }} 
-            </div> 
-            
-            <!-- DESCRIPTION --> 
-            <div class="form-group full-width"> 
-                {% comment %} <label for="description"> Description </label> 
-                <textarea id="description" name="Description" placeholder="Enter homework description" rows="6" required></textarea>  {% endcomment %}
-                {{ form.deposit_date.label_tag }} 
-                {{ form.deposit_date }} 
-            </div> 
-            <div class="form-group"> 
-                {{ form.deposit_amount.label_tag }} 
-                {{ form.deposit_amount }}
-            </div>
-          </div> 
-          <!-- BUTTONS --> 
-          <div class="form-buttons"> 
-            <button type="reset" class="reset-btn"> Reset </button> 
-            <button type="submit" class="submit-btn"> Send </button> 
-          </div> 
-        </form>
-    </div>
 
-    {% endif %}
+            <h3>
+                Total Students
+            </h3>
 
-    
-    <!-- ================= FEES STATUS TABLE ================= -->
+            <p>
+                320
+            </p>
 
-    <div class="table-container">
-
-        <h2>Student Fees Records</h2>
-
-
-        <div class="table-wrapper">
-
-            <table id="feesTable">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Admission No.</th>
-
-                        <th>Student Name</th>
-
-                        <th>Class</th>
-
-                        <th>Section</th>
-
-                        <th>Amount</th>
-
-                        <th>Date</th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                    {% for status in fees_record%}
-                    {% if role == 'Admin' or role == 'Staff' or status.admission_no.admission_no == student.admission_no %}
-                    <tr>
-
-                        <td>{{ status.admission_no.admission_no }}</td>
-
-                        <td>{{ status.student_name}}</td>
-
-                        <td>{{ status.class_field }}</td>
-
-                        <td>{{ status.section }}</td>
-
-                        <td>{{ status.deposit_amount }}</td>
-
-                        <td>{{ status.deposit_date }}</td>
-
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
+            <a href="{% url 'students' %}">
+                View Students →
+            </a>
 
         </div>
 
+
+
+        <!-- FEES PAID -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                ✅
+            </div>
+
+            <h3>
+                Fees Paid
+            </h3>
+
+            <p>
+                250
+            </p>
+
+        </div>
+
+
+
+        <!-- FEES PENDING -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                ⏳
+            </div>
+
+            <h3>
+                Fees Pending
+            </h3>
+
+            <p>
+                55
+            </p>
+
+        </div>
+
+
+
+        <!-- PARTIALLY PAID -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                💳
+            </div>
+
+            <h3>
+                Partially Paid
+            </h3>
+
+            <p>
+                15
+            </p>
+
+        </div>
+
+
     </div>
+
+
+
+    <!-- ================= FILTER & SEARCH ================= -->
+
+    <div class="section-title">
+
+        <span>
+            FEE RECORDS
+        </span>
+
+        <h2>
+            Search & Filter Records
+        </h2>
+
+    </div>
+
+
+    <div class="content-section">
+
+
+        <!-- ================= FILTER ================= -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>
+                    🔎 Filter Fee Records
+                </h2>
+
+                <span class="box-label">
+                    Quick Filter
+                </span>
+
+            </div>
+
+
+            <div class="filter-content">
+
+                <div class="filter-grid">
+
+
+                    <div class="filter-group">
+
+                        <label for="classFilter">
+                            Class
+                        </label>
+
+                        <select id="classFilter">
+
+                            <option value="all">
+                                All Classes
+                            </option>
+
+                            <option value="1">
+                                Class 1
+                            </option>
+
+                            <option value="2">
+                                Class 2
+                            </option>
+
+                            <option value="3">
+                                Class 3
+                            </option>
+
+                            <option value="4">
+                                Class 4
+                            </option>
+
+                            <option value="5">
+                                Class 5
+                            </option>
+
+                            <option value="6">
+                                Class 6
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="filter-group">
+
+                        <label for="statusFilter">
+                            Payment Status
+                        </label>
+
+                        <select id="statusFilter">
+
+                            <option value="all">
+                                All Status
+                            </option>
+
+                            <option value="Paid">
+                                Paid
+                            </option>
+
+                            <option value="Pending">
+                                Pending
+                            </option>
+
+                            <option value="Partially Paid">
+                                Partially Paid
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <button
+                            type="button"
+                            class="filter-btn"
+                            onclick="applyFilter()"
+                        >
+                            Apply Filter
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>
+                    🔍 Search Students
+                </h2>
+
+                <span class="box-label">
+                    Admission No. / Name
+                </span>
+
+            </div>
+
+
+            <div class="search-content">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by admission number or student name..."
+                    onkeyup="searchStudents()"
+                >
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= ADD FEE RECORD ================= -->
+
+        {% if role == 'Staff' %}
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>
+                    ➕ Add Fee Record
+                </h2>
+
+                <span class="box-label">
+                    Accountant
+                </span>
+
+            </div>
+
+
+            <div class="form-content">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <div class="form-grid">
+
+
+                        <!-- ADMISSION NUMBER -->
+
+                        <div class="form-group">
+
+                            {{ form.admission_no.label_tag }}
+
+                            {{ form.admission_no }}
+
+                        </div>
+
+
+
+                        <!-- STUDENT NAME -->
+
+                        <div class="form-group">
+
+                            {{ form.student_name.label_tag }}
+
+                            {{ form.student_name }}
+
+                        </div>
+
+
+
+                        <!-- CLASS -->
+
+                        <div class="form-group">
+
+                            {{ form.class_field.label_tag }}
+
+                            {{ form.class_field }}
+
+                        </div>
+
+
+
+                        <!-- SECTION -->
+
+                        <div class="form-group">
+
+                            {{ form.section.label_tag }}
+
+                            {{ form.section }}
+
+                        </div>
+
+
+
+                        <!-- DEPOSIT DATE -->
+
+                        <div class="form-group">
+
+                            {{ form.deposit_date.label_tag }}
+
+                            {{ form.deposit_date }}
+
+                        </div>
+
+
+
+                        <!-- DEPOSIT AMOUNT -->
+
+                        <div class="form-group">
+
+                            {{ form.deposit_amount.label_tag }}
+
+                            {{ form.deposit_amount }}
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="reset"
+                            class="reset-btn"
+                        >
+                            Reset
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="submit-btn"
+                        >
+                            Save Record
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- ================= FEES TABLE ================= -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>
+                    💳 Student Fees Records
+                </h2>
+
+                <span class="box-label">
+                    Fee Records
+                </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table id="feesTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Admission No.
+                            </th>
+
+                            <th>
+                                Student Name
+                            </th>
+
+                            <th>
+                                Class
+                            </th>
+
+                            <th>
+                                Section
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for status in fees_record %}
+
+                            {% if role == 'Admin' or role == 'Staff' or status.admission_no.admission_no == student.admission_no %}
+
+                            <tr>
+
+                                <td>
+                                    {{ status.admission_no.admission_no }}
+                                </td>
+
+                                <td>
+                                    {{ status.student_name }}
+                                </td>
+
+                                <td>
+                                    {{ status.class_field }}
+                                </td>
+
+                                <td>
+                                    {{ status.section }}
+                                </td>
+
+                                <td>
+                                    ₹{{ status.deposit_amount }}
+                                </td>
+
+                                <td>
+                                    {{ status.deposit_date }}
+                                </td>
+
+                            </tr>
+
+                            {% endif %}
+
+                        {% empty %}
+
+                            <tr>
+
+                                <td colspan="6" style="text-align:center;">
+
+                                    No fee records available.
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="dashboard-footer">
+
+        <h3>
+            VISION PUBLIC SCHOOL
+        </h3>
+
+        <p>
+            School Management & Information Portal
+        </p>
+
+    </div>
+
 
 </div>
 
 
-<!-- ================= JAVASCRIPT ================= -->
 
-{% comment %} <script>
+<!-- ========================================================= -->
+<!-- ====================== JAVASCRIPT ======================= -->
+<!-- ========================================================= -->
+
+<script>
+
+
+    /* ================= SEARCH ================= */
 
     function searchStudents() {
 
@@ -551,29 +2721,36 @@
             document
             .getElementById("searchInput")
             .value
-            .toLowerCase();
+            .toLowerCase()
+            .trim();
+
 
         let table =
             document
             .getElementById("feesTable");
 
+
         let rows =
             table
+            .getElementsByTagName("tbody")[0]
             .getElementsByTagName("tr");
 
 
-        for (let i = 1; i < rows.length; i++) {
+        for (let i = 0; i < rows.length; i++) {
 
             let rowText =
                 rows[i]
                 .innerText
                 .toLowerCase();
 
+
             if (rowText.includes(input)) {
 
                 rows[i].style.display = "";
 
-            } else {
+            }
+
+            else {
 
                 rows[i].style.display = "none";
 
@@ -583,6 +2760,9 @@
 
     }
 
+
+
+    /* ================= FILTER ================= */
 
     function applyFilter() {
 
@@ -591,53 +2771,76 @@
             .getElementById("classFilter")
             .value;
 
+
         let statusValue =
             document
             .getElementById("statusFilter")
-            .value
-            .toLowerCase();
+            .value;
 
 
         let table =
             document
             .getElementById("feesTable");
 
+
         let rows =
             table
+            .getElementsByTagName("tbody")[0]
             .getElementsByTagName("tr");
 
 
-        for (let i = 1; i < rows.length; i++) {
+        for (let i = 0; i < rows.length; i++) {
+
+            let cells = rows[i].getElementsByTagName("td");
+
+
+            if (cells.length < 6) {
+
+                continue;
+
+            }
+
 
             let className =
-                rows[i]
-                .cells[2]
-                .innerText;
-
-            let status =
-                rows[i]
-                .cells[7]
+                cells[2]
                 .innerText
-                .toLowerCase();
+                .trim();
 
+
+            /*
+                Your current table does not contain a
+                Payment Status column.
+
+                Therefore status filtering cannot be
+                accurately performed from the current
+                fees_record data.
+            */
 
             let classMatch =
                 classValue === "all"
-                || className === classValue;
+                ||
+                className === "Class " + classValue
+                ||
+                className === classValue;
 
-            let statusMatch =
-                statusValue === "all"
-                || status === statusValue;
+
+            if (statusValue !== "all") {
+
+                rows[i].style.display =
+                    classMatch ? "" : "none";
+
+                continue;
+
+            }
 
 
-            if (
-                classMatch &&
-                statusMatch
-            ) {
+            if (classMatch) {
 
                 rows[i].style.display = "";
 
-            } else {
+            }
+
+            else {
 
                 rows[i].style.display = "none";
 
@@ -648,25 +2851,9 @@
     }
 
 
-    function viewFees(admissionNo) {
-
-        alert(
-            "Viewing fees details for "
-            + admissionNo
-        );
-
-    }
+</script>
 
 
-    function editFees(admissionNo) {
+</body>
 
-        alert(
-            "Edit fees status for "
-            + admissionNo
-        );
-
-    }
-
-</script> {% endcomment %}
-
-</body></html>
+</html>

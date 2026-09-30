@@ -6,258 +6,558 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mark Attendance</title>
+    <title>Vision Public School | Mark Attendance</title>
 
     {% load static %}
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+
+            --primary: #06478b;
+            --primary-dark: #052e60;
+            --secondary: #1675cb;
+            --yellow: #ffcc24;
+
+            --light: #f3f7fc;
+            --text: #172b4d;
+            --muted: #64748b;
+
+            --border: #dce7f3;
+            --white: #ffffff;
+
+            --green: #16a34a;
+            --red: #dc2626;
+            --orange: #ea580c;
+
+            --shadow: 0 8px 28px rgba(5, 46, 96, 0.08);
+
         }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f6f9;
-            color: #333;
+
+        /* ================= GLOBAL ================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family: 'Inter', Arial, sans-serif;
+
+            background: var(--light);
+
+            color: var(--text);
+
+            line-height: 1.6;
+
+        }
+
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
 
         /* ================= SIDEBAR ================= */
 
         .sidebar {
+
             position: fixed;
+
             left: 0;
             top: 0;
 
-            width: 240px;
+            width: 255px;
             height: 100vh;
 
-            background: #1e293b;
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--primary-dark),
+                    var(--primary)
+                );
+
             color: white;
 
-            padding-top: 25px;
+            padding: 25px 16px;
 
             overflow-y: auto;
+
+            box-shadow:
+                5px 0 20px rgba(5, 46, 96, 0.12);
+
+            z-index: 1000;
+
         }
 
-        .sidebar h2 {
+
+        .sidebar-brand {
+
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 24px;
+
+            padding-bottom: 25px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.15);
+
+            margin-bottom: 20px;
+
         }
+
+
+        .sidebar-logo {
+
+            width: 58px;
+            height: 58px;
+
+            margin:
+                0 auto 10px;
+
+            display: grid;
+
+            place-items: center;
+
+            background: white;
+
+            color: var(--primary);
+
+            border:
+                4px solid var(--yellow);
+
+            border-radius: 50%;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.2);
+
+        }
+
+
+        .sidebar-brand h2 {
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        .sidebar-brand p {
+
+            margin-top: 3px;
+
+            font-size: 10px;
+
+            color: #dbeafe;
+
+            letter-spacing: 0.5px;
+
+        }
+
 
         .sidebar ul {
+
             list-style: none;
+
         }
+
 
         .sidebar ul li {
-            margin: 5px 0;
+
+            margin: 6px 0;
+
         }
 
-        .sidebar ul li a {
-            display: block;
 
-            padding: 13px 25px;
+        .sidebar ul li a {
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 11px 13px;
+
+            border-radius: 8px;
+
+            color: #e5efff;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.25s;
+
+        }
+
+
+        .sidebar ul li a:hover {
+
+            background:
+                rgba(255,255,255,0.12);
 
             color: white;
-            text-decoration: none;
+
+            transform:
+                translateX(3px);
+
+        }
+
+
+        .sidebar ul li a.active {
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            font-weight: 800;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.12);
+
+        }
+
+
+        .menu-icon {
+
+            width: 27px;
 
             font-size: 16px;
 
-            transition: 0.3s;
         }
 
-        .sidebar ul li a:hover {
-            background: #334155;
-            padding-left: 32px;
-        }
 
-        .sidebar ul li a.active {
-            background: #2563eb;
-
-            font-weight: bold;
-
-            border-left: 4px solid white;
-        }
 
         /* ================= MAIN CONTENT ================= */
 
         .main-content {
-            margin-left: 240px;
 
-            padding: 30px;
+            margin-left: 255px;
 
             min-height: 100vh;
+
+            padding: 28px;
+
         }
+
+
 
         /* ================= HEADER ================= */
 
         .header {
-            background: white;
 
-            padding: 25px 30px;
+            display: flex;
 
-            border-radius: 10px;
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 25px 28px;
 
             margin-bottom: 25px;
 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            background:
+                linear-gradient(
+                    110deg,
+                    var(--primary-dark),
+                    var(--primary)
+                );
+
+            color: white;
+
+            border-radius: 15px;
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        .header-tag {
+
+            display: inline-block;
+
+            color: var(--yellow);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .header h1 {
+
+            font-size:
+                clamp(23px, 3vw, 32px);
+
+            line-height: 1.25;
+
+            font-weight: 800;
+
+        }
+
+
+        .header p {
+
+            margin-top: 5px;
+
+            color: #dbeafe;
+
+            font-size: 13px;
+
+        }
+
+
+        .header-actions {
 
             display: flex;
 
             align-items: center;
 
-            justify-content: space-between;
+            gap: 10px;
 
-            gap: 20px;
         }
 
-        .header h1 {
-            font-size: 28px;
 
-            color: #1e293b;
+        .admin-badge {
 
-            margin-bottom: 8px;
+            padding: 11px 16px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
         }
 
-        .header p {
-            color: #64748b;
-
-            font-size: 16px;
-        }
-
-        /* ================= BACK BUTTON ================= */
 
         .back-btn {
+
             display: inline-block;
 
-            background: #64748b;
+            padding: 10px 14px;
+
+            background:
+                rgba(255,255,255,0.12);
 
             color: white;
 
-            text-decoration: none;
+            border:
+                1px solid rgba(255,255,255,0.25);
 
-            padding: 11px 20px;
+            border-radius: 8px;
 
-            border-radius: 6px;
+            font-size: 11px;
 
-            font-size: 14px;
+            font-weight: 700;
 
-            font-weight: 600;
-
-            transition: 0.3s;
+            transition: 0.25s;
 
             white-space: nowrap;
+
         }
+
 
         .back-btn:hover {
-            background: #475569;
 
-            transform: translateY(-1px);
+            background: white;
+
+            color: var(--primary-dark);
+
         }
+
+
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-title {
+
+            margin: 32px 0 15px;
+
+        }
+
+
+        .section-title span {
+
+            color: var(--secondary);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .section-title h2 {
+
+            color: var(--primary-dark);
+
+            font-size: 25px;
+
+            margin-top: 5px;
+
+        }
+
+
 
         /* ================= ATTENDANCE FORM ================= */
 
         .attendance-form {
-            background: white;
 
-            padding: 25px;
+            background: var(--white);
 
-            border-radius: 10px;
+            border:
+                1px solid var(--border);
 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
+
         }
 
-        /* ================= FORM TOP SECTION ================= */
 
-        .form-top {
-            display: grid;
 
-            grid-template-columns: repeat(3, 1fr);
+        /* ================= FORM HEADER ================= */
 
-            gap: 20px;
+        .form-header {
 
-            margin-bottom: 25px;
-
-            padding-bottom: 25px;
-
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .form-group {
             display: flex;
-
-            flex-direction: column;
-
-            gap: 7px;
-        }
-
-        .form-group label {
-            font-size: 14px;
-
-            font-weight: 600;
-
-            color: #475569;
-        }
-
-        .form-group select,
-        .form-group input {
-            width: 100%;
-
-            padding: 11px 12px;
-
-            border: 1px solid #cbd5e1;
-
-            border-radius: 6px;
-
-            background: white;
-
-            color: #334155;
-
-            font-size: 14px;
-
-            outline: none;
-        }
-
-        .form-group select:focus,
-        .form-group input:focus {
-            border-color: #2563eb;
-
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        /* ================= STUDENT HEADER ================= */
-
-        .student-header {
-            display: flex;
-
-            align-items: center;
 
             justify-content: space-between;
 
-            margin-bottom: 20px;
+            align-items: center;
 
             gap: 15px;
+
+            padding: 20px 23px;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #edf6ff,
+                    #ffffff
+                );
+
+            border-bottom:
+                1px solid var(--border);
+
         }
 
-        .student-header h2 {
-            color: #1e293b;
 
-            font-size: 21px;
+        .form-header h2 {
+
+            color: var(--primary-dark);
+
+            font-size: 18px;
+
+            font-weight: 800;
+
         }
+
+
+        .class-info {
+
+            padding: 7px 12px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 6px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+        }
+
+
 
         /* ================= QUICK ACTIONS ================= */
 
-        .quick-actions {
+        .student-header {
+
             display: flex;
 
-            gap: 10px;
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding:
+                20px 23px 0;
+
         }
 
+
+        .student-header h2 {
+
+            color: var(--primary-dark);
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+        }
+
+
+        .quick-actions {
+
+            display: flex;
+
+            gap: 8px;
+
+        }
+
+
         .quick-btn {
-            padding: 9px 15px;
+
+            padding: 8px 12px;
 
             border: none;
 
@@ -265,314 +565,631 @@
 
             cursor: pointer;
 
-            font-size: 13px;
+            font-size: 10px;
 
-            font-weight: 600;
+            font-weight: 800;
 
-            transition: 0.3s;
+            transition: 0.25s;
+
         }
+
 
         .present-all {
-            background: #16a34a;
 
-            color: white;
+            background:
+                #dcfce7;
+
+            color:
+                #15803d;
+
         }
+
 
         .present-all:hover {
-            background: #15803d;
+
+            background:
+                #bbf7d0;
+
         }
+
 
         .absent-all {
-            background: #dc2626;
 
-            color: white;
+            background:
+                #fee2e2;
+
+            color:
+                #b91c1c;
+
         }
+
 
         .absent-all:hover {
-            background: #b91c1c;
+
+            background:
+                #fecaca;
+
         }
+
+
 
         /* ================= TABLE ================= */
 
         .table-wrapper {
+
             width: 100%;
 
             overflow-x: auto;
 
-            border: 1px solid #e2e8f0;
+            padding:
+                20px 23px 23px;
 
-            border-radius: 8px;
         }
+
 
         table {
+
             width: 100%;
 
-            min-width: 750px;
+            min-width: 650px;
 
-            border-collapse: collapse;
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            overflow: hidden;
+
         }
 
+
         table th {
-            background: #f1f5f9;
 
-            color: #334155;
+            background:
+                var(--primary);
 
-            padding: 14px 12px;
+            color: white;
+
+            padding:
+                13px 12px;
 
             text-align: left;
 
-            font-size: 14px;
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.4px;
 
             white-space: nowrap;
 
-            border-bottom: 2px solid #e2e8f0;
         }
+
 
         table td {
-            padding: 13px 12px;
 
-            border-bottom: 1px solid #e2e8f0;
+            padding:
+                13px 12px;
 
-            font-size: 14px;
+            border-bottom:
+                1px solid #e8eef6;
 
-            color: #475569;
+            color:
+                #475569;
 
-            white-space: nowrap;
+            font-size: 11px;
+
+            vertical-align: middle;
+
         }
+
+
+        table tbody tr {
+
+            transition: 0.2s;
+
+        }
+
 
         table tbody tr:hover {
-            background: #f8fafc;
+
+            background:
+                #f0f7ff;
+
         }
+
+
+        table tbody tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
 
         table td:first-child {
-            font-weight: 600;
 
-            color: #1e293b;
+            color:
+                var(--primary);
+
+            font-weight: 700;
+
         }
+
+
 
         /* ================= STATUS DROPDOWN ================= */
 
         .status-select {
-            width: 150px;
-            padding: 9px 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
+
+            width: 145px;
+
+            padding:
+                9px 11px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 7px;
+
             background: white;
-            color: #334155;
-            font-size: 14px;
-            font-weight: 600;
+
+            color:
+                var(--text);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
             cursor: pointer;
+
             outline: none;
+
+            transition: 0.2s;
+
         }
+
 
         .status-select:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+
+            border-color:
+                var(--secondary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(22,117,203,0.10);
+
         }
+
 
         .status-select option[value="Present"] {
-            color: #15803d;
+
+            color:
+                #15803d;
+
         }
 
+
         .status-select option[value="Absent"] {
-            color: #b91c1c;
+
+            color:
+                #b91c1c;
+
         }
+
+
+
+        /* ================= STATUS BADGES ================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding:
+                5px 9px;
+
+            border-radius: 6px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+        }
+
+
+        .status.present {
+
+            background:
+                #dcfce7;
+
+            color:
+                #15803d;
+
+        }
+
+
+        .status.absent {
+
+            background:
+                #fee2e2;
+
+            color:
+                #b91c1c;
+
+        }
+
+
 
         /* ================= SUBMIT SECTION ================= */
 
         .submit-section {
+
             display: flex;
 
             justify-content: flex-end;
 
             align-items: center;
 
-            gap: 12px;
+            gap: 10px;
 
-            margin-top: 25px;
+            margin:
+                0 23px 23px;
 
             padding-top: 20px;
 
-            border-top: 1px solid #e2e8f0;
+            border-top:
+                1px solid var(--border);
+
         }
 
+
         .cancel-btn {
-            padding: 11px 22px;
 
-            background: #e2e8f0;
+            padding:
+                10px 16px;
 
-            color: #334155;
+            background:
+                #e2e8f0;
+
+            color:
+                #334155;
 
             text-decoration: none;
 
-            border-radius: 6px;
+            border-radius: 7px;
 
-            font-size: 14px;
+            font-size: 11px;
 
-            font-weight: 600;
+            font-weight: 800;
 
-            transition: 0.3s;
+            transition: 0.25s;
+
         }
+
 
         .cancel-btn:hover {
-            background: #cbd5e1;
+
+            background:
+                #cbd5e1;
+
         }
 
-        .submit-btn {
-            padding: 11px 24px;
 
-            background: #2563eb;
+        .submit-btn {
+
+            padding:
+                10px 18px;
+
+            background:
+                var(--primary);
 
             color: white;
 
             border: none;
 
-            border-radius: 6px;
+            border-radius: 7px;
 
-            font-size: 14px;
+            font-size: 11px;
 
-            font-weight: 600;
+            font-weight: 800;
 
             cursor: pointer;
 
-            transition: 0.3s;
+            transition: 0.25s;
+
         }
+
 
         .submit-btn:hover {
-            background: #1d4ed8;
 
-            transform: translateY(-1px);
+            background:
+                var(--primary-dark);
+
+            transform:
+                translateY(-1px);
+
         }
 
-        /* ================= SCROLLBAR ================= */
 
-        .table-wrapper::-webkit-scrollbar {
-            height: 8px;
+
+        /* ================= FOOTER ================= */
+
+        .dashboard-footer {
+
+            margin-top: 35px;
+
+            padding: 22px;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    var(--primary-dark),
+                    var(--primary)
+                );
+
+            border-radius: 13px;
+
+            color: white;
+
+            text-align: center;
+
+            box-shadow: var(--shadow);
+
         }
 
-        .table-wrapper::-webkit-scrollbar-track {
-            background: #f1f5f9;
+
+        .dashboard-footer h3 {
+
+            font-size: 17px;
+
+            margin-bottom: 5px;
+
         }
 
-        .table-wrapper::-webkit-scrollbar-thumb {
-            background: #94a3b8;
 
-            border-radius: 10px;
+        .dashboard-footer p {
+
+            color: #dbeafe;
+
+            font-size: 11px;
+
         }
 
-        .table-wrapper::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
-        }
 
-        /* ================= TABLET ================= */
 
-        @media (max-width: 900px) {
+        /* ================= RESPONSIVE ================= */
 
-            .form-top {
-                grid-template-columns: 1fr 1fr;
+        @media (max-width: 950px) {
+
+            .sidebar {
+
+                width: 220px;
+
+            }
+
+
+            .main-content {
+
+                margin-left: 220px;
+
+                padding: 20px;
+
             }
 
         }
 
-        /* ================= MOBILE ================= */
 
-        @media (max-width: 768px) {
+
+        @media (max-width: 700px) {
 
             .sidebar {
+
                 position: relative;
 
                 width: 100%;
 
                 height: auto;
 
-                padding-bottom: 10px;
+                min-height: auto;
+
+                padding: 15px;
+
             }
 
-            .sidebar h2 {
-                margin-bottom: 15px;
+
+            .sidebar-brand {
+
+                padding-bottom: 15px;
+
+                margin-bottom: 12px;
+
             }
+
+
+            .sidebar-logo {
+
+                width: 48px;
+
+                height: 48px;
+
+                font-size: 23px;
+
+            }
+
+
+            .sidebar-brand h2 {
+
+                font-size: 16px;
+
+            }
+
 
             .sidebar ul {
-                display: flex;
 
-                flex-wrap: wrap;
+                display: grid;
 
-                justify-content: center;
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 5px;
+
             }
+
 
             .sidebar ul li {
-                margin: 2px;
+
+                margin: 0;
+
             }
+
 
             .sidebar ul li a {
-                padding: 9px 11px;
 
-                font-size: 13px;
+                font-size: 11px;
+
+                padding: 9px;
+
             }
 
-            .sidebar ul li a:hover {
-                padding-left: 11px;
-            }
 
             .main-content {
+
                 margin-left: 0;
 
                 padding: 15px;
+
             }
+
 
             .header {
+
                 padding: 20px;
 
+                align-items: flex-start;
+
                 flex-direction: column;
 
-                align-items: stretch;
             }
 
-            .header h1 {
-                font-size: 23px;
+
+            .header-actions {
+
+                width: 100%;
+
+                flex-wrap: wrap;
+
             }
 
-            .header p {
-                font-size: 14px;
-            }
 
             .back-btn {
+
                 text-align: center;
+
             }
 
-            .attendance-form {
-                padding: 18px;
-            }
 
-            .form-top {
-                grid-template-columns: 1fr;
-            }
+            .form-header {
 
-            .student-header {
+                align-items: flex-start;
+
                 flex-direction: column;
 
-                align-items: stretch;
             }
+
+
+            .student-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+            }
+
 
             .quick-actions {
+
                 width: 100%;
+
             }
+
 
             .quick-btn {
+
                 flex: 1;
+
             }
 
+
             .submit-section {
+
                 flex-direction: column-reverse;
 
                 align-items: stretch;
+
             }
+
 
             .cancel-btn,
             .submit-btn {
+
                 width: 100%;
 
                 text-align: center;
+
+            }
+
+        }
+
+
+
+        @media (max-width: 480px) {
+
+            .sidebar ul {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .header h1 {
+
+                font-size: 22px;
+
+            }
+
+
+            .form-header h2 {
+
+                font-size: 15px;
+
+            }
+
+
+            .table-wrapper {
+
+                padding: 15px;
+
+            }
+
+
+            .student-header {
+
+                padding:
+                    16px 15px 0;
+
+            }
+
+
+            .submit-section {
+
+                margin:
+                    0 15px 15px;
+
             }
 
         }
@@ -594,100 +1211,207 @@
 
 <div class="sidebar">
 
-    <h2>Staff Portal</h2>
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
+
+        <h2>Staff Portal</h2>
+
+        <p>VISION PUBLIC SCHOOL</p>
+
+    </div>
+
 
     <ul>
 
+        <!-- DASHBOARD -->
+
         <li>
+
             <a href="{% url 'staff_dashboard' %}">
+
+                <span class="menu-icon">⌂</span>
+
                 Dashboard
+
             </a>
+
         </li>
+
+
+        <!-- ATTENDANCE -->
 
         {% if staff_role == 'Teacher' %}
 
         <li>
-            <a href="{% url 'attendance' %}" class="active">
+
+            <a
+                href="{% url 'attendance' %}"
+                class="active"
+            >
+
+                <span class="menu-icon">📋</span>
+
                 Attendance
+
             </a>
+
         </li>
 
         {% endif %}
 
 
+
+        <!-- STUDENTS -->
+
         <li>
+
             <a href="{% url 'students' %}">
+
+                <span class="menu-icon">🎓</span>
+
                 Students
+
             </a>
+
         </li>
 
+
+
+        <!-- ADD STUDENT -->
 
         {% if staff_role == 'Accountant' %}
 
         <li>
+
             <a href="{% url 'student_registration' %}">
+
+                <span class="menu-icon">➕</span>
+
                 Add a new Student
+
             </a>
+
         </li>
 
         {% endif %}
 
 
-        {% comment %} {% if staff_role == 'Teacher' %}
+
+        <!-- MARKS -->
+
+        {% comment %}
+
+        {% if staff_role == 'Teacher' %}
 
         <li>
+
             <a href="{% url 'marks' %}">
+
+                <span class="menu-icon">📊</span>
+
                 Marks Entry
+
             </a>
+
         </li>
 
-        {% endif %} {% endcomment %}
+        {% endif %}
 
+        {% endcomment %}
+
+
+
+        <!-- HOMEWORK -->
 
         {% if staff_role == 'Teacher' %}
 
         <li>
+
             <a href="{% url 'homework' %}">
+
+                <span class="menu-icon">📝</span>
+
                 Homework
+
             </a>
+
         </li>
 
         {% endif %}
 
+
+
+        <!-- NOTICES -->
 
         {% if staff_role == 'Teacher' %}
 
         <li>
+
             <a href="{% url 'notices' %}">
+
+                <span class="menu-icon">📢</span>
+
                 Notices
+
             </a>
+
         </li>
 
         {% endif %}
 
+
+
+        <!-- FEES STATUS -->
 
         {% if staff_role == 'Accountant' %}
 
         <li>
+
             <a href="{% url 'fees_status' %}">
+
+                <span class="menu-icon">💳</span>
+
                 Fees Status
+
             </a>
+
         </li>
 
         {% endif %}
 
 
+
+        <!-- PROFILE -->
+
         <li>
+
             <a href="teacher_profile.html">
+
+                <span class="menu-icon">👤</span>
+
                 Profile
+
             </a>
+
         </li>
 
 
+
+        <!-- LOGOUT -->
+
         <li>
+
             <a href="{% url 'logout' %}">
+
+                <span class="menu-icon">↪</span>
+
                 Logout
+
             </a>
+
         </li>
 
     </ul>
@@ -712,41 +1436,115 @@
 
         <div>
 
+            <span class="header-tag">
+                ATTENDANCE MANAGEMENT
+            </span>
+
             <h1>
                 Mark Attendance
             </h1>
 
             <p>
-                Mark attendance for students
+                Record daily attendance for students
             </p>
 
         </div>
 
 
-        <a href="{% url 'attendance' %}" class="back-btn">
-            ← Back to Attendance
-        </a>
+        <div class="header-actions">
+
+            <div class="admin-badge">
+                📋 Attendance
+            </div>
+
+            <a
+                href="{% url 'attendance' %}"
+                class="back-btn"
+            >
+                ← Back
+            </a>
+
+        </div>
 
     </div>
 
 
 
-    <!-- ================================================= -->
+    <!-- ================= SECTION TITLE ================= -->
+
+    <div class="section-title">
+
+        <span>
+            DAILY ATTENDANCE
+        </span>
+
+        <h2>
+            Student Attendance
+        </h2>
+
+    </div>
+
+
+
     <!-- ================= ATTENDANCE FORM ================= -->
-    <!-- ================================================= -->
 
-
-    <form method="POST" class="attendance-form">
+    <form
+        method="POST"
+        class="attendance-form"
+    >
 
         {% csrf_token %}
 
-        <!-- ================= STUDENT SECTION ================= -->
+
+
+        <!-- ================= FORM HEADER ================= -->
+
+        <div class="form-header">
+
+            <h2>
+                📋 Attendance Register
+            </h2>
+
+            <div class="class-info">
+
+                Class: {{ class }} &nbsp; | &nbsp;
+                Section: {{ section }}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= STUDENT HEADER ================= -->
 
         <div class="student-header">
 
             <h2>
-                Student Attendance
+                Mark student status
             </h2>
+
+
+            <div class="quick-actions">
+
+                <button
+                    type="button"
+                    class="quick-btn present-all"
+                    onclick="markAllStatus('Present')"
+                >
+                    ✓ Mark All Present
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-btn absent-all"
+                    onclick="markAllStatus('Absent')"
+                >
+                    ✕ Mark All Absent
+                </button>
+
+            </div>
 
         </div>
 
@@ -771,19 +1569,19 @@
                         </th>
 
                         <th>
-                            Status
+                            Attendance Status
                         </th>
 
                     </tr>
 
                 </thead>
 
-                <tbody>
-                    
-                    {% for student in students %}
-                    {% if student.class_field.class_field == class and  student.section == section %}
 
-                    <!-- STUDENT 1 -->
+                <tbody>
+
+                    {% for student in students %}
+
+                    {% if student.class_field.class_field == class and student.section == section %}
 
                     <tr>
 
@@ -797,16 +1595,39 @@
 
                         <td>
 
-                            <select name="attendance_{{student.admission_no}}" class="status-select" required>
-                                <option value="Present" selected>Present</option>
-                                <option value="Absent">Absent</option>
-                                <option value="Half Day">Half Day</option>
+                            <select
+                                name="attendance_{{ student.admission_no }}"
+                                class="status-select"
+                                required
+                            >
+
+                                <option
+                                    value="Present"
+                                    selected
+                                >
+                                    Present
+                                </option>
+
+                                <option
+                                    value="Absent"
+                                >
+                                    Absent
+                                </option>
+
+                                <option
+                                    value="Half Day"
+                                >
+                                    Half Day
+                                </option>
+
                             </select>
 
                         </td>
 
                     </tr>
+
                     {% endif %}
+
                     {% endfor %}
 
                 </tbody>
@@ -815,7 +1636,9 @@
 
         </div>
 
-        <!-- ================= SUBMIT BUTTONS ================= -->
+
+
+        <!-- ================= SUBMIT SECTION ================= -->
 
         <div class="submit-section">
 
@@ -831,12 +1654,28 @@
                 type="submit"
                 class="submit-btn"
             >
-                Save Attendance
+                ✓ Save Attendance
             </button>
 
         </div>
 
     </form>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="dashboard-footer">
+
+        <h3>
+            VISION PUBLIC SCHOOL
+        </h3>
+
+        <p>
+            School Management & Information Portal
+        </p>
+
+    </div>
 
 
 </div>
@@ -851,48 +1690,77 @@
 <script>
 
 
-/* ================= MARK ALL STATUS ================= */
+    /* ================= MARK ALL STATUS ================= */
 
-        function markAllStatus(status) {
-            let statusSelects = document.querySelectorAll(".status-select");
+    function markAllStatus(status) {
 
-            statusSelects.forEach(function(select) {
-                select.value = status;
-            });
+        let statusSelects =
+            document.querySelectorAll(".status-select");
+
+
+        statusSelects.forEach(function(select) {
+
+            select.value = status;
+
+        });
+
+    }
+
+
+
+    /* ================= SET TODAY'S DATE ================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            let dateInput =
+                document.getElementById(
+                    "attendance_date"
+                );
+
+
+            /*
+                The current Mark Attendance template
+                does not contain an element with
+                id="attendance_date".
+
+                Therefore, we safely check whether
+                the element exists before setting
+                its value.
+            */
+
+            if (dateInput) {
+
+                let today =
+                    new Date();
+
+
+                let year =
+                    today.getFullYear();
+
+
+                let month =
+                    String(
+                        today.getMonth() + 1
+                    ).padStart(2, "0");
+
+
+                let day =
+                    String(
+                        today.getDate()
+                    ).padStart(2, "0");
+
+
+                dateInput.value =
+                    year + "-" +
+                    month + "-" +
+                    day;
+
+            }
+
         }
-
-        /* ================= SET TODAY'S DATE ================= */
-
-
-document.addEventListener("DOMContentLoaded", function() {
-
-    let dateInput =
-        document.getElementById("attendance_date");
-
-
-    let today =
-        new Date();
-
-
-    let year =
-        today.getFullYear();
-
-
-    let month =
-        String(today.getMonth() + 1)
-        .padStart(2, "0");
-
-
-    let day =
-        String(today.getDate())
-        .padStart(2, "0");
-
-
-    dateInput.value =
-        year + "-" + month + "-" + day;
-
-});
-
+    );
 
 </script>
 
@@ -900,4 +1768,3 @@ document.addEventListener("DOMContentLoaded", function() {
 </body>
 
 </html>
-

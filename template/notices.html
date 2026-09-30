@@ -3,123 +3,222 @@
 
 <head>
 
-    <meta charset="UTF-8">
+    {% load static %}
 
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Notice Management</title>
+    <title>Vision Public School | Notice Management</title>
 
-    {% load static %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
     <style>
 
-        /* =========================================================
-           GLOBAL RESET
-        ========================================================= */
+        :root {
+            --primary: #06478b;
+            --primary-dark: #052e60;
+            --secondary: #1675cb;
+            --yellow: #ffcc24;
+
+            --light: #f3f7fc;
+            --text: #172b4d;
+            --muted: #64748b;
+            --border: #dce7f3;
+            --white: #ffffff;
+
+            --green: #16a34a;
+            --red: #dc2626;
+            --orange: #ea580c;
+
+            --shadow: 0 8px 28px rgba(5, 46, 96, 0.08);
+        }
+
+
+        /* ================= GLOBAL ================= */
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f6f9;
-            color: #333;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
 
-        /* =========================================================
-           SIDEBAR
-        ========================================================= */
+        /* ================= SIDEBAR ================= */
 
         .sidebar {
             position: fixed;
             left: 0;
             top: 0;
 
-            width: 240px;
+            width: 255px;
             height: 100vh;
 
-            background: #1e293b;
+            background: linear-gradient(
+                180deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
             color: white;
 
-            padding-top: 25px;
+            padding: 25px 16px;
 
             overflow-y: auto;
+
+            box-shadow: 5px 0 20px rgba(5, 46, 96, 0.12);
+
+            z-index: 1000;
         }
 
-        .sidebar h2 {
+
+        .sidebar-brand {
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 24px;
+
+            padding-bottom: 25px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+
+            margin-bottom: 20px;
         }
+
+
+        .sidebar-logo {
+            width: 58px;
+            height: 58px;
+
+            margin: 0 auto 10px;
+
+            display: grid;
+            place-items: center;
+
+            background: white;
+
+            color: var(--primary);
+
+            border: 4px solid var(--yellow);
+
+            border-radius: 50%;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+
+        .sidebar-brand h2 {
+            font-size: 19px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .sidebar-brand p {
+            margin-top: 3px;
+
+            font-size: 10px;
+
+            color: #dbeafe;
+
+            letter-spacing: 0.5px;
+        }
+
 
         .sidebar ul {
             list-style: none;
-            padding: 0;
-            margin: 0;
         }
+
 
         .sidebar ul li {
-            margin: 5px 0;
+            margin: 6px 0;
         }
+
 
         .sidebar ul li a {
-            display: block;
+            display: flex;
 
-            padding: 13px 25px;
+            align-items: center;
 
-            color: white;
-            text-decoration: none;
+            padding: 11px 13px;
 
-            font-size: 16px;
+            border-radius: 8px;
 
-            transition: 0.3s;
+            color: #e5efff;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.25s;
         }
+
 
         .sidebar ul li a:hover {
-            background: #334155;
-            padding-left: 32px;
+            background: rgba(255,255,255,0.12);
+
+            color: white;
+
+            transform: translateX(3px);
         }
+
 
         .sidebar ul li a.active {
-            background: #2563eb;
-            font-weight: bold;
+            background: var(--yellow);
 
-            border-left: 4px solid white;
+            color: var(--primary-dark);
+
+            font-weight: 800;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
         }
 
 
-        /* =========================================================
-           MAIN CONTENT
-        ========================================================= */
+        .menu-icon {
+            width: 27px;
+
+            font-size: 16px;
+        }
+
+
+        /* ================= MAIN CONTENT ================= */
 
         .main-content {
-            margin-left: 240px;
-
-            padding: 30px;
+            margin-left: 255px;
 
             min-height: 100vh;
+
+            padding: 28px;
         }
 
 
-        /* =========================================================
-           HEADER
-        ========================================================= */
+        /* ================= HEADER ================= */
 
         .header {
-            background: white;
-
-            padding: 25px 30px;
-
-            border-radius: 10px;
-
-            margin-bottom: 25px;
-
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-
             display: flex;
 
             justify-content: space-between;
@@ -127,79 +226,196 @@
             align-items: center;
 
             gap: 20px;
-        }
 
-        .header h1 {
-            font-size: 28px;
+            padding: 25px 28px;
 
-            color: #1e293b;
+            margin-bottom: 25px;
 
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            color: #64748b;
-
-            font-size: 16px;
-        }
-
-
-        /* =========================================================
-           ADD BUTTON
-        ========================================================= */
-
-        .add-btn {
-            background: #2563eb;
+            background: linear-gradient(
+                110deg,
+                var(--primary-dark),
+                var(--primary)
+            );
 
             color: white;
 
-            border: none;
+            border-radius: 15px;
 
-            padding: 12px 20px;
+            box-shadow: var(--shadow);
+        }
+
+
+        .header-tag {
+            display: inline-block;
+
+            color: var(--yellow);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .header h1 {
+            font-size: clamp(23px, 3vw, 32px);
+
+            line-height: 1.25;
+
+            font-weight: 800;
+        }
+
+
+        .header p {
+            margin-top: 5px;
+
+            color: #dbeafe;
+
+            font-size: 13px;
+        }
+
+
+        .admin-badge {
+            padding: 11px 16px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-title {
+            margin: 32px 0 15px;
+        }
+
+
+        .section-title span {
+            color: var(--secondary);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        .section-title h2 {
+            color: var(--primary-dark);
+
+            font-size: 25px;
+
+            margin-top: 5px;
+        }
+
+
+        /* ================= CONTENT SECTION ================= */
+
+        .content-section {
+            display: grid;
+
+            grid-template-columns: 1fr;
+
+            gap: 20px;
+        }
+
+
+        /* ================= INFO BOX ================= */
+
+        .info-box {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .box-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 20px 23px;
+
+            background: linear-gradient(
+                120deg,
+                #edf6ff,
+                #ffffff
+            );
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .box-header h2 {
+            color: var(--primary-dark);
+
+            font-size: 18px;
+
+            font-weight: 800;
+        }
+
+
+        .box-header .header-action {
+            padding: 7px 12px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
 
             border-radius: 6px;
 
-            cursor: pointer;
+            font-size: 10px;
 
-            font-size: 15px;
-
-            font-weight: 600;
+            font-weight: 800;
 
             white-space: nowrap;
-
-            transition: 0.3s;
-        }
-
-        .add-btn:hover {
-            background: #1d4ed8;
-
-            transform: translateY(-2px);
         }
 
 
-        /* =========================================================
-           FILTER BOX
-        ========================================================= */
+        /* ================= FILTER ================= */
 
-        .filter-box {
-            background: white;
-
-            padding: 22px;
-
-            border-radius: 10px;
-
-            margin-bottom: 20px;
-
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-
-            display: flex;
-
-            align-items: flex-end;
-
-            gap: 18px;
-
-            flex-wrap: wrap;
+        .filter-content {
+            padding: 20px 23px 23px;
         }
+
+
+        .filter-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr))
+                auto;
+
+            gap: 15px;
+
+            align-items: end;
+        }
+
 
         .filter-group {
             display: flex;
@@ -209,147 +425,220 @@
             gap: 7px;
         }
 
+
         .filter-group label {
-            font-size: 14px;
+            color: var(--muted);
 
-            font-weight: 600;
+            font-size: 11px;
 
-            color: #475569;
+            font-weight: 700;
         }
 
+
         .filter-group select {
-            width: 190px;
+            width: 100%;
 
             padding: 11px 12px;
 
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--border);
 
-            border-radius: 6px;
+            border-radius: 7px;
 
             background: white;
 
-            color: #334155;
+            color: var(--text);
 
-            font-size: 14px;
+            font-family: 'Inter', Arial, sans-serif;
+
+            font-size: 12px;
 
             outline: none;
 
             cursor: pointer;
+
+            transition: 0.25s;
         }
+
 
         .filter-group select:focus {
-            border-color: #2563eb;
+            border-color: var(--secondary);
 
             box-shadow:
-                0 0 0 3px rgba(37, 99, 235, 0.1);
+                0 0 0 3px rgba(22,117,203,0.10);
         }
 
-        .filter-btn {
-            background: #2563eb;
 
-            color: white;
+        .filter-btn {
+            padding: 11px 17px;
 
             border: none;
 
-            padding: 11px 20px;
+            border-radius: 7px;
 
-            border-radius: 6px;
+            background: var(--primary);
+
+            color: white;
+
+            font-family: 'Inter', Arial, sans-serif;
+
+            font-size: 11px;
+
+            font-weight: 800;
 
             cursor: pointer;
 
-            font-size: 14px;
+            transition: 0.25s;
 
-            font-weight: 600;
-
-            transition: 0.3s;
+            white-space: nowrap;
         }
+
 
         .filter-btn:hover {
-            background: #1d4ed8;
+            background: var(--primary-dark);
+
+            transform: translateY(-1px);
         }
 
 
-        /* =========================================================
-           SEARCH BOX
-        ========================================================= */
+        /* ================= SEARCH ================= */
 
         .search-box {
+            margin-top: 20px;
+
             background: white;
 
-            padding: 20px;
+            border: 1px solid var(--border);
 
-            border-radius: 10px;
+            border-radius: 14px;
 
-            margin-bottom: 25px;
+            padding: 20px 23px;
 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow);
         }
+
+
+        .search-box label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
 
         .search-box input {
             width: 100%;
 
-            padding: 13px 15px;
+            padding: 12px 14px;
 
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--border);
 
-            border-radius: 6px;
+            border-radius: 7px;
 
             outline: none;
 
-            font-size: 15px;
+            color: var(--text);
 
-            color: #334155;
-        }
-
-        .search-box input:focus {
-            border-color: #2563eb;
-
-            box-shadow:
-                0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-
-        /* =========================================================
-           NOTICE FORM
-        ========================================================= */
-
-        .homework-form {
             background: white;
 
-            padding: 25px;
+            font-family: 'Inter', Arial, sans-serif;
 
-            border-radius: 10px;
+            font-size: 12px;
 
-            margin-bottom: 25px;
-
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .homework-form h2 {
-            color: #1e293b;
-
-            font-size: 21px;
-
-            margin-bottom: 20px;
+            transition: 0.25s;
         }
 
 
-        /* =========================================================
-           FORM GRID
-        ========================================================= */
+        .search-box input:focus {
+            border-color: var(--secondary);
+
+            box-shadow:
+                0 0 0 3px rgba(22,117,203,0.10);
+        }
+
+
+        /* ================= NOTICE FORM ================= */
+
+        .notice-form {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            margin-top: 20px;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .notice-form-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 20px 23px;
+
+            background: linear-gradient(
+                120deg,
+                #edf6ff,
+                #ffffff
+            );
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .notice-form-header h2 {
+            color: var(--primary-dark);
+
+            font-size: 18px;
+
+            font-weight: 800;
+        }
+
+
+        .notice-form-header span {
+            padding: 7px 11px;
+
+            border-radius: 6px;
+
+            background: #eaf3ff;
+
+            color: var(--secondary);
+
+            font-size: 10px;
+
+            font-weight: 800;
+        }
+
+
+        .notice-form-body {
+            padding: 23px;
+        }
+
+
+        /* ================= FORM GRID ================= */
 
         .form-grid {
             display: grid;
 
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
 
             gap: 20px;
         }
 
-
-        /* =========================================================
-           FORM GROUP
-        ========================================================= */
 
         .form-group {
             display: flex;
@@ -362,22 +651,14 @@
         }
 
 
-        /* =========================================================
-           FORM LABEL
-        ========================================================= */
-
         .form-group label {
-            font-size: 14px;
+            color: var(--muted);
 
-            font-weight: 600;
+            font-size: 11px;
 
-            color: #475569;
+            font-weight: 700;
         }
 
-
-        /* =========================================================
-           DJANGO FORM FIELDS
-        ========================================================= */
 
         .form-group input,
         .form-group textarea,
@@ -386,226 +667,276 @@
 
             padding: 12px;
 
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--border);
 
-            border-radius: 6px;
+            border-radius: 7px;
 
             outline: none;
 
             background: white;
 
-            color: #334155;
+            color: var(--text);
 
-            font-size: 14px;
+            font-family: 'Inter', Arial, sans-serif;
 
-            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
 
-            transition: 0.3s;
+            transition: 0.25s;
         }
+
 
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
-            border-color: #2563eb;
+            border-color: var(--secondary);
 
             box-shadow:
-                0 0 0 3px rgba(37, 99, 235, 0.1);
+                0 0 0 3px rgba(22,117,203,0.10);
         }
 
-
-        /* =========================================================
-           TEXTAREA
-        ========================================================= */
 
         .form-group textarea {
             resize: vertical;
 
-            min-height: 130px;
+            min-height: 140px;
+
+            line-height: 1.6;
         }
 
-
-        /* =========================================================
-           SELECT
-        ========================================================= */
 
         .form-group select {
             cursor: pointer;
         }
 
 
-        /* =========================================================
-           FULL WIDTH
-        ========================================================= */
-
         .full-width {
             grid-column: 1 / -1;
         }
 
 
-        /* =========================================================
-           FORM BUTTONS
-        ========================================================= */
+        /* ================= FORM BUTTONS ================= */
 
         .form-buttons {
             display: flex;
 
             justify-content: flex-end;
 
-            gap: 15px;
+            align-items: center;
 
-            margin-top: 25px;
+            gap: 10px;
+
+            margin-top: 23px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid var(--border);
         }
+
 
         .reset-btn,
         .submit-btn {
             border: none;
 
-            padding: 12px 22px;
+            padding: 10px 17px;
 
-            border-radius: 6px;
+            border-radius: 7px;
+
+            font-family: 'Inter', Arial, sans-serif;
+
+            font-size: 11px;
+
+            font-weight: 800;
 
             cursor: pointer;
 
-            font-size: 14px;
-
-            font-weight: 600;
-
-            transition: 0.3s;
+            transition: 0.25s;
         }
 
-
-        /* =========================================================
-           RESET BUTTON
-        ========================================================= */
 
         .reset-btn {
-            background: #e2e8f0;
+            background: #e8eef6;
 
-            color: #334155;
+            color: #475569;
         }
+
 
         .reset-btn:hover {
-            background: #cbd5e1;
+            background: #dce5f0;
         }
 
-
-        /* =========================================================
-           SUBMIT BUTTON
-        ========================================================= */
 
         .submit-btn {
-            background: #2563eb;
+            background: var(--yellow);
 
-            color: white;
+            color: var(--primary-dark);
+
+            box-shadow: 0 4px 12px rgba(255,204,36,0.20);
         }
+
 
         .submit-btn:hover {
-            background: #1d4ed8;
+            background: #f3bd00;
 
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
 
-        /* =========================================================
-           TABLE CONTAINER
-        ========================================================= */
+        /* ================= NOTICE RECORDS ================= */
 
-        .table-container {
-            background: white;
-
-            padding: 25px;
-
-            border-radius: 10px;
-
-            margin-bottom: 25px;
-
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        .notice-records {
+            margin-top: 20px;
         }
 
-        .table-container h2 {
-            color: #1e293b;
-
-            font-size: 21px;
-
-            margin-bottom: 20px;
-        }
-
-
-        /* =========================================================
-           TABLE WRAPPER
-        ========================================================= */
 
         .table-wrapper {
             width: 100%;
 
             overflow-x: auto;
+
+            padding: 20px 23px 23px;
         }
 
-
-        /* =========================================================
-           NOTICE TABLE
-        ========================================================= */
 
         #noticeTable {
             width: 100%;
 
-            border-collapse: collapse;
+            min-width: 700px;
 
-            min-width: 650px;
+            border-collapse: separate;
 
-            background: white;
+            border-spacing: 0;
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            overflow: hidden;
         }
 
-        #noticeTable thead {
-            background: #1e293b;
-
-            color: white;
-        }
 
         #noticeTable th {
-            padding: 14px 15px;
+            background: var(--primary);
+
+            color: white;
+
+            padding: 13px 12px;
 
             text-align: left;
 
-            font-size: 14px;
+            font-size: 10px;
 
-            font-weight: 600;
+            font-weight: 800;
+
+            letter-spacing: 0.4px;
 
             white-space: nowrap;
         }
 
-        #noticeTable td {
-            padding: 14px 15px;
 
-            border-bottom: 1px solid #e2e8f0;
+        #noticeTable td {
+            padding: 13px 12px;
+
+            border-bottom: 1px solid #e8eef6;
 
             color: #475569;
 
-            font-size: 14px;
+            font-size: 11px;
 
             vertical-align: top;
         }
+
 
         #noticeTable tbody tr {
             transition: 0.2s;
         }
 
+
         #noticeTable tbody tr:hover {
-            background: #f8fafc;
+            background: #f0f7ff;
         }
 
-        #noticeTable td:nth-child(2) {
-            max-width: 400px;
 
-            line-height: 1.5;
+        #noticeTable tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        #noticeTable td:first-child {
+            color: var(--primary);
+
+            font-weight: 700;
+        }
+
+
+        #noticeTable td:nth-child(2) {
+            max-width: 420px;
+
+            line-height: 1.6;
 
             word-break: break-word;
         }
 
 
-        /* =========================================================
-           SCROLLBAR
-        ========================================================= */
+        /* ================= NOTICE STATUS ================= */
+
+        .notice-date {
+            white-space: nowrap;
+
+            color: var(--muted);
+        }
+
+
+        /* ================= EMPTY MESSAGE ================= */
+
+        .empty-message {
+            text-align: center !important;
+
+            padding: 30px !important;
+
+            color: var(--muted) !important;
+
+            font-weight: 600;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .dashboard-footer {
+            margin-top: 35px;
+
+            padding: 22px;
+
+            background: linear-gradient(
+                110deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
+            border-radius: 13px;
+
+            color: white;
+
+            text-align: center;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .dashboard-footer h3 {
+            font-size: 17px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .dashboard-footer p {
+            color: #dbeafe;
+
+            font-size: 11px;
+        }
+
+
+        /* ================= SCROLLBAR ================= */
 
         .sidebar::-webkit-scrollbar,
         .table-wrapper::-webkit-scrollbar {
@@ -614,26 +945,39 @@
             height: 6px;
         }
 
+
         .sidebar::-webkit-scrollbar-thumb,
         .table-wrapper::-webkit-scrollbar-thumb {
-            background: #64748b;
+            background: #5d87b4;
 
             border-radius: 10px;
         }
 
 
-        /* =========================================================
-           TABLET
-        ========================================================= */
+        /* ================= RESPONSIVE ================= */
 
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
+
+            .filter-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .filter-btn {
+                width: fit-content;
+            }
+
+        }
+
+
+        @media (max-width: 950px) {
 
             .sidebar {
-                width: 200px;
+                width: 220px;
             }
 
             .main-content {
-                margin-left: 200px;
+                margin-left: 220px;
 
                 padding: 20px;
             }
@@ -646,15 +990,8 @@
                 grid-column: auto;
             }
 
-            .filter-group select {
-                width: 170px;
-            }
         }
 
-
-        /* =========================================================
-           MOBILE
-        ========================================================= */
 
         @media (max-width: 700px) {
 
@@ -665,12 +1002,54 @@
 
                 height: auto;
 
-                padding-bottom: 15px;
+                min-height: auto;
+
+                padding: 15px;
             }
 
-            .sidebar h2 {
-                margin-bottom: 15px;
+
+            .sidebar-brand {
+                padding-bottom: 15px;
+
+                margin-bottom: 12px;
             }
+
+
+            .sidebar-logo {
+                width: 48px;
+
+                height: 48px;
+
+                font-size: 23px;
+            }
+
+
+            .sidebar-brand h2 {
+                font-size: 16px;
+            }
+
+
+            .sidebar ul {
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 5px;
+            }
+
+
+            .sidebar ul li {
+                margin: 0;
+            }
+
+
+            .sidebar ul li a {
+                font-size: 11px;
+
+                padding: 9px;
+            }
+
 
             .main-content {
                 margin-left: 0;
@@ -678,107 +1057,105 @@
                 padding: 15px;
             }
 
+
             .header {
                 padding: 20px;
 
-                flex-direction: column;
-
                 align-items: flex-start;
+
+                flex-direction: column;
             }
+
 
             .header h1 {
-                font-size: 23px;
+                font-size: 22px;
             }
 
-            .header p {
-                font-size: 14px;
+
+            .admin-badge {
+                font-size: 10px;
             }
 
-            .filter-box {
-                padding: 18px;
 
-                flex-direction: column;
-
-                align-items: stretch;
+            .filter-grid {
+                grid-template-columns: 1fr;
             }
 
-            .filter-group {
-                width: 100%;
-            }
-
-            .filter-group select {
-                width: 100%;
-            }
 
             .filter-btn {
                 width: 100%;
             }
 
+
             .search-box {
-                padding: 15px;
+                padding: 16px;
             }
 
-            .homework-form {
-                padding: 20px;
+
+            .notice-form-body {
+                padding: 18px;
             }
 
-            .form-grid {
-                grid-template-columns: 1fr;
 
-                gap: 15px;
+            .notice-form-header {
+                padding: 17px;
             }
 
-            .full-width {
-                grid-column: auto;
-            }
 
             .form-buttons {
                 flex-direction: column;
             }
+
 
             .reset-btn,
             .submit-btn {
                 width: 100%;
             }
 
-            .table-container {
-                padding: 18px;
+
+            .table-wrapper {
+                padding: 15px;
             }
+
         }
 
 
-        /* =========================================================
-           EXTRA SMALL MOBILE
-        ========================================================= */
+        @media (max-width: 480px) {
 
-        @media (max-width: 450px) {
+            .sidebar ul {
+                grid-template-columns: 1fr;
+            }
+
 
             .main-content {
                 padding: 10px;
             }
 
+
             .header {
                 padding: 18px;
             }
+
 
             .header h1 {
                 font-size: 21px;
             }
 
-            .homework-form {
-                padding: 16px;
+
+            .section-title h2 {
+                font-size: 21px;
             }
 
-            .form-group input,
-            .form-group textarea,
-            .form-group select {
-                padding: 11px;
+
+            .notice-form-header h2 {
+                font-size: 15px;
             }
 
-            #noticeTable th,
-            #noticeTable td {
-                padding: 11px;
+
+            .notice-form-header span {
+                font-size: 9px;
             }
+
         }
 
     </style>
@@ -797,78 +1174,126 @@
 
     <div class="sidebar">
 
-        <h2>Admin Portal</h2>
+        <div class="sidebar-brand">
+
+            <div class="sidebar-logo">
+                V
+            </div>
+
+            <h2>
+                Admin Portal
+            </h2>
+
+            <p>
+                VISION PUBLIC SCHOOL
+            </p>
+
+        </div>
+
 
         <ul>
 
             <li>
                 <a href="{% url 'admin_dashboard' %}">
+                    <span class="menu-icon">⌂</span>
                     Dashboard
                 </a>
             </li>
 
+
             <li>
                 <a href="{% url 'students' %}">
+                    <span class="menu-icon">🎓</span>
                     Students
                 </a>
             </li>
 
+
             <li>
                 <a href="{% url 'staff' %}">
+                    <span class="menu-icon">👨‍🏫</span>
                     Staff
                 </a>
             </li>
 
+
             <li>
                 <a href="{% url 'classes' %}">
+                    <span class="menu-icon">🏫</span>
                     Classes
                 </a>
             </li>
 
+
             <li>
                 <a href="{% url 'attendance' %}">
+                    <span class="menu-icon">📋</span>
                     Attendance
                 </a>
             </li>
 
-            {% comment %} <li>
+
+            {% comment %}
+            <li>
                 <a href="{% url 'marks' %}">
+                    <span class="menu-icon">📊</span>
                     Marks
                 </a>
-            </li> {% endcomment %}
+            </li>
+            {% endcomment %}
+
 
             <li>
                 <a href="{% url 'homework' %}">
+                    <span class="menu-icon">📝</span>
                     Homework
                 </a>
             </li>
 
+
             <li>
                 <a href="{% url 'notices' %}" class="active">
+                    <span class="menu-icon">📢</span>
                     Notices
                 </a>
             </li>
 
+
             <li>
                 <a href="{% url 'fees_details' %}">
+                    <span class="menu-icon">💰</span>
                     Fees Details
                 </a>
             </li>
 
+
             <li>
                 <a href="{% url 'fees_status' %}">
+                    <span class="menu-icon">💳</span>
                     Fees Status
                 </a>
             </li>
 
+
+            <li>
+                <a href="{% url 'staff_registration' %}">
+                    <span class="menu-icon">➕</span>
+                    Add New Staff
+                </a>
+            </li>
+
+
             <li>
                 <a href="admin_profile.html">
+                    <span class="menu-icon">👤</span>
                     Profile
                 </a>
             </li>
 
+
             <li>
                 <a href="{% url 'logout' %}">
+                    <span class="menu-icon">↪</span>
                     Logout
                 </a>
             </li>
@@ -889,12 +1314,28 @@
 
     <div class="sidebar">
 
-        <h2>Staff Portal</h2>
+        <div class="sidebar-brand">
+
+            <div class="sidebar-logo">
+                V
+            </div>
+
+            <h2>
+                Staff Portal
+            </h2>
+
+            <p>
+                VISION PUBLIC SCHOOL
+            </p>
+
+        </div>
+
 
         <ul>
 
             <li>
                 <a href="{% url 'staff_dashboard' %}">
+                    <span class="menu-icon">⌂</span>
                     Dashboard
                 </a>
             </li>
@@ -904,6 +1345,7 @@
 
             <li>
                 <a href="{% url 'attendance' %}">
+                    <span class="menu-icon">📋</span>
                     Attendance
                 </a>
             </li>
@@ -913,6 +1355,7 @@
 
             <li>
                 <a href="{% url 'students' %}">
+                    <span class="menu-icon">🎓</span>
                     Students
                 </a>
             </li>
@@ -922,39 +1365,43 @@
 
             <li>
                 <a href="{% url 'student_registration' %}">
-                    Add a new Student
+                    <span class="menu-icon">➕</span>
+                    Add New Student
                 </a>
             </li>
 
             {% endif %}
 
 
-            {% comment %} {% if staff_role == 'Teacher' %}
+            {% comment %}
+
+            {% if staff_role == 'Teacher' %}
 
             <li>
                 <a href="{% url 'marks' %}">
+                    <span class="menu-icon">📊</span>
                     Marks Entry
                 </a>
             </li>
 
-            {% endif %} {% endcomment %}
+            {% endif %}
+
+            {% endcomment %}
 
 
             {% if staff_role == 'Teacher' %}
 
             <li>
                 <a href="{% url 'homework' %}">
+                    <span class="menu-icon">📝</span>
                     Homework
                 </a>
             </li>
 
-            {% endif %}
-
-
-            {% if staff_role == 'Teacher' %}
 
             <li>
                 <a href="{% url 'notices' %}" class="active">
+                    <span class="menu-icon">📢</span>
                     Notices
                 </a>
             </li>
@@ -966,6 +1413,7 @@
 
             <li>
                 <a href="{% url 'fees_status' %}">
+                    <span class="menu-icon">💳</span>
                     Fees Status
                 </a>
             </li>
@@ -975,6 +1423,7 @@
 
             <li>
                 <a href="teacher_profile.html">
+                    <span class="menu-icon">👤</span>
                     Profile
                 </a>
             </li>
@@ -982,6 +1431,7 @@
 
             <li>
                 <a href="{% url 'logout' %}">
+                    <span class="menu-icon">↪</span>
                     Logout
                 </a>
             </li>
@@ -992,135 +1442,209 @@
 
     {% endif %}
 
-{% if role == 'Student' %}
+
+
+    <!-- =========================================================
+         SIDEBAR - STUDENT
+    ========================================================= -->
+
+    {% if role == 'Student' %}
+
     <div class="sidebar">
 
+        <div class="sidebar-brand">
 
-<h2>Student Portal</h2>
+            <div class="sidebar-logo">
+                V
+            </div>
 
-<ul>
+            <h2>
+                Student Portal
+            </h2>
 
-    <li>
-        <a href="{% url 'student_dashboard' %}" class="active">
-            Dashboard
-        </a>
-    </li>
+            <p>
+                VISION PUBLIC SCHOOL
+            </p>
 
-    <li>
-        <a href="{% url 'attendance' %}">
-            Attendance
-        </a>
-    </li>
+        </div>
 
-    {% comment %} <li>
-        <a href="{% url 'marks' %}">
-            Marks
-        </a>
-    </li> {% endcomment %}
 
-    <li>
-        <a href="{% url 'homework' %}">
-            Homework
-        </a>
-    </li>
+        <ul>
 
-    <li>
-        <a href="{% url 'notices' %}">
-            Notices
-        </a>
-    </li>
+            <li>
+                <a href="{% url 'student_dashboard' %}">
+                    <span class="menu-icon">⌂</span>
+                    Dashboard
+                </a>
+            </li>
 
-    <li>
-        <a href="{% url 'fees_status' %}">
-            Fees Status
-        </a>
-    </li>
 
-    <li>
-        <a href="student_profile.html">
-            Profile
-        </a>
-    </li>
+            <li>
+                <a href="{% url 'attendance' %}">
+                    <span class="menu-icon">📋</span>
+                    Attendance
+                </a>
+            </li>
 
-    <li>
-        <a href="{% url 'logout' %}">
-            Logout
-        </a>
-    </li>
 
-</ul>
+            {% comment %}
 
-</div>
-    {% endif %}
+            <li>
+                <a href="{% url 'marks' %}">
+                    <span class="menu-icon">📊</span>
+                    Marks
+                </a>
+            </li>
 
-    {% if role == 'Guardian' %}
-<div class="sidebar">
+            {% endcomment %}
 
-    <div class="logo">
-        <span>🏫</span>
-        School Management
+
+            <li>
+                <a href="{% url 'homework' %}">
+                    <span class="menu-icon">📝</span>
+                    Homework
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{% url 'notices' %}" class="active">
+                    <span class="menu-icon">📢</span>
+                    Notices
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{% url 'fees_status' %}">
+                    <span class="menu-icon">💳</span>
+                    Fees Status
+                </a>
+            </li>
+
+
+            <li>
+                <a href="student_profile.html">
+                    <span class="menu-icon">👤</span>
+                    Profile
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{% url 'logout' %}">
+                    <span class="menu-icon">↪</span>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
     </div>
 
-    <ul class="menu">
+    {% endif %}
 
-        <li class="active">
-            <a href="{% url 'guardian_dashboard' %}">
-                🏠 <span>Dashboard</span>
-            </a>
-        </li>
 
-        {% comment %} <li>
-            <a href="{% url 'student_dashboard' %}">
-                👨‍🎓 <span>My Child</span>
-            </a>
-        </li> {% endcomment %}
 
-        <li>
-        <a href="{% url 'attendance' %}">
-            Attendance
-        </a>
-    </li>
+    <!-- =========================================================
+         SIDEBAR - GUARDIAN
+    ========================================================= -->
 
-    {% comment %} <li>
-        <a href="{% url 'marks' %}">
-            Marks
-        </a>
-    </li> {% endcomment %}
+    {% if role == 'Guardian' %}
 
-    <li>
-        <a href="{% url 'homework' %}">
-            Homework
-        </a>
-    </li>
+    <div class="sidebar">
 
-    <li>
-        <a href="{% url 'notices' %}">
-            Notices
-        </a>
-    </li>
+        <div class="sidebar-brand">
 
-    <li>
-        <a href="{% url 'fees_status' %}">
-            Fees Status
-        </a>
-    </li>
+            <div class="sidebar-logo">
+                V
+            </div>
 
-        <li>
-            <a href="#">
-                👤 <span>Profile</span>
-            </a>
-        </li>
+            <h2>
+                Guardian Portal
+            </h2>
 
-        <li class="logout">                                  
-            <a href="{% url 'logout' %}">
-                🚪 <span>Logout</span>
-            </a>
-        </li>
+            <p>
+                VISION PUBLIC SCHOOL
+            </p>
 
-    </ul>
+        </div>
 
-</div>
-{% endif %}
+
+        <ul>
+
+            <li>
+                <a href="{% url 'guardian_dashboard' %}">
+                    <span class="menu-icon">⌂</span>
+                    Dashboard
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{% url 'attendance' %}">
+                    <span class="menu-icon">📋</span>
+                    Attendance
+                </a>
+            </li>
+
+
+            {% comment %}
+
+            <li>
+                <a href="{% url 'marks' %}">
+                    <span class="menu-icon">📊</span>
+                    Marks
+                </a>
+            </li>
+
+            {% endcomment %}
+
+
+            <li>
+                <a href="{% url 'homework' %}">
+                    <span class="menu-icon">📝</span>
+                    Homework
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{% url 'notices' %}" class="active">
+                    <span class="menu-icon">📢</span>
+                    Notices
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{% url 'fees_status' %}">
+                    <span class="menu-icon">💳</span>
+                    Fees Status
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#">
+                    <span class="menu-icon">👤</span>
+                    Profile
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{% url 'logout' %}">
+                    <span class="menu-icon">↪</span>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    {% endif %}
 
 
 
@@ -1131,13 +1655,15 @@
     <div class="main-content">
 
 
-        <!-- =====================================================
-             HEADER
-        ===================================================== -->
+        <!-- ================= HEADER ================= -->
 
         <div class="header">
 
             <div>
+
+                <span class="header-tag">
+                    NOTICE MANAGEMENT
+                </span>
 
                 <h1>
                     Notice Management
@@ -1149,224 +1675,299 @@
 
             </div>
 
-        </div>
 
-
-
-        <!-- =====================================================
-             FILTER SECTION
-        ===================================================== -->
-
-        <div class="filter-box">
-
-            <div class="filter-group">
-
-                <label for="audienceFilter">
-                    Audience
-                </label>
-
-                <select id="audienceFilter">
-
-                    <option value="all">
-                        All
-                    </option>
-
-                    <option value="Students">
-                        Students
-                    </option>
-
-                    <option value="Staff">
-                        Staff
-                    </option>
-
-                    <option value="Students & Staff">
-                        Students & Staff
-                    </option>
-
-                </select>
-
+            <div class="admin-badge">
+                📢 School Notices
             </div>
-
-
-            <div class="filter-group">
-
-                <label for="priorityFilter">
-                    Priority
-                </label>
-
-                <select id="priorityFilter">
-
-                    <option value="all">
-                        All Priorities
-                    </option>
-
-                    <option value="High">
-                        High
-                    </option>
-
-                    <option value="Medium">
-                        Medium
-                    </option>
-
-                    <option value="Low">
-                        Low
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="filter-group">
-
-                <label for="statusFilter">
-                    Status
-                </label>
-
-                <select id="statusFilter">
-
-                    <option value="all">
-                        All Status
-                    </option>
-
-                    <option value="Active">
-                        Active
-                    </option>
-
-                    <option value="Expired">
-                        Expired
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="filter-btn"
-                onclick="applyFilter()">
-
-                Apply Filter
-
-            </button>
 
         </div>
 
 
 
-        <!-- =====================================================
-             SEARCH
-        ===================================================== -->
+        <!-- ================= FILTER ================= -->
+
+        <div class="section-title">
+
+            <span>
+                NOTICE FILTERS
+            </span>
+
+            <h2>
+                Filter Notices
+            </h2>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>
+                    🔎 Filter & Search
+                </h2>
+
+                <span class="header-action">
+                    Notice Management
+                </span>
+
+            </div>
+
+
+            <div class="filter-content">
+
+                <div class="filter-grid">
+
+
+                    <div class="filter-group">
+
+                        <label for="audienceFilter">
+                            Audience
+                        </label>
+
+                        <select id="audienceFilter">
+
+                            <option value="all">
+                                All
+                            </option>
+
+                            <option value="Students">
+                                Students
+                            </option>
+
+                            <option value="Staff">
+                                Staff
+                            </option>
+
+                            <option value="Students & Staff">
+                                Students & Staff
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="filter-group">
+
+                        <label for="priorityFilter">
+                            Priority
+                        </label>
+
+                        <select id="priorityFilter">
+
+                            <option value="all">
+                                All Priorities
+                            </option>
+
+                            <option value="High">
+                                High
+                            </option>
+
+                            <option value="Medium">
+                                Medium
+                            </option>
+
+                            <option value="Low">
+                                Low
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="filter-group">
+
+                        <label for="statusFilter">
+                            Status
+                        </label>
+
+                        <select id="statusFilter">
+
+                            <option value="all">
+                                All Status
+                            </option>
+
+                            <option value="Active">
+                                Active
+                            </option>
+
+                            <option value="Expired">
+                                Expired
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="filter-btn"
+                        onclick="applyFilter()"
+                    >
+                        Apply Filter
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= SEARCH ================= -->
 
         <div class="search-box">
+
+            <label for="searchInput">
+                Search Notices
+            </label>
 
             <input
                 type="text"
                 id="searchInput"
                 placeholder="Search by notice title or description..."
-                onkeyup="searchNotices()">
+                onkeyup="searchNotices()"
+            >
 
         </div>
 
 
 
-        <!-- =====================================================
-             POST NOTICE FORM
-        ===================================================== -->
+        <!-- ================= POST NOTICE ================= -->
 
-        <div class="homework-form">
+        <div class="section-title">
+
+            <span>
+                NOTICE CREATION
+            </span>
 
             <h2>
-                Post a Notice
+                Post a New Notice
             </h2>
 
-
-            <form method="POST">
-
-                {% csrf_token %}
+        </div>
 
 
-                <div class="form-grid">
+        <div class="notice-form">
+
+            <div class="notice-form-header">
+
+                <h2>
+                    📢 Notice Details
+                </h2>
+
+                <span>
+                    CREATE NOTICE
+                </span>
+
+            </div>
 
 
-                    <!-- CLASS -->
+            <div class="notice-form-body">
 
-                    <div class="form-group">
+                <form method="POST">
 
-                        {{ form.class_field.label_tag }}
+                    {% csrf_token %}
 
-                        {{ form.class_field }}
+
+                    <div class="form-grid">
+
+
+                        <!-- CLASS -->
+
+                        <div class="form-group">
+
+                            {{ form.class_field.label_tag }}
+
+                            {{ form.class_field }}
+
+                        </div>
+
+
+                        <!-- TITLE -->
+
+                        <div class="form-group">
+
+                            {{ form.title.label_tag }}
+
+                            {{ form.title }}
+
+                        </div>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <div class="form-group full-width">
+
+                            {{ form.description.label_tag }}
+
+                            {{ form.description }}
+
+                        </div>
+
 
                     </div>
 
 
+                    <div class="form-buttons">
 
-                    <!-- TITLE -->
-
-                    <div class="form-group">
-
-                        {{ form.title.label_tag }}
-
-                        {{ form.title }}
-
-                    </div>
+                        <button
+                            type="reset"
+                            class="reset-btn"
+                        >
+                            Reset
+                        </button>
 
 
-
-                    <!-- DESCRIPTION -->
-
-                    <div class="form-group full-width">
-
-                        {{ form.description.label_tag }}
-
-                        {{ form.description }}
+                        <button
+                            type="submit"
+                            class="submit-btn"
+                        >
+                            📢 Post Notice
+                        </button>
 
                     </div>
 
+                </form>
 
-                </div>
-
-
-
-                <!-- BUTTONS -->
-
-                <div class="form-buttons">
-
-                    <button
-                        type="reset"
-                        class="reset-btn">
-
-                        Reset
-
-                    </button>
-
-
-                    <button
-                        type="submit"
-                        class="submit-btn">
-
-                        Post Notice
-
-                    </button>
-
-                </div>
-
-            </form>
+            </div>
 
         </div>
 
 
 
-        <!-- =====================================================
-             NOTICE TABLE
-        ===================================================== -->
+        <!-- ================= NOTICE RECORDS ================= -->
 
-        <div class="table-container">
+        <div class="section-title">
+
+            <span>
+                NOTICE RECORDS
+            </span>
 
             <h2>
-                Notice Records
+                Published Notices
             </h2>
+
+        </div>
+
+
+        <div class="info-box notice-records">
+
+            <div class="box-header">
+
+                <h2>
+                    📢 Notice Records
+                </h2>
+
+                <span class="header-action">
+                    SCHOOL NOTICES
+                </span>
+
+            </div>
 
 
             <div class="table-wrapper">
@@ -1400,8 +2001,8 @@
 
                     <tbody>
 
-
                         {% for notice in notice_details %}
+
                         {% if role == 'Staff' or role == 'Admin' or notice.class_field == student.class_field %}
 
                         <tr>
@@ -1421,7 +2022,7 @@
                             </td>
 
 
-                            <td>
+                            <td class="notice-date">
                                 {{ notice.post_date }}
                             </td>
 
@@ -1429,26 +2030,43 @@
 
                         {% endif %}
 
+
                         {% empty %}
 
                         <tr>
 
-                            <td colspan="4" style="text-align: center;">
-
+                            <td
+                                colspan="4"
+                                class="empty-message"
+                            >
                                 No notices available.
-
                             </td>
 
                         </tr>
 
                         {% endfor %}
 
-
                     </tbody>
 
                 </table>
 
             </div>
+
+        </div>
+
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <div class="dashboard-footer">
+
+            <h3>
+                VISION PUBLIC SCHOOL
+            </h3>
+
+            <p>
+                School Management & Information Portal
+            </p>
 
         </div>
 
@@ -1515,16 +2133,6 @@
 
         /* =====================================================
            APPLY FILTER
-           
-           NOTE:
-           Your current table contains only:
-           Title
-           Description
-           Posted By
-           Posted Date
-
-           Therefore Audience, Priority and Status are not
-           available in the table to filter.
         ===================================================== */
 
         function applyFilter() {
@@ -1534,7 +2142,6 @@
             );
 
         }
-
 
     </script>
 
