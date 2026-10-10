@@ -1110,15 +1110,13 @@
     </li>
 
 
-    {% comment %}
     <li>
         <a href="{% url 'marks' %}">
             <span class="menu-icon">📊</span>
             Marks
         </a>
     </li>
-    {% endcomment %}
-
+    
 
     <li>
         <a href="{% url 'homework' %}">
@@ -1238,8 +1236,6 @@
     {% endif %}
 
 
-    {% comment %}
-
     {% if staff_role == 'Teacher' %}
 
     <li>
@@ -1250,8 +1246,6 @@
     </li>
 
     {% endif %}
-
-    {% endcomment %}
 
 
     {% if staff_role == 'Teacher' %}

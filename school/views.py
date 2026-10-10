@@ -294,25 +294,24 @@ def mark_attendance(request):
                                                       'students':students})
     return render(request,"mark_attendance.html")
 
-# def marks(request):
-#     userid = request.session.get('userid')
-#     if(userid.startswith("STF")):
-#         staff =request.user.staff
-#         staff_role=staff.role
-#         return render(request,"marks.html",{'role':'Staff','staff_role':staff_role})
-#     elif(userid.startswith("ADM")):
-#         admin =request.user.school_admin
-#         return render(request,"marks.html",{'role':'Admin'})
-#     return render(request,"marks.html")
+def marks(request):
+    userid = request.session.get('userid')
+    if(userid.startswith("STF")):
+        staff =request.user.staff
+        staff_role=staff.role
+        return render(request,"marks.html",{'role':'Staff','staff_role':staff_role})
+    elif(userid.startswith("ADM")):
+        admin =request.user.school_admin
+        return render(request,"marks.html",{'role':'Admin'})
+    return render(request,"marks.html")
 
-# def upload_marks(request):
-#     userid = request.session.get('userid')
-#     if(userid.startswith("STF")):
-#         staff =request.user.staff
-#         staff_role=staff.role
-        
-#         return render(request,"upload_marks.html",{'role':'Staff','staff_role':staff_role})
-#     return render(request,"upload_marks.html")
+def upload_marks(request):
+    userid = request.session.get('userid')
+    if(userid.startswith("STF")):
+        staff =request.user.staff
+        staff_role=staff.role
+        return render(request,"upload_marks.html",{'role':'Staff','staff_role':staff_role})
+    return render(request,"upload_marks.html")
 
 def homework_function(request):
     homework_details=Homework.objects.all()

@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -97,16 +100,33 @@ WSGI_APPLICATION = 'school.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+
+
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
+        'NAME': os.getenv('TIDB_DB_NAME', 'test'),
+        'USER': os.getenv('TIDB_USER'),
+        'PASSWORD': os.getenv('TIDB_PASSWORD'),
+        'HOST': os.getenv('TIDB_HOST'),
+        'PORT': os.getenv('TIDB_PORT', '4000'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'ssl_mode': 'VERIFY_IDENTITY',
+            'ssl': {
+                'ca': os.getenv('CA_PATH'),
+            },
+        },
     }
 }
+
+
 
 DATABASES = {
     'default': {

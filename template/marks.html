@@ -4,173 +4,393 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Marks Management</title>
+    <title>Vision Public School | Marks Management</title>
 
     {% load static %}
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #06478b;
+            --primary-dark: #052e60;
+            --secondary: #1675cb;
+            --yellow: #ffcc24;
+
+            --light: #f3f7fc;
+            --text: #172b4d;
+            --muted: #64748b;
+            --border: #dce7f3;
+
+            --white: #ffffff;
+
+            --green: #16a34a;
+            --red: #dc2626;
+            --orange: #ea580c;
+
+            --shadow: 0 8px 28px rgba(5, 46, 96, 0.08);
         }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f6f9;
-            color: #333;
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
 
         /* ================= SIDEBAR ================= */
 
         .sidebar {
+
             position: fixed;
             left: 0;
             top: 0;
 
-            width: 240px;
+            width: 255px;
             height: 100vh;
 
-            background: #1e293b;
+            background: linear-gradient(
+                180deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
             color: white;
 
-            padding-top: 25px;
+            padding: 25px 16px;
 
             overflow-y: auto;
+
+            box-shadow: 5px 0 20px rgba(5, 46, 96, 0.12);
+
+            z-index: 1000;
         }
 
-        .sidebar h2 {
+
+        .sidebar-brand {
+
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 24px;
+
+            padding-bottom: 25px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+
+            margin-bottom: 20px;
         }
+
+
+        .sidebar-logo {
+
+            width: 58px;
+            height: 58px;
+
+            margin: 0 auto 10px;
+
+            display: grid;
+            place-items: center;
+
+            background: white;
+
+            color: var(--primary);
+
+            border: 4px solid var(--yellow);
+
+            border-radius: 50%;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+
+        .sidebar-brand h2 {
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .sidebar-brand p {
+
+            margin-top: 3px;
+
+            font-size: 10px;
+
+            color: #dbeafe;
+
+            letter-spacing: 0.5px;
+        }
+
 
         .sidebar ul {
             list-style: none;
         }
 
+
         .sidebar ul li {
-            margin: 5px 0;
+            margin: 6px 0;
         }
+
 
         .sidebar ul li a {
-            display: block;
 
-            padding: 13px 25px;
+            display: flex;
 
-            color: white;
-            text-decoration: none;
+            align-items: center;
 
-            font-size: 16px;
+            padding: 11px 13px;
 
-            transition: 0.3s;
+            border-radius: 8px;
+
+            color: #e5efff;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.25s;
         }
+
 
         .sidebar ul li a:hover {
-            background: #334155;
-            padding-left: 32px;
+
+            background: rgba(255,255,255,0.12);
+
+            color: white;
+
+            transform: translateX(3px);
         }
+
 
         .sidebar ul li a.active {
-            background: #2563eb;
 
-            font-weight: bold;
+            background: var(--yellow);
 
-            border-left: 4px solid white;
+            color: var(--primary-dark);
+
+            font-weight: 800;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
         }
+
+
+        .menu-icon {
+
+            width: 27px;
+
+            font-size: 16px;
+        }
+
 
         /* ================= MAIN CONTENT ================= */
 
         .main-content {
-            margin-left: 240px;
 
-            padding: 30px;
+            margin-left: 255px;
 
             min-height: 100vh;
+
+            padding: 28px;
         }
+
 
         /* ================= HEADER ================= */
 
         .header {
-            background: white;
-
-            padding: 25px 30px;
-
-            border-radius: 10px;
-
-            margin-bottom: 25px;
-
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
             display: flex;
 
             justify-content: space-between;
 
             align-items: center;
-        }
 
-        .header h1 {
-            font-size: 28px;
+            gap: 20px;
 
-            color: #1e293b;
+            padding: 25px 28px;
 
-            margin-bottom: 8px;
-        }
+            margin-bottom: 25px;
 
-        .header p {
-            color: #64748b;
-
-            font-size: 16px;
-        }
-
-        /* ================= UPLOAD MARKS BUTTON ================= */
-
-        .upload-btn {
-            display: inline-block;
-
-            background: #2563eb;
+            background: linear-gradient(
+                110deg,
+                var(--primary-dark),
+                var(--primary)
+            );
 
             color: white;
 
-            text-decoration: none;
+            border-radius: 15px;
 
-            border: none;
-
-            padding: 12px 20px;
-
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            font-size: 15px;
-
-            font-weight: 600;
-
-            transition: 0.3s;
+            box-shadow: var(--shadow);
         }
 
+
+        .header-tag {
+
+            display: inline-block;
+
+            color: var(--yellow);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .header h1 {
+
+            font-size: clamp(23px, 3vw, 32px);
+
+            line-height: 1.25;
+
+            font-weight: 800;
+        }
+
+
+        .header p {
+
+            margin-top: 5px;
+
+            color: #dbeafe;
+
+            font-size: 13px;
+        }
+
+
+        .admin-badge {
+
+            padding: 11px 16px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        /* ================= UPLOAD BUTTON ================= */
+
+        .upload-btn {
+
+            display: inline-block;
+
+            padding: 11px 16px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            transition: 0.25s;
+        }
+
+
         .upload-btn:hover {
-            background: #1d4ed8;
+
+            background: #f3bd00;
 
             transform: translateY(-2px);
         }
 
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-title {
+
+            margin: 32px 0 15px;
+        }
+
+
+        .section-title span {
+
+            color: var(--secondary);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        .section-title h2 {
+
+            color: var(--primary-dark);
+
+            font-size: 25px;
+
+            margin-top: 5px;
+        }
+
+
         /* ================= FILTER BOX ================= */
 
         .filter-box {
+
             background: white;
 
-            padding: 22px;
+            border: 1px solid var(--border);
 
-            border-radius: 10px;
+            border-radius: 14px;
+
+            padding: 22px 23px;
 
             margin-bottom: 20px;
 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow);
 
             display: flex;
 
@@ -181,7 +401,9 @@
             flex-wrap: wrap;
         }
 
+
         .filter-group {
+
             display: flex;
 
             flex-direction: column;
@@ -189,436 +411,802 @@
             gap: 7px;
         }
 
+
         .filter-group label {
-            font-size: 14px;
 
-            font-weight: 600;
+            color: var(--muted);
 
-            color: #475569;
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.3px;
         }
 
+
         .filter-group select {
+
             width: 190px;
 
             padding: 11px 12px;
 
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--border);
 
-            border-radius: 6px;
+            border-radius: 8px;
 
             background: white;
 
-            color: #334155;
+            color: #475569;
 
-            font-size: 14px;
+            font-family: inherit;
+
+            font-size: 12px;
 
             outline: none;
 
             cursor: pointer;
+
+            transition: 0.25s;
         }
+
 
         .filter-group select:focus {
-            border-color: #2563eb;
 
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: var(--secondary);
+
+            box-shadow: 0 0 0 3px rgba(22, 117, 203, 0.1);
         }
 
-        /* ================= FILTER BUTTON ================= */
 
         .filter-btn {
-            background: #2563eb;
+
+            background: var(--primary);
 
             color: white;
 
             border: none;
 
-            padding: 11px 20px;
+            padding: 11px 18px;
 
-            border-radius: 6px;
+            border-radius: 8px;
 
             cursor: pointer;
 
-            font-size: 14px;
+            font-family: inherit;
 
-            font-weight: 600;
+            font-size: 11px;
 
-            transition: 0.3s;
+            font-weight: 800;
+
+            transition: 0.25s;
         }
 
+
         .filter-btn:hover {
-            background: #1d4ed8;
+
+            background: var(--primary-dark);
 
             transform: translateY(-1px);
         }
 
+
         /* ================= SEARCH BOX ================= */
 
         .search-box {
+
             background: white;
 
-            padding: 20px;
+            border: 1px solid var(--border);
 
-            border-radius: 10px;
+            border-radius: 14px;
 
-            margin-bottom: 25px;
+            padding: 20px 23px;
 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+
+            box-shadow: var(--shadow);
         }
 
+
+        .search-label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: var(--primary-dark);
+
+            font-size: 12px;
+
+            font-weight: 800;
+        }
+
+
         .search-box input {
+
             width: 100%;
 
-            padding: 13px 15px;
+            padding: 12px 14px;
 
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--border);
 
-            border-radius: 6px;
+            border-radius: 8px;
 
             outline: none;
 
-            font-size: 15px;
+            color: #475569;
 
-            transition: 0.3s;
+            font-family: inherit;
+
+            font-size: 12px;
+
+            transition: 0.25s;
         }
+
 
         .search-box input:focus {
-            border-color: #2563eb;
 
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: var(--secondary);
+
+            box-shadow: 0 0 0 3px rgba(22, 117, 203, 0.1);
         }
 
-        /* ================= TABLE CONTAINER ================= */
 
-        .table-container {
+        /* ================= INFORMATION BOX ================= */
+
+        .info-box {
+
             background: white;
 
-            padding: 25px;
+            border: 1px solid var(--border);
 
-            border-radius: 10px;
+            border-radius: 14px;
 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
         }
 
-        .table-container h2 {
-            color: #1e293b;
 
-            font-size: 21px;
+        .box-header {
 
-            margin-bottom: 20px;
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 20px 23px;
+
+            background: linear-gradient(
+                120deg,
+                #edf6ff,
+                #ffffff
+            );
+
+            border-bottom: 1px solid var(--border);
         }
 
-        /* ================= TABLE WRAPPER ================= */
 
-        .table-wrapper {
-            width: 100%;
+        .box-header h2 {
 
-            overflow-x: auto;
+            color: var(--primary-dark);
+
+            font-size: 18px;
+
+            font-weight: 800;
         }
+
+
+        .record-count {
+
+            padding: 7px 12px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 6px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
 
         /* ================= TABLE ================= */
 
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+            padding: 20px 23px 23px;
+        }
+
+
         table {
+
             width: 100%;
 
             min-width: 1050px;
 
-            border-collapse: collapse;
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            overflow: hidden;
         }
 
+
         table th {
-            background: #f1f5f9;
 
-            color: #334155;
+            background: var(--primary);
 
-            padding: 14px 12px;
+            color: white;
+
+            padding: 13px 12px;
 
             text-align: left;
 
-            font-size: 14px;
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.4px;
 
             white-space: nowrap;
-
-            border-bottom: 2px solid #e2e8f0;
         }
 
+
         table td {
+
             padding: 13px 12px;
 
-            border-bottom: 1px solid #e2e8f0;
-
-            font-size: 14px;
+            border-bottom: 1px solid #e8eef6;
 
             color: #475569;
 
+            font-size: 11px;
+
+            vertical-align: middle;
+
             white-space: nowrap;
         }
 
-        table tbody tr:hover {
-            background: #f8fafc;
+
+        table tbody tr {
+
+            transition: 0.2s;
         }
 
-        /* ================= ADMISSION NUMBER ================= */
+
+        table tbody tr:hover {
+
+            background: #f0f7ff;
+        }
+
+
+        table tbody tr:last-child td {
+
+            border-bottom: none;
+        }
+
 
         table td:first-child {
-            font-weight: 600;
 
-            color: #1e293b;
+            color: var(--primary);
+
+            font-weight: 700;
         }
 
-        /* ================= MARKS ================= */
+
+        /* ================= MARKS HIGHLIGHT ================= */
 
         table td:nth-child(7) {
-            font-weight: bold;
 
-            color: #2563eb;
+            color: var(--primary);
+
+            font-weight: 800;
         }
+
 
         table td:nth-child(8) {
-            color: #64748b;
+
+            color: var(--muted);
+
+            font-weight: 600;
         }
+
+
+        /* ================= MARKS STATUS ================= */
+
+        .marks-badge {
+
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            background: #e0edff;
+
+            color: #1556a0;
+
+            border-radius: 6px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .dashboard-footer {
+
+            margin-top: 35px;
+
+            padding: 22px;
+
+            background: linear-gradient(
+                110deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
+            border-radius: 13px;
+
+            color: white;
+
+            text-align: center;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .dashboard-footer h3 {
+
+            font-size: 17px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .dashboard-footer p {
+
+            color: #dbeafe;
+
+            font-size: 11px;
+        }
+
 
         /* ================= SCROLLBAR ================= */
 
         .table-wrapper::-webkit-scrollbar {
+
             height: 8px;
         }
 
+
         .table-wrapper::-webkit-scrollbar-track {
-            background: #f1f5f9;
+
+            background: #edf3fa;
         }
 
+
         .table-wrapper::-webkit-scrollbar-thumb {
+
             background: #94a3b8;
 
             border-radius: 10px;
         }
 
+
         .table-wrapper::-webkit-scrollbar-thumb:hover {
+
             background: #64748b;
         }
 
+
         /* ================= RESPONSIVE ================= */
 
-        @media (max-width: 1200px) {
-
-            .filter-box {
-                align-items: flex-end;
-            }
-
-        }
-
-        /* ================= TABLET ================= */
-
-        @media (max-width: 768px) {
+        @media (max-width: 950px) {
 
             .sidebar {
-                width: 200px;
+
+                width: 220px;
             }
+
 
             .main-content {
-                margin-left: 200px;
+
+                margin-left: 220px;
 
                 padding: 20px;
             }
 
-            .header {
-                padding: 20px;
-            }
-
-            .header h1 {
-                font-size: 23px;
-            }
 
             .filter-box {
-                align-items: stretch;
 
-                flex-direction: column;
+                align-items: stretch;
             }
+
+
+            .filter-group {
+
+                flex: 1;
+            }
+
 
             .filter-group select {
+
                 width: 100%;
             }
-
-            .filter-btn {
-                width: 100%;
-            }
-
-            .upload-btn {
-                padding: 11px 16px;
-            }
-
         }
 
-        /* ================= MOBILE ================= */
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
 
             .sidebar {
+
                 position: relative;
 
                 width: 100%;
 
                 height: auto;
 
-                padding-bottom: 10px;
+                min-height: auto;
+
+                padding: 15px;
             }
 
-            .sidebar h2 {
-                margin-bottom: 15px;
+
+            .sidebar-brand {
+
+                padding-bottom: 15px;
+
+                margin-bottom: 12px;
             }
+
+
+            .sidebar-logo {
+
+                width: 48px;
+
+                height: 48px;
+
+                font-size: 23px;
+            }
+
+
+            .sidebar-brand h2 {
+
+                font-size: 16px;
+            }
+
 
             .sidebar ul {
-                display: flex;
 
-                flex-wrap: wrap;
+                display: grid;
 
-                justify-content: center;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+
+                gap: 5px;
             }
+
 
             .sidebar ul li {
-                margin: 2px;
+
+                margin: 0;
             }
+
 
             .sidebar ul li a {
-                padding: 9px 11px;
 
-                font-size: 13px;
+                font-size: 11px;
+
+                padding: 9px;
             }
 
-            .sidebar ul li a:hover {
-                padding-left: 11px;
-            }
 
             .main-content {
+
                 margin-left: 0;
 
                 padding: 15px;
             }
 
-            .header {
-                flex-direction: column;
 
-                align-items: stretch;
+            .header {
 
                 padding: 20px;
 
-                gap: 15px;
+                align-items: flex-start;
+
+                flex-direction: column;
             }
 
-            .header h1 {
-                font-size: 21px;
-            }
-
-            .header p {
-                font-size: 14px;
-            }
 
             .upload-btn {
+
                 width: 100%;
 
                 text-align: center;
             }
 
-            .table-container {
+
+            .filter-box {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
                 padding: 18px;
             }
 
-            .table-container h2 {
-                font-size: 18px;
+
+            .filter-group {
+
+                width: 100%;
             }
+
+
+            .filter-group select {
+
+                width: 100%;
+            }
+
+
+            .filter-btn {
+
+                width: 100%;
+            }
+
 
             .search-box {
-                padding: 15px;
+
+                padding: 18px;
             }
 
+
+            .box-header {
+
+                padding: 17px;
+            }
+
+
+            .table-wrapper {
+
+                padding: 15px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            .sidebar ul {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .header h1 {
+
+                font-size: 22px;
+            }
+
+
+            .admin-badge {
+
+                font-size: 10px;
+            }
+
+
+            .section-title h2 {
+
+                font-size: 21px;
+            }
+
+
+            .box-header h2 {
+
+                font-size: 15px;
+            }
+
+
+            .record-count {
+
+                font-size: 9px;
+
+                padding: 6px 9px;
+            }
         }
 
     </style>
 
 </head>
 
+
 <body>
 
 
-<!-- ================= SIDEBAR ================= -->
+<!-- ===================================================== -->
+<!-- ===================== SIDEBAR ======================= -->
+<!-- ===================================================== -->
+
 
 {% if role == 'Admin' %}
 
 <div class="sidebar">
 
-    <h2>Admin Portal</h2>
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
+
+        <h2>
+            Admin Portal
+        </h2>
+
+        <p>
+            VISION PUBLIC SCHOOL
+        </p>
+
+    </div>
+
 
     <ul>
 
         <li>
-        <a href="{% url 'student_dashboard' %}" class="active">
-            Dashboard
-        </a>
-    </li>
+            <a href="{% url 'admin_dashboard' %}">
+
+                <span class="menu-icon">⌂</span>
+
+                Dashboard
+
+            </a>
+        </li>
+
 
         <li>
             <a href="{% url 'students' %}">
+
+                <span class="menu-icon">🎓</span>
+
                 Students
+
             </a>
         </li>
+
 
         <li>
             <a href="{% url 'staff' %}">
+
+                <span class="menu-icon">👨‍🏫</span>
+
                 Staff
+
             </a>
         </li>
+
 
         <li>
             <a href="{% url 'classes' %}">
+
+                <span class="menu-icon">🏫</span>
+
                 Classes
+
             </a>
         </li>
+
 
         <li>
             <a href="{% url 'attendance' %}">
+
+                <span class="menu-icon">📋</span>
+
                 Attendance
+
             </a>
         </li>
 
-        {% comment %} <li>
+
+        <li>
             <a href="{% url 'marks' %}" class="active">
+
+                <span class="menu-icon">📊</span>
+
                 Marks
+
             </a>
-        </li> {% endcomment %}
+        </li>
+
 
         <li>
             <a href="{% url 'homework' %}">
+
+                <span class="menu-icon">📝</span>
+
                 Homework
+
             </a>
         </li>
+
 
         <li>
             <a href="{% url 'notices' %}">
+
+                <span class="menu-icon">📢</span>
+
                 Notices
+
             </a>
         </li>
+
 
         <li>
             <a href="{% url 'fees_details' %}">
+
+                <span class="menu-icon">💰</span>
+
                 Fees Details
+
             </a>
         </li>
+
 
         <li>
             <a href="{% url 'fees_status' %}">
+
+                <span class="menu-icon">💳</span>
+
                 Fees Status
+
             </a>
         </li>
+
+
+        <li>
+            <a href="{% url 'staff_registration' %}">
+
+                <span class="menu-icon">➕</span>
+
+                Add New Staff
+
+            </a>
+        </li>
+
 
         <li>
             <a href="admin_profile.html">
+
+                <span class="menu-icon">👤</span>
+
                 Profile
+
             </a>
         </li>
 
+
         <li>
             <a href="{% url 'logout' %}">
+
+                <span class="menu-icon">↪</span>
+
                 Logout
+
             </a>
         </li>
 
@@ -627,69 +1215,104 @@
 </div>
 
 {% endif %}
+
 
 
 {% if role == 'Staff' %}
 
 <div class="sidebar">
 
-    <h2>Staff Portal</h2>
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
+
+        <h2>
+            Staff Portal
+        </h2>
+
+        <p>
+            VISION PUBLIC SCHOOL
+        </p>
+
+    </div>
+
 
     <ul>
 
         <li>
+
             <a href="{% url 'staff_dashboard' %}">
+
+                <span class="menu-icon">⌂</span>
+
                 Dashboard
+
             </a>
+
         </li>
 
 
         {% if staff_role == 'Teacher' %}
 
         <li>
+
             <a href="{% url 'attendance' %}">
+
+                <span class="menu-icon">📋</span>
+
                 Attendance
+
             </a>
+
         </li>
 
         {% endif %}
 
 
         <li>
+
             <a href="{% url 'students' %}">
+
+                <span class="menu-icon">🎓</span>
+
                 Students
+
             </a>
+
         </li>
 
 
         {% if staff_role == 'Accountant' %}
 
         <li>
+
             <a href="{% url 'student_registration' %}">
+
+                <span class="menu-icon">➕</span>
+
                 Add a new Student
+
             </a>
+
         </li>
 
         {% endif %}
 
 
-        {% comment %} {% if staff_role == 'Teacher' %}
+        {% if staff_role == 'Teacher' %}
 
         <li>
+
             <a href="{% url 'marks' %}" class="active">
+
+                <span class="menu-icon">📊</span>
+
                 Marks Entry
+
             </a>
-        </li>
 
-        {% endif %} {% endcomment %}
-
-
-        {% if staff_role == 'Teacher' %}
-
-        <li>
-            <a href="{% url 'homework' %}">
-                Homework
-            </a>
         </li>
 
         {% endif %}
@@ -698,9 +1321,32 @@
         {% if staff_role == 'Teacher' %}
 
         <li>
-            <a href="{% url 'notices' %}">
-                Notices
+
+            <a href="{% url 'homework' %}">
+
+                <span class="menu-icon">📝</span>
+
+                Homework
+
             </a>
+
+        </li>
+
+        {% endif %}
+
+
+        {% if staff_role == 'Teacher' %}
+
+        <li>
+
+            <a href="{% url 'notices' %}">
+
+                <span class="menu-icon">📢</span>
+
+                Notices
+
+            </a>
+
         </li>
 
         {% endif %}
@@ -709,25 +1355,43 @@
         {% if staff_role == 'Accountant' %}
 
         <li>
+
             <a href="{% url 'fees_status' %}">
+
+                <span class="menu-icon">💳</span>
+
                 Fees Status
+
             </a>
+
         </li>
 
         {% endif %}
 
 
         <li>
+
             <a href="teacher_profile.html">
+
+                <span class="menu-icon">👤</span>
+
                 Profile
+
             </a>
+
         </li>
 
 
         <li>
+
             <a href="{% url 'logout' %}">
+
+                <span class="menu-icon">↪</span>
+
                 Logout
+
             </a>
+
         </li>
 
     </ul>
@@ -738,7 +1402,10 @@
 
 
 
-<!-- ================= MAIN CONTENT ================= -->
+<!-- ===================================================== -->
+<!-- =================== MAIN CONTENT ==================== -->
+<!-- ===================================================== -->
+
 
 <div class="main-content">
 
@@ -749,8 +1416,12 @@
 
         <div>
 
+            <span class="header-tag">
+                ACADEMIC MANAGEMENT
+            </span>
+
             <h1>
-                Marks Management
+                Marks Management 📊
             </h1>
 
             <p>
@@ -759,8 +1430,6 @@
 
         </div>
 
-
-        <!-- ================= UPLOAD MARKS ================= -->
 
         <a
             href="{% url 'upload_marks' %}"
@@ -775,6 +1444,19 @@
 
 
     <!-- ================= FILTER SECTION ================= -->
+
+    <div class="section-title">
+
+        <span>
+            MARKS FILTER
+        </span>
+
+        <h2>
+            Filter Examination Records
+        </h2>
+
+    </div>
+
 
     <div class="filter-box">
 
@@ -893,6 +1575,14 @@
 
     <div class="search-box">
 
+        <label
+            for="searchInput"
+            class="search-label">
+
+            Search Student Marks
+
+        </label>
+
         <input
             type="text"
             id="searchInput"
@@ -903,13 +1593,35 @@
 
 
 
-    <!-- ================= MARKS TABLE ================= -->
+    <!-- ================= MARKS INFORMATION ================= -->
 
-    <div class="table-container">
+    <div class="section-title">
+
+        <span>
+            ACADEMIC RECORDS
+        </span>
 
         <h2>
             Student Marks Records
         </h2>
+
+    </div>
+
+
+    <div class="info-box">
+
+
+        <div class="box-header">
+
+            <h2>
+                📊 Examination Marks
+            </h2>
+
+            <span class="record-count">
+                5 Records
+            </span>
+
+        </div>
 
 
         <div class="table-wrapper">
@@ -989,7 +1701,9 @@
                         </td>
 
                         <td>
-                            87
+                            <span class="marks-badge">
+                                87
+                            </span>
                         </td>
 
                         <td>
@@ -1029,7 +1743,9 @@
                         </td>
 
                         <td>
-                            92
+                            <span class="marks-badge">
+                                92
+                            </span>
                         </td>
 
                         <td>
@@ -1069,7 +1785,9 @@
                         </td>
 
                         <td>
-                            78
+                            <span class="marks-badge">
+                                78
+                            </span>
                         </td>
 
                         <td>
@@ -1109,7 +1827,9 @@
                         </td>
 
                         <td>
-                            91
+                            <span class="marks-badge">
+                                91
+                            </span>
                         </td>
 
                         <td>
@@ -1149,7 +1869,9 @@
                         </td>
 
                         <td>
-                            67
+                            <span class="marks-badge">
+                                67
+                            </span>
                         </td>
 
                         <td>
@@ -1168,11 +1890,30 @@
     </div>
 
 
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="dashboard-footer">
+
+        <h3>
+            VISION PUBLIC SCHOOL
+        </h3>
+
+        <p>
+            School Management & Information Portal
+        </p>
+
+    </div>
+
+
 </div>
 
 
 
-<!-- ================= JAVASCRIPT ================= -->
+<!-- ===================================================== -->
+<!-- ==================== JAVASCRIPT ===================== -->
+<!-- ===================================================== -->
+
 
 <script>
 

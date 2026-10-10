@@ -1,79 +1,1312 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    {% load static %}
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Guardian Dashboard</title>
-    {% load static %}
+    <title>Vision Public School | Guardian Dashboard</title>
 
-    <link rel="stylesheet" href="{% static 'css/guardian_dashboard.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* ================= ROOT ================= */
+
+        :root {
+            --primary: #06478b;
+            --primary-dark: #052e60;
+            --secondary: #1675cb;
+            --yellow: #ffcc24;
+
+            --light: #f3f7fc;
+            --text: #172b4d;
+            --muted: #64748b;
+            --border: #dce7f3;
+            --white: #ffffff;
+
+            --green: #16a34a;
+            --red: #dc2626;
+            --orange: #ea580c;
+
+            --shadow: 0 8px 28px rgba(5, 46, 96, 0.08);
+        }
+
+
+        /* ================= GLOBAL ================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 255px;
+            height: 100vh;
+
+            background: linear-gradient(
+                180deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
+            color: white;
+
+            padding: 25px 16px;
+
+            overflow-y: auto;
+
+            box-shadow: 5px 0 20px rgba(5, 46, 96, 0.12);
+
+            z-index: 1000;
+        }
+
+
+        /* ================= SIDEBAR BRAND ================= */
+
+        .sidebar-brand {
+            text-align: center;
+
+            padding-bottom: 25px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+
+            margin-bottom: 20px;
+        }
+
+
+        .sidebar-logo {
+            width: 58px;
+            height: 58px;
+
+            margin: 0 auto 10px;
+
+            display: grid;
+            place-items: center;
+
+            background: white;
+
+            color: var(--primary);
+
+            border: 4px solid var(--yellow);
+
+            border-radius: 50%;
+
+            font-size: 28px;
+            font-weight: 800;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+
+        .sidebar-brand h2 {
+            font-size: 19px;
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .sidebar-brand p {
+            margin-top: 3px;
+
+            font-size: 10px;
+
+            color: #dbeafe;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* ================= SIDEBAR MENU ================= */
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin: 6px 0;
+        }
+
+
+        .sidebar ul li a {
+            display: flex;
+
+            align-items: center;
+
+            padding: 11px 13px;
+
+            border-radius: 8px;
+
+            color: #e5efff;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: 0.25s;
+        }
+
+
+        .sidebar ul li a:hover {
+            background: rgba(255,255,255,0.12);
+
+            color: white;
+
+            transform: translateX(3px);
+        }
+
+
+        .sidebar ul li a.active {
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            font-weight: 800;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+        }
+
+
+        .menu-icon {
+            width: 27px;
+
+            font-size: 16px;
+        }
+
+
+        /* ================= MAIN CONTENT ================= */
+
+        .main {
+            margin-left: 255px;
+
+            min-height: 100vh;
+
+            padding: 28px;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 25px 28px;
+
+            margin-bottom: 25px;
+
+            background: linear-gradient(
+                110deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
+            color: white;
+
+            border-radius: 15px;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .header-tag {
+            display: inline-block;
+
+            color: var(--yellow);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .header h1 {
+            font-size: clamp(23px, 3vw, 32px);
+
+            line-height: 1.25;
+
+            font-weight: 800;
+        }
+
+
+        .header p {
+            margin-top: 5px;
+
+            color: #dbeafe;
+
+            font-size: 13px;
+        }
+
+
+        /* ================= GUARDIAN INFO ================= */
+
+        .guardian-info {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 10px 14px;
+
+            background: rgba(255,255,255,0.1);
+
+            border: 1px solid rgba(255,255,255,0.15);
+
+            border-radius: 10px;
+
+            min-width: 210px;
+        }
+
+
+        .guardian-info strong {
+            display: block;
+
+            color: white;
+
+            font-size: 12px;
+        }
+
+
+        .guardian-info small {
+            display: block;
+
+            margin-top: 2px;
+
+            color: #dbeafe;
+
+            font-size: 9px;
+        }
+
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 50%;
+
+            font-size: 17px;
+
+            font-weight: 800;
+        }
+
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-title {
+            margin: 32px 0 15px;
+        }
+
+
+        .section-title span {
+            color: var(--secondary);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        .section-title h2 {
+            color: var(--primary-dark);
+
+            font-size: 25px;
+
+            margin-top: 5px;
+        }
+
+
+        /* ================= CHILD INFORMATION ================= */
+
+        .child-card {
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 20px 23px;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .child-avatar {
+            width: 60px;
+            height: 60px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            background: #eaf3ff;
+
+            border-radius: 12px;
+
+            font-size: 28px;
+        }
+
+
+        .child-details {
+            flex: 1;
+        }
+
+
+        .child-details h2 {
+            color: var(--primary-dark);
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            margin-bottom: 4px;
+        }
+
+
+        .child-details p {
+            color: var(--muted);
+
+            font-size: 11px;
+
+            margin-top: 2px;
+        }
+
+
+        .child-details strong {
+            color: var(--primary);
+        }
+
+
+        .view-profile {
+            display: inline-block;
+
+            padding: 9px 14px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 7px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            transition: 0.25s;
+        }
+
+
+        .view-profile:hover {
+            background: #f3bd00;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ================= STAT CARDS ================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+
+        .stat-card {
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            box-shadow: var(--shadow);
+
+            transition: 0.25s;
+
+            overflow: hidden;
+        }
+
+
+        .stat-card::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 4px;
+
+            background: var(--secondary);
+        }
+
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: 0 14px 32px rgba(5, 46, 96, 0.12);
+        }
+
+
+        .stat-icon {
+            width: 45px;
+            height: 45px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            background: #eaf3ff;
+
+            border-radius: 11px;
+
+            font-size: 21px;
+        }
+
+
+        .stat-card h3 {
+            color: var(--muted);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            margin-bottom: 3px;
+        }
+
+
+        .stat-card h1 {
+            color: var(--primary-dark);
+
+            font-size: 23px;
+
+            line-height: 1.3;
+
+            font-weight: 800;
+        }
+
+
+        .stat-card h1.paid {
+            color: var(--green);
+        }
+
+
+        .stat-card p {
+            color: var(--muted);
+
+            font-size: 9px;
+
+            margin-top: 2px;
+        }
+
+
+        /* ================= INFORMATION SECTION ================= */
+
+        .content-section {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 20px;
+        }
+
+
+        .info-box {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .info-box.full-width {
+            grid-column: 1 / -1;
+        }
+
+
+        .box-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 20px 23px;
+
+            background: linear-gradient(
+                120deg,
+                #edf6ff,
+                #ffffff
+            );
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .box-header h2 {
+            color: var(--primary-dark);
+
+            font-size: 18px;
+
+            font-weight: 800;
+        }
+
+
+        .box-header a {
+            padding: 7px 12px;
+
+            background: var(--yellow);
+
+            color: var(--primary-dark);
+
+            border-radius: 6px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        .box-header a:hover {
+            background: #f3bd00;
+        }
+
+
+        /* ================= TABLE ================= */
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+
+            padding: 20px 23px 23px;
+        }
+
+
+        table {
+            width: 100%;
+
+            min-width: 600px;
+
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            overflow: hidden;
+        }
+
+
+        table th {
+            background: var(--primary);
+
+            color: white;
+
+            padding: 13px 12px;
+
+            text-align: left;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.4px;
+
+            white-space: nowrap;
+        }
+
+
+        table td {
+            padding: 13px 12px;
+
+            border-bottom: 1px solid #e8eef6;
+
+            color: #475569;
+
+            font-size: 11px;
+
+            vertical-align: middle;
+        }
+
+
+        table tbody tr {
+            transition: 0.2s;
+        }
+
+
+        table tbody tr:hover {
+            background: #f0f7ff;
+        }
+
+
+        table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        table td:first-child {
+            color: var(--primary);
+
+            font-weight: 700;
+        }
+
+
+        /* ================= STATUS BADGES ================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 6px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        .status.active,
+        .status.paid {
+            background: #dcfce7;
+
+            color: #15803d;
+        }
+
+
+        .status.pending {
+            background: #fff7d6;
+
+            color: #9a6700;
+        }
+
+
+        .status.grade {
+            background: #e0edff;
+
+            color: #1556a0;
+        }
+
+
+        /* ================= NOTICE LIST ================= */
+
+        .notice-list {
+            padding: 8px 23px 18px;
+        }
+
+
+        .notice {
+            display: flex;
+
+            gap: 13px;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid #e8eef6;
+        }
+
+
+        .notice:last-child {
+            border-bottom: none;
+        }
+
+
+        .notice-icon {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            background: #eaf3ff;
+
+            border-radius: 9px;
+
+            font-size: 17px;
+        }
+
+
+        .notice h3 {
+            color: var(--primary-dark);
+
+            font-size: 12px;
+
+            font-weight: 800;
+        }
+
+
+        .notice p {
+            margin-top: 3px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+        }
+
+
+        .notice small {
+            display: block;
+
+            margin-top: 4px;
+
+            color: var(--secondary);
+
+            font-size: 9px;
+
+            font-weight: 700;
+        }
+
+
+        .empty {
+            padding: 25px 0;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            text-align: center;
+        }
+
+
+        /* ================= QUICK ACCESS ================= */
+
+        .quick-section {
+            margin-top: 32px;
+        }
+
+
+        .quick-section > h2 {
+            color: var(--primary-dark);
+
+            font-size: 20px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .quick-links {
+            display: grid;
+
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+
+            gap: 18px;
+        }
+
+
+        .quick-card {
+            position: relative;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            box-shadow: var(--shadow);
+
+            transition: 0.25s;
+
+            overflow: hidden;
+        }
+
+
+        .quick-card::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 4px;
+
+            background: var(--secondary);
+        }
+
+
+        .quick-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: 0 14px 32px rgba(5, 46, 96, 0.12);
+        }
+
+
+        .quick-card > span {
+            width: 45px;
+            height: 45px;
+
+            display: grid;
+            place-items: center;
+
+            background: #eaf3ff;
+
+            border-radius: 11px;
+
+            font-size: 21px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .quick-card strong {
+            color: var(--primary-dark);
+
+            font-size: 13px;
+        }
+
+
+        .quick-card small {
+            color: var(--muted);
+
+            font-size: 10px;
+
+            margin-top: 3px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .dashboard-footer {
+            margin-top: 35px;
+
+            padding: 22px;
+
+            background: linear-gradient(
+                110deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+
+            border-radius: 13px;
+
+            color: white;
+
+            text-align: center;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .dashboard-footer h3 {
+            font-size: 17px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .dashboard-footer p {
+            color: #dbeafe;
+
+            font-size: 11px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1200px) {
+
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .quick-links {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 950px) {
+
+            .sidebar {
+                width: 220px;
+            }
+
+            .main {
+                margin-left: 220px;
+
+                padding: 20px;
+            }
+
+            .content-section {
+                grid-template-columns: 1fr;
+            }
+
+            .info-box.full-width {
+                grid-column: auto;
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                min-height: auto;
+
+                padding: 15px;
+            }
+
+
+            .sidebar-brand {
+                padding-bottom: 15px;
+
+                margin-bottom: 12px;
+            }
+
+
+            .sidebar-logo {
+                width: 48px;
+                height: 48px;
+
+                font-size: 23px;
+            }
+
+
+            .sidebar-brand h2 {
+                font-size: 16px;
+            }
+
+
+            .sidebar ul {
+                display: grid;
+
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+
+                gap: 5px;
+            }
+
+
+            .sidebar ul li {
+                margin: 0;
+            }
+
+
+            .sidebar ul li a {
+                font-size: 11px;
+
+                padding: 9px;
+            }
+
+
+            .main {
+                margin-left: 0;
+
+                padding: 15px;
+            }
+
+
+            .header {
+                padding: 20px;
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .guardian-info {
+                width: 100%;
+            }
+
+
+            .child-card {
+                align-items: flex-start;
+
+                flex-wrap: wrap;
+            }
+
+
+            .view-profile {
+                margin-left: 78px;
+            }
+
+
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+
+                gap: 12px;
+            }
+
+
+            .stat-card {
+                padding: 16px;
+            }
+
+
+            .quick-links {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+
+                gap: 12px;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .sidebar ul {
+                grid-template-columns: 1fr;
+            }
+
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+
+            .guardian-info {
+                min-width: 0;
+            }
+
+
+            .child-card {
+                flex-direction: column;
+            }
+
+
+            .view-profile {
+                margin-left: 0;
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+
+            .box-header {
+                padding: 16px;
+            }
+
+
+            .box-header h2 {
+                font-size: 15px;
+            }
+
+
+            .table-wrapper {
+                padding: 15px;
+            }
+
+
+            .section-title h2 {
+                font-size: 21px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
+
 <body>
+
 
 <!-- ================= SIDEBAR ================= -->
 
 <div class="sidebar">
 
-    <div class="logo">
-        <span>🏫</span>
-        School Management
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+            V
+        </div>
+
+        <h2>Guardian Portal</h2>
+
+        <p>VISION PUBLIC SCHOOL</p>
+
     </div>
 
-    <ul class="menu">
 
-        <li class="active">
-            <a href="{% url 'guardian_dashboard' %}">
-                🏠 <span>Dashboard</span>
+    <ul>
+
+        <li>
+            <a href="{% url 'guardian_dashboard' %}" class="active">
+                <span class="menu-icon">⌂</span>
+                Dashboard
             </a>
         </li>
+
 
         <li>
             <a href="{% url 'student_dashboard' %}">
-                👨‍🎓 <span>My Child</span>
+                <span class="menu-icon">🎓</span>
+                My Child
             </a>
         </li>
 
+
         <li>
-        <a href="{% url 'attendance' %}">
-            Attendance
-        </a>
-    </li>
+            <a href="{% url 'attendance' %}">
+                <span class="menu-icon">📋</span>
+                Attendance
+            </a>
+        </li>
 
-    {% comment %} <li>
-        <a href="{% url 'marks' %}">
-            Marks
-        </a>
-    </li> {% endcomment %}
 
-    <li>
-        <a href="{% url 'homework' %}">
-            Homework
-        </a>
-    </li>
+        <li>
+            <a href="{% url 'marks' %}">
+                <span class="menu-icon">📊</span>
+                Marks
+            </a>
+        </li>
 
-    <li>
-        <a href="{% url 'notices' %}">
-            Notices
-        </a>
-    </li>
 
-    <li>
-        <a href="{% url 'fees_status' %}">
-            Fees Status
-        </a>
-    </li>
+        <li>
+            <a href="{% url 'homework' %}">
+                <span class="menu-icon">📝</span>
+                Homework
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'notices' %}">
+                <span class="menu-icon">📢</span>
+                Notices
+            </a>
+        </li>
+
+
+        <li>
+            <a href="{% url 'fees_status' %}">
+                <span class="menu-icon">💳</span>
+                Fees Status
+            </a>
+        </li>
+
 
         <li>
             <a href="#">
-                👤 <span>Profile</span>
+                <span class="menu-icon">👤</span>
+                Profile
             </a>
         </li>
 
-        <li class="logout">
+
+        <li>
             <a href="{% url 'logout' %}">
-                🚪 <span>Logout</span>
+                <span class="menu-icon">↪</span>
+                Logout
             </a>
         </li>
 
@@ -86,353 +1319,511 @@
 
 <div class="main">
 
-    <!-- TOP NAVBAR -->
 
-    <header>
+    <!-- ================= HEADER ================= -->
 
-        <div class="header-left">
-            <h2>Guardian Dashboard</h2>
-            <p>School Management System</p>
+    <div class="header">
+
+        <div>
+
+            <span class="header-tag">
+                GUARDIAN PORTAL
+            </span>
+
+            <h1>
+                Welcome,
+                {{ guardian.name|default:"Guardian" }} 👋
+            </h1>
+
+            <p>
+                Vision Public School — School Management System
+            </p>
+
         </div>
+
 
         <div class="guardian-info">
 
             <div class="avatar">
-                {{ guardian.name|default:"G" |slice:":1"|upper }}
+                {{ guardian.name|default:"G"|slice:":1"|upper }}
             </div>
 
             <div>
+
                 <strong>
                     {{ guardian.name|default:"Guardian" }}
                 </strong>
 
-                <small>Guardian{{ guardian.relation }} of {{student.name}}</small>
+                <small>
+                    Guardian{{ guardian.relation }} of
+                    {{ student.name|default:"Student" }}
+                </small>
+
             </div>
 
         </div>
 
-    </header>
+    </div>
 
 
-    <!-- PAGE CONTENT -->
+    <!-- ================= CHILD INFORMATION ================= -->
 
-    <section class="content">
+    <div class="section-title">
 
-        <div class="welcome">
+        <span>
+            STUDENT INFORMATION
+        </span>
+
+        <h2>
+            My Child
+        </h2>
+
+    </div>
+
+
+    <div class="child-card">
+
+        <div class="child-avatar">
+            👨‍🎓
+        </div>
+
+
+        <div class="child-details">
+
+            <h2>
+                {{ student.name|default:"Student Name" }}
+            </h2>
+
+            <p>
+                Admission No:
+                <strong>
+                    {{ student.admission_number|default:"STD001" }}
+                </strong>
+            </p>
+
+            <p>
+
+                Class:
+                <strong>
+                    {{ student.class_field|default:"10" }}
+                </strong>
+
+                &nbsp;&nbsp;
+
+                Section:
+                <strong>
+                    {{ student.section|default:"A" }}
+                </strong>
+
+            </p>
+
+        </div>
+
+
+        <a href="#" class="view-profile">
+            View Profile
+        </a>
+
+    </div>
+
+
+    <!-- ================= SUMMARY ================= -->
+
+    <div class="section-title">
+
+        <span>
+            ACADEMIC OVERVIEW
+        </span>
+
+        <h2>
+            Dashboard Summary
+        </h2>
+
+    </div>
+
+
+    <div class="stats">
+
+
+        <!-- ATTENDANCE -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📅
+            </div>
 
             <div>
+
+                <h3>
+                    Attendance
+                </h3>
+
                 <h1>
-                    Welcome,
-                    {{ guardian.name|default:"Guardian" }} 👋
+                    {{ attendance_percentage|default:"92" }}%
                 </h1>
 
                 <p>
-                    Here's an overview of your child's academic progress.
+                    Overall Attendance
                 </p>
+
             </div>
 
         </div>
 
 
-        <!-- ================= CHILD INFO ================= -->
+        <!-- MARKS -->
 
-        <div class="child-card">
+        <div class="stat-card">
 
-            <div class="child-avatar">
-                👨‍🎓
+            <div class="stat-icon">
+                📊
             </div>
 
-            <div class="child-details">
+            <div>
+
+                <h3>
+                    Average Marks
+                </h3>
+
+                <h1>
+                    {{ average_marks|default:"78" }}%
+                </h1>
+
+                <p>
+                    Academic Performance
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FEES -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                💰
+            </div>
+
+            <div>
+
+                <h3>
+                    Fees Status
+                </h3>
+
+                <h1 class="paid">
+                    {{ fee_status|default:"Paid" }}
+                </h1>
+
+                <p>
+                    Current Fee Status
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- HOMEWORK -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📝
+            </div>
+
+            <div>
+
+                <h3>
+                    Homework
+                </h3>
+
+                <h1>
+                    {{ pending_homework|default:"3" }}
+                </h1>
+
+                <p>
+                    Pending Homework
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= LOWER INFORMATION ================= -->
+
+    <div class="section-title">
+
+        <span>
+            ACADEMIC & SCHOOL INFORMATION
+        </span>
+
+        <h2>
+            Student Updates
+        </h2>
+
+    </div>
+
+
+    <div class="content-section">
+
+
+        <!-- ================= HOMEWORK ================= -->
+
+        <div class="info-box">
+
+            <div class="box-header">
 
                 <h2>
-                    {{ student.name|default:"Student Name" }}
+                    📝 Recent Homework
                 </h2>
 
-                <p>
-                    Admission No:
-                    <strong>
-                        {{ student.admission_number|default:"STD001" }}
-                    </strong>
-                </p>
-
-                <p>
-                    Class:
-                    <strong>
-                        {{ student.class_field|default:"10" }}
-                    </strong>
-
-                    &nbsp;&nbsp;
-
-                    Section:
-                    <strong>
-                        {{ student.section|default:"A" }}
-                    </strong>
-                </p>
+                <a href="{% url 'homework' %}">
+                    View All
+                </a>
 
             </div>
 
-            <a href="#" class="view-profile">
-                View Profile
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Subject</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for hw in homework_details %}
+
+                        <tr>
+
+                            <td>
+                                {{ hw.subject }}
+                            </td>
+
+                            <td>
+                                {{ hw.description }}
+                            </td>
+
+                            <td>
+                                {{ hw.post_by_date }}
+                            </td>
+
+                            <td>
+
+                                <span class="status pending">
+                                    Pending
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="4">
+                                No homework available.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= NOTICES ================= -->
+
+        <div class="info-box">
+
+            <div class="box-header">
+
+                <h2>
+                    📢 Latest Notices
+                </h2>
+
+                <a href="{% url 'notices' %}">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="notice-list">
+
+                {% for notice in notices %}
+
+                <div class="notice">
+
+                    <div class="notice-icon">
+                        📢
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            {{ notice.title|default:"School Notice" }}
+                        </h3>
+
+                        <p>
+                            {{ notice.description|truncatechars:80 }}
+                        </p>
+
+                        <small>
+                            {{ notice.post_date }}
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                {% empty %}
+
+                <div class="empty">
+                    No notices available.
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= QUICK ACCESS ================= -->
+
+    <div class="quick-section">
+
+        <h2>
+            Quick Access
+        </h2>
+
+
+        <div class="quick-links">
+
+
+            <a href="{% url 'attendance' %}" class="quick-card">
+
+                <span>
+                    📅
+                </span>
+
+                <strong>
+                    Attendance
+                </strong>
+
+                <small>
+                    Check attendance
+                </small>
+
+            </a>
+
+
+            <a href="#" class="quick-card">
+
+                <span>
+                    📊
+                </span>
+
+                <strong>
+                    Report Card
+                </strong>
+
+                <small>
+                    View marks
+                </small>
+
+            </a>
+
+
+            <a href="{% url 'fees_status' %}" class="quick-card">
+
+                <span>
+                    💰
+                </span>
+
+                <strong>
+                    Fees
+                </strong>
+
+                <small>
+                    Fee details
+                </small>
+
+            </a>
+
+
+            <a href="#" class="quick-card">
+
+                <span>
+                    🕐
+                </span>
+
+                <strong>
+                    Timetable
+                </strong>
+
+                <small>
+                    Class schedule
+                </small>
+
             </a>
 
         </div>
 
+    </div>
 
-        <!-- ================= STAT CARDS ================= -->
 
-        <div class="stats">
+    <!-- ================= FOOTER ================= -->
 
-            <div class="stat-card">
+    <div class="dashboard-footer">
 
-                <div class="stat-icon">
-                    📅
-                </div>
+        <h3>
+            VISION PUBLIC SCHOOL
+        </h3>
 
-                <div>
-                    <h3>Attendance</h3>
+        <p>
+            School Management & Information Portal
+        </p>
 
-                    <h1>
-                        {{ attendance_percentage|default:"92" }}%
-                    </h1>
+    </div>
 
-                    <p>Overall Attendance</p>
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    📊
-                </div>
-
-                <div>
-                    <h3>Average Marks</h3>
-
-                    <h1>
-                        {{ average_marks|default:"78" }}%
-                    </h1>
-
-                    <p>Academic Performance</p>
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    💰
-                </div>
-
-                <div>
-                    <h3>Fees Status</h3>
-
-                    <h1 class="paid">
-                        {{ fee_status|default:"Paid" }}
-                    </h1>
-
-                    <p>Current Fee Status</p>
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    📝
-                </div>
-
-                <div>
-                    <h3>Homework</h3>
-
-                    <h1>
-                        {{ pending_homework|default:"3" }}
-                    </h1>
-
-                    <p>Pending Homework</p>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- ================= LOWER SECTION ================= -->
-
-        <div class="dashboard-grid">
-
-
-            <!-- HOMEWORK -->
-
-            <div class="dashboard-card">
-
-                <div class="card-header">
-
-                    <h2>📝 Recent Homework</h2>
-
-                    <a href="#">View All</a>
-
-                </div>
-
-                <div class="table-container">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-                                <th>Subject</th>
-                                <th>Description</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            {% for hw in homework_details %}
-
-                            <tr>
-
-                                <td>
-                                    {{ hw.subject }}
-                                </td>
-
-                                <td>
-                                    {{ hw.description }}
-                                </td>
-
-                                <td>
-                                    {{ hw.post_by_date }}
-                                </td>
-
-                                <td>
-                                    <span class="status pending">
-                                        Pending
-                                    </span>
-                                </td>
-
-                            </tr>
-
-                            {% empty %}
-
-                            <tr>
-                                <td colspan="4">
-                                    No homework available.
-                                </td>
-                            </tr>
-
-                            {% endfor %}
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-
-            <!-- NOTICES -->
-
-            <div class="dashboard-card">
-
-                <div class="card-header">
-
-                    <h2>📢 Latest Notices</h2>
-
-                    <a href="#">View All</a>
-
-                </div>
-
-
-                <div class="notice-list">
-
-                    {% for notice in notices %}
-
-                    <div class="notice">
-
-                        <div class="notice-icon">
-                            📢
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                {{ notice.title|default:"School Notice" }}
-                            </h3>
-
-                            <p>
-                                {{ notice.description|truncatechars:80 }}
-                            </p>
-
-                            <small>
-                                {{ notice.post_date }}
-                            </small>
-
-                        </div>
-
-                    </div>
-
-                    {% empty %}
-
-                    <div class="empty">
-                        No notices available.
-                    </div>
-
-                    {% endfor %}
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- ================= QUICK LINKS ================= -->
-
-        <div class="quick-section">
-
-            <h2>Quick Access</h2>
-
-            <div class="quick-links">
-
-                <a href="#" class="quick-card">
-                    <span>📅</span>
-                    <strong>Attendance</strong>
-                    <small>Check attendance</small>
-                </a>
-
-                <a href="#" class="quick-card">
-                    <span>📊</span>
-                    <strong>Report Card</strong>
-                    <small>View marks</small>
-                </a>
-
-                <a href="#" class="quick-card">
-                    <span>💰</span>
-                    <strong>Fees</strong>
-                    <small>Fee details</small>
-                </a>
-
-                <a href="#" class="quick-card">
-                    <span>🕐</span>
-                    <strong>Timetable</strong>
-                    <small>Class schedule</small>
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
 
 </div>
 
+
 </body>
+
 </html>
 ```
