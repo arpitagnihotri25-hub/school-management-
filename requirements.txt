@@ -1,4 +1,5 @@
 Django==6.0.5
-gunicorn
-whitenoise
-mysqlclient
+gunicorn==26.2.0
+whitenoise==6.12.0
+mysqlclient==2.2.8
+python-dotenv
