@@ -105,37 +105,37 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': os.getenv('TIDB_DB_NAME', 'vision-school-db'),
-#         'USER': os.getenv('TIDB_USER'),
-#         'PASSWORD': os.getenv('TIDB_PASSWORD'),
-#         'HOST': os.getenv('TIDB_HOST'),
-#         'PORT': os.getenv('TIDB_PORT', '4000'),
-#         'OPTIONS': {
-#             'charset': 'utf8mb4',
-#             'ssl_mode': 'VERIFY_IDENTITY',
-#             'ssl': {
-#                 'ca': os.getenv('CA_PATH'),
-#             },
-#         },
-#     }
-# }
-
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'school_Management',   
-        'USER': 'root',                                  
-        'PASSWORD': 'Arpit25@',                   
-        'HOST': 'localhost',                           
-        'PORT': '3306',                
+        'NAME': os.getenv('TIDB_DB_NAME', 'vision-school-db'),
+        'USER': os.getenv('TIDB_USER'),
+        'PASSWORD': os.getenv('TIDB_PASSWORD'),
+        'HOST': os.getenv('TIDB_HOST'),
+        'PORT': os.getenv('TIDB_PORT', '4000'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'ssl_mode': 'VERIFY_IDENTITY',
+            'ssl': {
+                'ca': os.getenv('CA_PATH'),
+            },
+        },
     }
-
 }
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'school_Management',   
+#         'USER': 'root',                                  
+#         'PASSWORD': 'Arpit25@',                   
+#         'HOST': 'localhost',                           
+#         'PORT': '3306',                
+#     }
+
+# }
 
 
 # Password validation
