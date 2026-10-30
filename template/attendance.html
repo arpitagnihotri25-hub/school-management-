@@ -1079,17 +1079,17 @@
 
 
     <li>
-        <a href="{% url 'students' %}">
-            <span class="menu-icon">🎓</span>
-            Students
+        <a href="{% url 'staff' %}">
+            <span class="menu-icon">👨‍🏫</span>
+            Staff
         </a>
     </li>
 
 
     <li>
-        <a href="{% url 'staff' %}">
-            <span class="menu-icon">👨‍🏫</span>
-            Staff
+        <a href="{% url 'students' %}">
+            <span class="menu-icon">🎓</span>
+            Students
         </a>
     </li>
 
@@ -1151,6 +1151,14 @@
 
 
     <li>
+            <a href="{% url 'staff_registration' %}">
+                <span class="menu-icon">➕</span>
+                Add New Staff
+            </a>
+        </li>
+
+
+    <li>
         <a href="admin_profile.html">
             <span class="menu-icon">👤</span>
             Profile
@@ -1166,7 +1174,6 @@
     </li>
 
 </ul>
-```
 
 </div>
 
@@ -1180,7 +1187,7 @@
 
 <div class="sidebar">
 
-```
+
 <div class="sidebar-brand">
 
     <div class="sidebar-logo">
@@ -1204,6 +1211,14 @@
     </li>
 
 
+    <li>
+        <a href="{% url 'students' %}">
+            <span class="menu-icon">🎓</span>
+            Students
+        </a>
+    </li>
+
+
     {% if staff_role == 'Teacher' %}
 
     <li>
@@ -1214,14 +1229,6 @@
     </li>
 
     {% endif %}
-
-
-    <li>
-        <a href="{% url 'students' %}">
-            <span class="menu-icon">🎓</span>
-            Students
-        </a>
-    </li>
 
 
     {% if staff_role == 'Accountant' %}
@@ -1241,7 +1248,7 @@
     <li>
         <a href="{% url 'marks' %}">
             <span class="menu-icon">📊</span>
-            Marks Entry
+            Marks 
         </a>
     </li>
 
@@ -1300,7 +1307,6 @@
     </li>
 
 </ul>
-```
 
 </div>
 

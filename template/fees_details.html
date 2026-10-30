@@ -1086,16 +1086,12 @@
         </li>
 
 
-        {% comment %}
-
         <li>
             <a href="{% url 'marks' %}">
                 <span class="menu-icon">📊</span>
                 Marks
             </a>
         </li>
-
-        {% endcomment %}
 
 
         <li>
@@ -1128,6 +1124,14 @@
                 Fees Status
             </a>
         </li>
+
+
+        <li>
+        <a href="{% url 'staff_registration' %}">
+            <span class="menu-icon">➕</span>
+            Add New Staff
+        </a>
+    </li>
 
 
         <li>
@@ -1214,8 +1218,6 @@
         {% endif %}
 
 
-        {% comment %}
-
         {% if staff_role == 'Teacher' %}
 
         <li>
@@ -1226,8 +1228,6 @@
         </li>
 
         {% endif %}
-
-        {% endcomment %}
 
 
         {% if staff_role == 'Teacher' %}

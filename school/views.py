@@ -19,7 +19,7 @@ from feesdetails.forms import fees__details
 from feesdetails.models import FeeDetails
 from classteacher.forms import ClassteacherForm
 from classteacher.models import Classteacher
-from classteacher.models import Classteacher
+from marks.models import Marks
 from attendance.models import Attendance
 from homework.models import Homework
 from guardian.models import Guardian
@@ -295,14 +295,15 @@ def mark_attendance(request):
     return render(request,"mark_attendance.html")
 
 def marks(request):
+    marks_records=Marks.objects.all()
     userid = request.session.get('userid')
     if(userid.startswith("STF")):
         staff =request.user.staff
         staff_role=staff.role
-        return render(request,"marks.html",{'role':'Staff','staff_role':staff_role})
+        return render(request,"marks.html",{'role':'Staff','staff_role':staff_role,'marks_records':marks_records})
     elif(userid.startswith("ADM")):
         admin =request.user.school_admin
-        return render(request,"marks.html",{'role':'Admin'})
+        return render(request,"marks.html",{'role':'Admin','marks_records':marks_records})
     return render(request,"marks.html")
 
 def upload_marks(request):
@@ -310,7 +311,27 @@ def upload_marks(request):
     if(userid.startswith("STF")):
         staff =request.user.staff
         staff_role=staff.role
-        return render(request,"upload_marks.html",{'role':'Staff','staff_role':staff_role})
+        students = Student.objects.all().order_by('admission_no')
+        if request.method == "POST":
+            maximum_marks=request.POST.get('maximum_marks')
+            term=request.POST.get('exam_type')
+            for key, score in request.POST.items():
+                if key.startswith("marks_"):
+                    admission_no = key.replace("marks_", "")
+                    student = Student.objects.get(admission_no=admission_no)
+                    Marks.objects.create(
+                admission_no=student,
+                student_name=student.name,
+                class_field=student.class_field,
+                section=student.section,
+                subject=staff.subject,
+                term=term,
+                total_marks=maximum_marks,
+                marks_obt=score
+            )
+        return render(request,"upload_marks.html",{'role':'Staff',
+                                                      'staff_role':staff_role,
+                                                      'students':students})
     return render(request,"upload_marks.html")
 
 def homework_function(request):

@@ -1080,22 +1080,22 @@
 
 
         <li>
-            <a href="{% url 'students' %}">
+            <a href="{% url 'staff' %}">
 
-                <span class="menu-icon">🎓</span>
+                <span class="menu-icon">👨‍🏫</span>
 
-                Students
+                Staff
 
             </a>
         </li>
 
 
         <li>
-            <a href="{% url 'staff' %}">
+            <a href="{% url 'students' %}">
 
-                <span class="menu-icon">👨‍🏫</span>
+                <span class="menu-icon">🎓</span>
 
-                Staff
+                Students
 
             </a>
         </li>
@@ -1254,6 +1254,19 @@
         </li>
 
 
+        <li>
+
+            <a href="{% url 'students' %}">
+
+                <span class="menu-icon">🎓</span>
+
+                Students
+
+            </a>
+
+        </li>
+
+
         {% if staff_role == 'Teacher' %}
 
         <li>
@@ -1269,19 +1282,6 @@
         </li>
 
         {% endif %}
-
-
-        <li>
-
-            <a href="{% url 'students' %}">
-
-                <span class="menu-icon">🎓</span>
-
-                Students
-
-            </a>
-
-        </li>
 
 
         {% if staff_role == 'Accountant' %}
@@ -1309,7 +1309,7 @@
 
                 <span class="menu-icon">📊</span>
 
-                Marks Entry
+                Marks
 
             </a>
 
@@ -1430,7 +1430,7 @@
 
         </div>
 
-
+        {% if role == 'Staff' %}
         <a
             href="{% url 'upload_marks' %}"
             class="upload-btn">
@@ -1438,6 +1438,7 @@
             + Upload Marks
 
         </a>
+        {% endif %}
 
     </div>
 
@@ -1671,215 +1672,46 @@
 
                 <tbody>
 
-
-                    <!-- RECORD 1 -->
-
+                    {% for record in marks_records %}
                     <tr>
 
                         <td>
-                            STD001
+                            {{ record.admission_no.admission_no }}
                         </td>
 
                         <td>
-                            Aarav Sharma
+                            {{ record.student_name }}
                         </td>
 
                         <td>
-                            BCA 1st Year
+                            {{ record.class_field }}
                         </td>
 
                         <td>
-                            A
+                            {{ record.section }}
                         </td>
 
                         <td>
-                            Python
+                            {{ record.subject }}
                         </td>
 
                         <td>
-                            Internal 1
+                            {{ record.term }}
                         </td>
 
                         <td>
                             <span class="marks-badge">
-                                87
+                                {{ record.marks_obt }}
                             </span>
                         </td>
 
                         <td>
-                            100
+                            {{ record.total_marks }}
                         </td>
 
                     </tr>
 
-
-
-                    <!-- RECORD 2 -->
-
-                    <tr>
-
-                        <td>
-                            STD002
-                        </td>
-
-                        <td>
-                            Ananya Singh
-                        </td>
-
-                        <td>
-                            BCA 1st Year
-                        </td>
-
-                        <td>
-                            A
-                        </td>
-
-                        <td>
-                            DBMS
-                        </td>
-
-                        <td>
-                            Internal 1
-                        </td>
-
-                        <td>
-                            <span class="marks-badge">
-                                92
-                            </span>
-                        </td>
-
-                        <td>
-                            100
-                        </td>
-
-                    </tr>
-
-
-
-                    <!-- RECORD 3 -->
-
-                    <tr>
-
-                        <td>
-                            STD003
-                        </td>
-
-                        <td>
-                            Rahul Verma
-                        </td>
-
-                        <td>
-                            BCA 2nd Year
-                        </td>
-
-                        <td>
-                            B
-                        </td>
-
-                        <td>
-                            Django
-                        </td>
-
-                        <td>
-                            Semester
-                        </td>
-
-                        <td>
-                            <span class="marks-badge">
-                                78
-                            </span>
-                        </td>
-
-                        <td>
-                            100
-                        </td>
-
-                    </tr>
-
-
-
-                    <!-- RECORD 4 -->
-
-                    <tr>
-
-                        <td>
-                            STD004
-                        </td>
-
-                        <td>
-                            Priya Gupta
-                        </td>
-
-                        <td>
-                            BCA 2nd Year
-                        </td>
-
-                        <td>
-                            B
-                        </td>
-
-                        <td>
-                            Mathematics
-                        </td>
-
-                        <td>
-                            Semester
-                        </td>
-
-                        <td>
-                            <span class="marks-badge">
-                                91
-                            </span>
-                        </td>
-
-                        <td>
-                            100
-                        </td>
-
-                    </tr>
-
-
-
-                    <!-- RECORD 5 -->
-
-                    <tr>
-
-                        <td>
-                            STD005
-                        </td>
-
-                        <td>
-                            Vivek Yadav
-                        </td>
-
-                        <td>
-                            BCA 3rd Year
-                        </td>
-
-                        <td>
-                            A
-                        </td>
-
-                        <td>
-                            Python
-                        </td>
-
-                        <td>
-                            Final
-                        </td>
-
-                        <td>
-                            <span class="marks-badge">
-                                67
-                            </span>
-                        </td>
-
-                        <td>
-                            100
-                        </td>
-
-                    </tr>
-
+                    {% endfor %}
 
                 </tbody>
 

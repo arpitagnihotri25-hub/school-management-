@@ -1514,22 +1514,22 @@
 
 
         <li>
-            <a href="{% url 'students' %}">
+            <a href="{% url 'staff' %}">
 
-                <span class="menu-icon">🎓</span>
+                <span class="menu-icon">👨‍🏫</span>
 
-                Students
+                Staff
 
             </a>
         </li>
 
 
         <li>
-            <a href="{% url 'staff' %}">
+            <a href="{% url 'students' %}">
 
-                <span class="menu-icon">👨‍🏫</span>
+                <span class="menu-icon">🎓</span>
 
-                Staff
+                Students
 
             </a>
         </li>
@@ -1557,7 +1557,6 @@
         </li>
 
 
-        {% comment %}
         <li>
             <a href="{% url 'marks' %}">
 
@@ -1567,7 +1566,6 @@
 
             </a>
         </li>
-        {% endcomment %}
 
 
         <li>
@@ -1610,6 +1608,14 @@
 
                 Fees Status
 
+            </a>
+        </li>
+
+        
+        <li>
+            <a href="{% url 'staff_registration' %}">
+                <span class="menu-icon">➕</span>
+                Add New Staff
             </a>
         </li>
 
@@ -1679,6 +1685,19 @@
         </li>
 
 
+        <li>
+
+            <a href="{% url 'students' %}">
+
+                <span class="menu-icon">🎓</span>
+
+                Students
+
+            </a>
+
+        </li>
+
+
         {% if staff_role == 'Teacher' %}
 
         <li>
@@ -1694,19 +1713,6 @@
         </li>
 
         {% endif %}
-
-
-        <li>
-
-            <a href="{% url 'students' %}">
-
-                <span class="menu-icon">🎓</span>
-
-                Students
-
-            </a>
-
-        </li>
 
 
         {% if staff_role == 'Accountant' %}
@@ -1726,7 +1732,6 @@
         {% endif %}
 
 
-        {% comment %}
         {% if staff_role == 'Teacher' %}
 
         <li>
@@ -1735,14 +1740,13 @@
 
                 <span class="menu-icon">📊</span>
 
-                Marks Entry
+                Marks
 
             </a>
 
         </li>
 
         {% endif %}
-        {% endcomment %}
 
 
         {% if staff_role == 'Teacher' %}

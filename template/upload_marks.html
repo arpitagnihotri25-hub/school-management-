@@ -937,143 +937,6 @@
 <body>
 
 
-<!-- =========================================================
-     ADMIN SIDEBAR
-========================================================= -->
-
-{% if role == 'Admin' %}
-
-<div class="sidebar">
-
-    <div class="sidebar-brand">
-
-        <div class="sidebar-logo">
-            V
-        </div>
-
-        <h2>
-            Admin Portal
-        </h2>
-
-        <p>
-            VISION PUBLIC SCHOOL
-        </p>
-
-    </div>
-
-
-    <ul>
-
-        <li>
-            <a href="{% url 'admin_dashboard' %}">
-                <span class="menu-icon">⌂</span>
-                Dashboard
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'students' %}">
-                <span class="menu-icon">🎓</span>
-                Students
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'staff' %}">
-                <span class="menu-icon">👨‍🏫</span>
-                Staff
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'classes' %}">
-                <span class="menu-icon">🏫</span>
-                Classes
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'attendance' %}">
-                <span class="menu-icon">📋</span>
-                Attendance
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'marks' %}" class="active">
-                <span class="menu-icon">📊</span>
-                Marks
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'homework' %}">
-                <span class="menu-icon">📝</span>
-                Homework
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'notices' %}">
-                <span class="menu-icon">📢</span>
-                Notices
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'fees_details' %}">
-                <span class="menu-icon">💰</span>
-                Fees Details
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'fees_status' %}">
-                <span class="menu-icon">💳</span>
-                Fees Status
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'staff_registration' %}">
-                <span class="menu-icon">➕</span>
-                Add New Staff
-            </a>
-        </li>
-
-
-        <li>
-            <a href="admin_profile.html">
-                <span class="menu-icon">👤</span>
-                Profile
-            </a>
-        </li>
-
-
-        <li>
-            <a href="{% url 'logout' %}">
-                <span class="menu-icon">↪</span>
-                Logout
-            </a>
-        </li>
-
-    </ul>
-
-</div>
-
-{% endif %}
-
-
 
 <!-- =========================================================
      STAFF SIDEBAR
@@ -1147,7 +1010,7 @@
         <li>
             <a href="{% url 'marks' %}" class="active">
                 <span class="menu-icon">📊</span>
-                Marks Entry
+                Marks
             </a>
         </li>
 
@@ -1376,9 +1239,56 @@
 
                     </div>
 
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
 
 
-                    <!-- EXAMINATION TYPE -->
+
+    <!-- ================= STUDENT MARKS ================= -->
+
+    <div class="section-title">
+
+        <span>
+            STUDENT RECORDS
+        </span>
+
+        <h2>
+            Student Marks
+        </h2>
+
+    </div>
+
+
+    <div class="info-box">
+
+
+        <div class="box-header">
+
+            <div>
+
+                <h2>
+                    📊 Student Marks Entry
+                </h2>
+
+                <p>
+                    Enter marks obtained by each student
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form method="POST" action="{% url 'upload_marks' %}">
+
+            {% csrf_token %}
+            
+            <div class="table-wrapper">
 
                     <div class="form-group">
 
@@ -1435,64 +1345,13 @@
 
                     </div>
 
-
-                </div>
-
-            </div>
-
-        </form>
-
-    </div>
-
-
-
-    <!-- ================= STUDENT MARKS ================= -->
-
-    <div class="section-title">
-
-        <span>
-            STUDENT RECORDS
-        </span>
-
-        <h2>
-            Student Marks
-        </h2>
-
-    </div>
-
-
-    <div class="info-box">
-
-
-        <div class="box-header">
-
-            <div>
-
-                <h2>
-                    📊 Student Marks Entry
-                </h2>
-
-                <p>
-                    Enter marks obtained by each student
-                </p>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="table-wrapper">
+                    <br>
 
             <table>
 
                 <thead>
 
                     <tr>
-
-                        <th>
-                            S.No.
-                        </th>
 
                         <th>
                             Admission No.
@@ -1521,29 +1380,24 @@
 
                 <tbody>
 
-
-                    <!-- ================= STUDENT 1 ================= -->
+                    {% for student in students %}
 
                     <tr>
 
                         <td>
-                            1
+                            {{ student.admission_no }}
                         </td>
 
                         <td>
-                            STD0001
+                            {{ student.name }}
                         </td>
 
                         <td>
-                            Aarav Sharma
+                            {{ student.class_field }}
                         </td>
 
                         <td>
-                            10
-                        </td>
-
-                        <td>
-                            A
+                            {{ student.section }}
                         </td>
 
                         <td>
@@ -1551,7 +1405,7 @@
                             <input
                                 type="number"
                                 class="marks-input"
-                                name="marks_STD0001"
+                                name="marks_{{ student.admission_no }}"
                                 placeholder="Enter marks"
                                 min="0"
                             >
@@ -1560,166 +1414,7 @@
 
                     </tr>
 
-
-
-                    <!-- ================= STUDENT 2 ================= -->
-
-                    <tr>
-
-                        <td>
-                            2
-                        </td>
-
-                        <td>
-                            STD0002
-                        </td>
-
-                        <td>
-                            Ananya Singh
-                        </td>
-
-                        <td>
-                            10
-                        </td>
-
-                        <td>
-                            A
-                        </td>
-
-                        <td>
-
-                            <input
-                                type="number"
-                                class="marks-input"
-                                name="marks_STD0002"
-                                placeholder="Enter marks"
-                                min="0"
-                            >
-
-                        </td>
-
-                    </tr>
-
-
-
-                    <!-- ================= STUDENT 3 ================= -->
-
-                    <tr>
-
-                        <td>
-                            3
-                        </td>
-
-                        <td>
-                            STD0003
-                        </td>
-
-                        <td>
-                            Rahul Verma
-                        </td>
-
-                        <td>
-                            10
-                        </td>
-
-                        <td>
-                            A
-                        </td>
-
-                        <td>
-
-                            <input
-                                type="number"
-                                class="marks-input"
-                                name="marks_STD0003"
-                                placeholder="Enter marks"
-                                min="0"
-                            >
-
-                        </td>
-
-                    </tr>
-
-
-
-                    <!-- ================= STUDENT 4 ================= -->
-
-                    <tr>
-
-                        <td>
-                            4
-                        </td>
-
-                        <td>
-                            STD0004
-                        </td>
-
-                        <td>
-                            Priya Gupta
-                        </td>
-
-                        <td>
-                            10
-                        </td>
-
-                        <td>
-                            A
-                        </td>
-
-                        <td>
-
-                            <input
-                                type="number"
-                                class="marks-input"
-                                name="marks_STD0004"
-                                placeholder="Enter marks"
-                                min="0"
-                            >
-
-                        </td>
-
-                    </tr>
-
-
-
-                    <!-- ================= STUDENT 5 ================= -->
-
-                    <tr>
-
-                        <td>
-                            5
-                        </td>
-
-                        <td>
-                            STD0005
-                        </td>
-
-                        <td>
-                            Vivek Yadav
-                        </td>
-
-                        <td>
-                            10
-                        </td>
-
-                        <td>
-                            A
-                        </td>
-
-                        <td>
-
-                            <input
-                                type="number"
-                                class="marks-input"
-                                name="marks_STD0005"
-                                placeholder="Enter marks"
-                                min="0"
-                            >
-
-                        </td>
-
-                    </tr>
-
+                    {% endfor %}
 
                 </tbody>
 
@@ -1742,8 +1437,12 @@
 
         </div>
 
+        </form>
+
 
     </div>
+
+
 
 
 

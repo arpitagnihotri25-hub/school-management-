@@ -1233,14 +1233,12 @@
             </li>
 
 
-            {% comment %}
             <li>
                 <a href="{% url 'marks' %}">
                     <span class="menu-icon">📊</span>
                     Marks
                 </a>
             </li>
-            {% endcomment %}
 
 
             <li>
@@ -1339,6 +1337,14 @@
                     Dashboard
                 </a>
             </li>
+            
+
+            <li>
+                <a href="{% url 'students' %}">
+                    <span class="menu-icon">🎓</span>
+                    Students
+                </a>
+            </li>
 
 
             {% if staff_role == 'Teacher' %}
@@ -1353,14 +1359,6 @@
             {% endif %}
 
 
-            <li>
-                <a href="{% url 'students' %}">
-                    <span class="menu-icon">🎓</span>
-                    Students
-                </a>
-            </li>
-
-
             {% if staff_role == 'Accountant' %}
 
             <li>
@@ -1373,20 +1371,16 @@
             {% endif %}
 
 
-            {% comment %}
-
             {% if staff_role == 'Teacher' %}
 
             <li>
                 <a href="{% url 'marks' %}">
                     <span class="menu-icon">📊</span>
-                    Marks Entry
+                    Marks 
                 </a>
             </li>
 
             {% endif %}
-
-            {% endcomment %}
 
 
             {% if staff_role == 'Teacher' %}
@@ -1487,16 +1481,12 @@
             </li>
 
 
-            {% comment %}
-
             <li>
                 <a href="{% url 'marks' %}">
                     <span class="menu-icon">📊</span>
                     Marks
                 </a>
             </li>
-
-            {% endcomment %}
 
 
             <li>
@@ -1589,16 +1579,12 @@
             </li>
 
 
-            {% comment %}
-
             <li>
                 <a href="{% url 'marks' %}">
                     <span class="menu-icon">📊</span>
                     Marks
                 </a>
             </li>
-
-            {% endcomment %}
 
 
             <li>

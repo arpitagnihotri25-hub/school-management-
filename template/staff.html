@@ -1003,17 +1003,17 @@
 
 
         <li>
-            <a href="{% url 'students' %}">
-                <span class="menu-icon">🎓</span>
-                Students
+            <a href="{% url 'staff' %}" class="active">
+                <span class="menu-icon">👨‍🏫</span>
+                Staff
             </a>
         </li>
 
 
         <li>
-            <a href="{% url 'staff' %}" class="active">
-                <span class="menu-icon">👨‍🏫</span>
-                Staff
+            <a href="{% url 'students' %}">
+                <span class="menu-icon">🎓</span>
+                Students
             </a>
         </li>
 
@@ -1033,15 +1033,13 @@
             </a>
         </li>
 
-
-        {% comment %}
+        
         <li>
             <a href="{% url 'marks' %}">
                 <span class="menu-icon">📊</span>
                 Marks
             </a>
         </li>
-        {% endcomment %}
 
 
         <li>

@@ -1008,6 +1008,17 @@
             </li>
 
 
+            <li>
+                <a href="{% url 'students' %}">
+
+                    <span class="menu-icon">🎓</span>
+
+                    Students
+
+                </a>
+            </li>
+
+
             {% if staff_role == 'Teacher' %}
 
             <li>
@@ -1020,18 +1031,17 @@
                 </a>
             </li>
 
-            {% endif %}
-
-
             <li>
-                <a href="{% url 'students' %}">
+                <a href="{% url 'marks' %}">
 
-                    <span class="menu-icon">🎓</span>
+                    <span class="menu-icon">📋</span>
 
-                    Students
+                    Marks
 
                 </a>
             </li>
+
+            {% endif %}
 
 
             {% if staff_role == 'Accountant' %}

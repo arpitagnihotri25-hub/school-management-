@@ -832,16 +832,16 @@
         </li>
 
         <li>
-            <a href="{% url 'students' %}">
-                <span class="sidebar-icon">🎓</span>
-                Students
+            <a href="{% url 'staff' %}">
+                <span class="sidebar-icon">👨‍🏫</span>
+                Staff
             </a>
         </li>
 
         <li>
-            <a href="{% url 'staff' %}">
-                <span class="sidebar-icon">👨‍🏫</span>
-                Staff
+            <a href="{% url 'students' %}">
+                <span class="sidebar-icon">🎓</span>
+                Students
             </a>
         </li>
 
@@ -907,103 +907,6 @@
             <a href="admin_profile.html">
                 <span class="sidebar-icon">👤</span>
                 Profile
-            </a>
-        </li>
-
-        <li>
-            <a href="{% url 'logout' %}">
-                <span class="sidebar-icon">↪</span>
-                Logout
-            </a>
-        </li>
-
-    </ul>
-
-</div>
-
-{% endif %}
-
-
-
-{% if role == 'Staff' %}
-
-<!-- ================= STAFF SIDEBAR ================= -->
-
-<div class="sidebar">
-
-    <div class="sidebar-brand">
-
-        <div class="sidebar-logo">
-            V
-        </div>
-
-        <h2>VISION PUBLIC SCHOOL</h2>
-        <p>Staff Portal</p>
-
-    </div>
-
-    <ul>
-
-        <li>
-            <a href="{% url 'staff_dashboard' %}">
-                <span class="sidebar-icon">⌂</span>
-                Dashboard
-            </a>
-        </li>
-
-        <li>
-            <a href="{% url 'students' %}">
-                <span class="sidebar-icon">🎓</span>
-                Students
-            </a>
-        </li>
-
-        <li>
-            <a href="{% url 'staff' %}">
-                <span class="sidebar-icon">👨‍🏫</span>
-                Staff
-            </a>
-        </li>
-
-        <li>
-            <a href="{% url 'attendance' %}">
-                <span class="sidebar-icon">📋</span>
-                Attendance
-            </a>
-        </li>
-
-        <li>
-            <a href="{% url 'marks' %}">
-                <span class="sidebar-icon">📊</span>
-                Marks
-            </a>
-        </li>
-
-        <li>
-            <a href="{% url 'homework' %}">
-                <span class="sidebar-icon">📝</span>
-                Homework
-            </a>
-        </li>
-
-        <li>
-            <a href="{% url 'notices' %}">
-                <span class="sidebar-icon">📢</span>
-                Notices
-            </a>
-        </li>
-
-        <li>
-            <a href="{% url 'fees_details' %}">
-                <span class="sidebar-icon">💰</span>
-                Fees Details
-            </a>
-        </li>
-
-        <li>
-            <a href="{% url 'fees_status' %}">
-                <span class="sidebar-icon">💳</span>
-                Fees Status
             </a>
         </li>
 
